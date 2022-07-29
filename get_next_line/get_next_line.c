@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 09:38:31 by mfreixo-          #+#    #+#             */
-/*   Updated: 2022/07/10 18:04:48 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:55:44 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,7 @@ char	*get_next_line(int fd)
 		buffer = ft_strjoin(buffer, get_line(fd));
 	if (n == -1)
 		n = ft_strlen(buffer);
-	line = malloc(sizeof(char) * (n + 2));
-	i = 0;
-	while (buffer[i])
-	{
-		line[i] = buffer[i];
-		if (buffer[i++] == '\n')
-			break ;
-	}
-	line[i] = '\0';
+	line = malloc(sizeof(char) * (n + 2));#include <stdio.h>
 	buffer = ft_save_buff(buffer, i);
 	return (line);
 }

@@ -1,8 +1,17 @@
-#include <stdio.h>
-#include "./get_next_line/get_next_line.h"
-#include <signal.h>
-#include  <stdlib.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
+/*   Updated: 2022/07/29 19:50:37 by gafreita         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
 void     INThandler(int);
 
 void  INThandler(int sig)
@@ -32,7 +41,7 @@ int main()
 {
      char *str;
      int size;
-     
+
  //    str = get_next_line(0);
  //    if (str)
   //        printf("%s\n", str);
