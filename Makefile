@@ -1,22 +1,42 @@
-GNL = get_next_line
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/07/30 20:14:45 by gafreita          #+#    #+#              #
+#    Updated: 2022/07/30 20:14:45 by gafreita         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = minishell
 
-SRC = $(GNL)/get_next_line.c $(GNL)/get_next_line_utils.c ./minishell.c
+SRC = minishell.c
 
-INC = -I . -I./get_next_line
+LIBFT_LIB_DIR = ./libft
+INC = -I . -I ./libft/include/
+LIB = -L ./libft -lft
 
-#FLAGS = -Wall -Wextra -Werror
+CCFLAGS = gcc -Wall -Wextra -Werror
+
+DEP = ./libft/libft.a
 
 RM = rm -f
 
-$(NAME):
-	@ $(CC) $(INC) -L.local/lib -lreadline -D BUFFER_SIZE=10000 $(PRINTF) $(SRC) -o $(NAME)
+$(NAME): $(DEP)
+	@ $(CCFLAGS) $(LIB) $(INC) -D BUFFER_SIZE=10000 $(SRC) -o $(NAME)
 
 all : $(NAME)
 
 clean:
 	@ $(RM) $(NAME)
+
+./libft/libft.a:
+	@make -s -C $(LIBFT_LIB_DIR)
+
+submodule:
+	@git submodule update --init --recursive
 
 fclean: clean
 
