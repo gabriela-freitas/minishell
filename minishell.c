@@ -20,10 +20,9 @@ void	inthandler(int sig)
 	if (sig == SIGINT)
 	{
 		printf("\n");
-		write(1, "mini$: ", 7);
+		// write(1, "minishell$:", 12);
 	}
-	signal(SIGINT, inthandler);
-
+	// signal(SIGINT, inthandler);
 }
 
 
@@ -33,10 +32,11 @@ void	read_loop(void)
 
 	while (str != NULL)
 	{
-		write(1, "mini$: ", 7);
-		signal(SIGQUIT, inthandler);
+		//write(1, "minishell$: ", 7);
+		signal(SIGQUIT, inthandler); //apanha o ctrl \\*
 		signal(SIGINT, inthandler);
-		str = get_next_line(0);
+		str = readline("minishell$:");
+		free(str);
 	}
 	printf("\n");
 }
