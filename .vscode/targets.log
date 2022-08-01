@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Aug  1 16:28:35 2022
+# Make data base, printed on Mon Aug  1 17:14:23 2022
 
 # Variables
 
@@ -24,6 +24,7 @@ GNOME_KEYRING_CONTROL = /nfs/homes/mfreixo-/.cache/keyring-A9Y2P1
 SBX_CHROME_API_RQ = 1
 # environment
 VSCODE_CWD = /nfs/homes/mfreixo-
+ 
 # environment
 LIBVIRT_DEFAULT_URI = qemu:///system
 # default
@@ -66,8 +67,6 @@ XAUTHORITY = /run/flatpak/Xauthority
 ALSA_CONFIG_DIR = /usr/share/alsa
 # makefile
 MAKEFLAGS = pqrR
-# makefile (from 'Makefile', line 17)
-LIBFT_LIB_DIR = ./libft
 # environment
 ZYPAK_SPAWN_LATEST_ON_REEXEC = 0
 # makefile (from 'Makefile', line 23)
@@ -162,6 +161,8 @@ MAKEFILES :=
 ^F = $(notdir $^)
 # environment
 DBUS_SYSTEM_BUS_ADDRESS = unix:path=/run/dbus/system_bus_socket
+# makefile (from 'Makefile', line 17)
+LIBFT_DIR = ./libft
 # environment
 XDG_CONFIG_HOME = /nfs/homes/mfreixo-/.var/app/com.visualstudio.code/config
 # environment
@@ -229,7 +230,6 @@ VSCODE_IPC_HOOK = /run/user/10709/vscode-a0c3b2ce-1.69.2-main.sock
 # default
 .RECIPEPREFIX := 
 # automatic
- 
 <F = $(notdir $<)
 # default
 SUFFIXES := 
@@ -260,9 +260,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 64768, inode 2364016): 12 files, no impossibilities.
+# . (device 64768, inode 2364016): 13 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -272,7 +272,7 @@ GDMSESSION = ubuntu
 
 minishell: libft/libft.a
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-01 16:27:56.212051892
+#  Last modified 2022-08-01 17:09:28.118901384
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 28):
@@ -281,7 +281,7 @@ minishell: libft/libft.a
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-01 16:27:54.004032485
+#  Last modified 2022-08-01 17:09:28.118901384
 #  File has been updated.
 #  Successfully updated.
 
@@ -298,7 +298,7 @@ libft/libft.a:
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
-	@make -s -C $(LIBFT_LIB_DIR)
+	@make -s -C $(LIBFT_DIR)
 
 clean:
 #  Phony target (prerequisite of .PHONY).
@@ -333,6 +333,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 
 .PHONY: clean fclean all re
 #  Implicit rule search has not been done.
@@ -347,12 +348,12 @@ fclean: clean
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 22 / storage = 183 B / avg = 8 B
-# current buf: size = 8162 B / used = 183 B / count = 22 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 23 / storage = 189 B / avg = 8 B
+# current buf: size = 8162 B / used = 189 B / count = 23 / avg = 8 B
 
-# strcache performance: lookups = 45 / hit rate = 51%
+# strcache performance: lookups = 46 / hit rate = 50%
 # hash-table stats:
-# Load=22/8192=0%, Rehash=0, Collisions=1/45=2%
-# Finished Make data base on Mon Aug  1 16:28:35 2022
+# Load=23/8192=0%, Rehash=0, Collisions=1/46=2%
+# Finished Make data base on Mon Aug  1 17:14:23 2022
 
  
