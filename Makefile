@@ -16,7 +16,7 @@ SRC = minishell.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
-LIB = -L ./libft -lft
+LIB = -L ./libft -lft -lreadline
 
 CCFLAGS = gcc -Wall -Wextra -Werror
 
@@ -28,8 +28,8 @@ COLOUR_GREEN=\033[7;1;32m
 COLOUR_YELLOW=\033[7;1;33m
 COLOUR_END=\033[0m
 
-$(NAME): $(DEP)
-	@ $(CCFLAGS) $(INC) -D BUFFER_SIZE=10000 $(SRC) $(LIB) -o $(NAME)
+$(NAME): $(DEP) $(OBJS)
+	@ $(CCFLAGS) $(INC) $(SRC) $(LIB) -o $(NAME)
 	@echo "$(COLOUR_GREEN) minishell is ready to use $(COLOUR_END)"
 
 all : $(NAME)
