@@ -44,5 +44,6 @@ void	read_loop(void)
 int	main(void)
 {
 	read_loop();
+	printf("oioi\n");
 	return (0);
 }
