@@ -24,8 +24,13 @@ DEP = ./libft/libft.a
 
 RM = rm -f
 
+COLOUR_GREEN=\033[7;1;32m
+COLOUR_YELLOW=\033[7;1;33m
+COLOUR_END=\033[0m
+
 $(NAME): $(DEP)
 	@ $(CCFLAGS) $(INC) -D BUFFER_SIZE=10000 $(SRC) $(LIB) -o $(NAME)
+	@echo "$(COLOUR_GREEN) minishell is ready to use $(COLOUR_END)"
 
 all : $(NAME)
 
@@ -39,6 +44,9 @@ submodule:
 	@git submodule update --init --recursive
 
 fclean: clean
+	@make fclean -s -C $(LIBFT_DIR)
+	@echo "$(COLOUR_YELLOW) minishell cleaned $(COLOUR_END)"
+
 
 re: fclean all
 
