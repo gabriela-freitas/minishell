@@ -23,7 +23,7 @@ void	inthandler(int sig)
 		write(1, "mini$: ", 7);
 	}
 	signal(SIGINT, inthandler);
-	
+
 }
 
 
@@ -44,6 +44,5 @@ void	read_loop(void)
 int	main(void)
 {
 	read_loop();
-	printf("oioi\n");
 	return (0);
 }
