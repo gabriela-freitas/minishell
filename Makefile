@@ -14,7 +14,7 @@ NAME = minishell
 
 SRC = minishell.c
 
-LIBFT_LIB_DIR = ./libft
+LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft
 
@@ -25,7 +25,7 @@ DEP = ./libft/libft.a
 RM = rm -f
 
 $(NAME): $(DEP)
-	@ $(CCFLAGS) $(LIB) $(INC) -D BUFFER_SIZE=10000 $(SRC) -o $(NAME)
+	@ $(CCFLAGS) $(INC) -D BUFFER_SIZE=10000 $(SRC) $(LIB) -o $(NAME)
 
 all : $(NAME)
 
@@ -33,7 +33,7 @@ clean:
 	@ $(RM) $(NAME)
 
 ./libft/libft.a:
-	@make -s -C $(LIBFT_LIB_DIR)
+	@make -s -C $(LIBFT_DIR)
 
 submodule:
 	@git submodule update --init --recursive

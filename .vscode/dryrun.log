@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/nfs/homes/mfreixo-/minishell'
+make: 'minishell' is up to date.
+make: Leaving directory '/nfs/homes/mfreixo-/minishell'
+ 

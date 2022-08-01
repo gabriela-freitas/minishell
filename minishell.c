@@ -16,12 +16,16 @@ void	inthandler(int sig);
 
 void	inthandler(int sig)
 {
-	// char	c;
 	signal(sig, SIG_IGN);
-	printf("\n");
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		write(1, "mini$: ", 7);
+	}
 	signal(SIGINT, inthandler);
-	write(1, "mini$: ", 7);
+	
 }
+
 
 void	read_loop(void)
 {
@@ -30,6 +34,7 @@ void	read_loop(void)
 	while (str != NULL)
 	{
 		write(1, "mini$: ", 7);
+		signal(SIGQUIT, inthandler);
 		signal(SIGINT, inthandler);
 		str = get_next_line(0);
 	}
@@ -38,11 +43,6 @@ void	read_loop(void)
 
 int	main(void)
 {
-	// char	*str;
-	// int		size;
-	//	str = get_next_line(0);
-	//	if (str)
-	//	   printf("%s\n", str);
 	read_loop();
 	return (0);
 }
