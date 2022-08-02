@@ -31,6 +31,7 @@ void	read_loop(void)
 	while (str != NULL)
 	{
 		add_history(str);
+		first_parse(str);
 		parser(str);
 		free(str);
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_isBuiltIn(char *cmd)
+int	ft_is_builtin(char *cmd)
 {
 	if (!ft_strncmp(cmd, "echo", 5))
 		return (ECHO);
@@ -19,19 +19,20 @@ int ft_isBuiltIn(char *cmd)
 	return (-1);
 }
 
-int check_cmd(char *str)
+int	check_cmd(char *str)
 {
-	printf("%d\n", ft_isBuiltIn(str));
+	printf("%d\n", ft_is_builtin(str));
 	printf("%s\n", getenv("PATH"));
 	return (0);
 }
 
-void parser(char *str)
+//has more than 25 lines
+void	parser(char *str)
 {
-	char *args;
-	char *cmd;
-	int i;
-	size_t length;
+	char	*args;
+	char	*cmd;
+	int		i;
+	size_t	length;
 
 	if (!str)
 		return ;
@@ -44,7 +45,7 @@ void parser(char *str)
 		if (ft_isspace(str[i]) == 0)
 			i++;
 		else
-			break;
+			break ;
 	}
 	cmd = ft_substr(str, 0, i); //criar saida para erro do cmd
 	check_cmd(cmd);
