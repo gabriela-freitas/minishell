@@ -22,4 +22,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+HIST_STATE history;
+
 #endif

@@ -11,19 +11,18 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <errno.h>
 
 
 
 void	inthandler(int sig)
 {
 	(void) sig;
+
     printf("\n"); // Move to a new line
     rl_on_new_line(); // Regenerate the prompt on a newline
     rl_replace_line("", 0); // Clear the previous text
     rl_redisplay();
 }
-
 
 void	read_loop(void)
 {
@@ -31,17 +30,17 @@ void	read_loop(void)
 
 	while (str != NULL)
 	{
-		//write(1, "minishell$: ", 7);
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
 		signal(SIGINT, inthandler);
-		str = readline("minishell$:");
-		free(str);
+		str = readline("minishell$: ");
+	//	ft_add_history(str);
 	}
-	printf("\n");
+	printf("exit\n");
 }
 
 int	main(void)
 {
+	global = 4;
 	read_loop();
 	return (0);
 }
