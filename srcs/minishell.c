@@ -102,14 +102,15 @@ int	main(int argc, char **argv, char **env)
 {
 	(void) argc;
 	(void) argv;
-	t_env	*mini_env;
+	(void) env;
+	// t_env	*mini_env;
 
-	mini_env = ini_env(env);
-	while(mini_env)
-	{
-		printf("name = %s, content = %s\n", mini_env->name, mini_env->content);
-		mini_env = mini_env->next;
-	}
+	// mini_env = ini_env(env);
+	// while(mini_env)
+	// {
+	// 	printf("name = %s, content = %s\n", mini_env->name, mini_env->content);
+	// 	mini_env = mini_env->next;
+	// }
 	read_loop();
 	rl_clear_history();
 	return (0);
