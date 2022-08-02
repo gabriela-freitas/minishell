@@ -31,6 +31,8 @@ void	read_loop(void)
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
 		add_history(str);
+		parser(str);
+		free(str);
 	}
 	printf("exit\n");
 }

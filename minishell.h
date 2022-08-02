@@ -22,5 +22,26 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef enum 
+{ 
+    ECHO, 
+    CD, 
+    PWD,
+    EXPORT, 
+    ENV, 
+    EXIT, 
+    UNSET,
+} built;
+
+void	inthandler(int sig);
+void	read_loop(void);
+void    parser(char *str);
+int     ft_issapce(char c);
+int     check_cmd(char *str);
+int     ft_isBuiltIn(char *cmd);
+
+
+
+
 
 #endif
