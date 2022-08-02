@@ -6,8 +6,14 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 12:13:46 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/02 17:43:24 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_echo(char *str)
+{
+	if (str)
+		printf("%s", str);
+}
