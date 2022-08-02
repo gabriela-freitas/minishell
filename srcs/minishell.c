@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-
-
 void	inthandler(int sig)
 {
 	(void) sig;
