@@ -12,12 +12,9 @@
 
 #include "minishell.h"
 
-
-
 void	inthandler(int sig)
 {
 	(void) sig;
-
     printf("\n"); // Move to a new line
     rl_on_new_line(); // Regenerate the prompt on a newline
     rl_replace_line("", 0); // Clear the previous text
@@ -40,7 +37,7 @@ void	read_loop(void)
 
 int	main(void)
 {
-
 	read_loop();
+	rl_clear_history();
 	return (0);
 }
