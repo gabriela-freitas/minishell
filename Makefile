@@ -12,7 +12,7 @@
 
 NAME = minishell
 
-SRC = minishell.c
+SRC = srcs/minishell.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
