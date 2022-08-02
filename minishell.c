@@ -33,14 +33,14 @@ void	read_loop(void)
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
-	//	ft_add_history(str);
+		add_history(str);
 	}
 	printf("exit\n");
 }
 
 int	main(void)
 {
-	global = 4;
+
 	read_loop();
 	return (0);
 }
