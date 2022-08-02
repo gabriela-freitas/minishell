@@ -32,13 +32,14 @@ void	read_loop(void)
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
 		add_history(str);
+		parse_line(str);
+		free(str);
 	}
 	printf("exit\n");
 }
 
 int	main(void)
 {
-
 	read_loop();
 	return (0);
 }
