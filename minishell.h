@@ -18,7 +18,6 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -31,14 +30,31 @@ typedef enum
     ENV, 
     EXIT, 
     UNSET,
-} built;
+} BUILTIN;
 
+typedef struct s_env
+{
+    char *name;
+    char *content;
+    struct s_env *next;
+}   t_env;
+
+typedef struct s_base
+{
+    t_env *env;
+    char **paths; //se o user der unset no path isso fica nulo e nada funciona :(
+}   t_base;
+
+// minishell.c
 void	inthandler(int sig);
 void	read_loop(void);
-void    parser(char *str);
-int     ft_issapce(char c);
-int     check_cmd(char *str);
+
+// parsing.c
+int     ft_isspace(char c);
 int     ft_isBuiltIn(char *cmd);
+void    parser(char *str);
+int     check_cmd(char *str);
+char    **get_path();
 
 
 
