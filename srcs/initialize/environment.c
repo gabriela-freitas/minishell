@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_env *new_env(char *name, char *content)
+static t_env *new_env(char *name, char *content)
 {
 	t_env *new_env;
 
@@ -25,7 +25,7 @@ t_env *new_env(char *name, char *content)
 	return (new_env);
 }
 
-void env_append(t_env **head, t_env *add_env)
+static void env_append(t_env **head, t_env *add_env)
 {
 	t_env *aux;
     t_env *new_envi;
@@ -46,12 +46,6 @@ void env_append(t_env **head, t_env *add_env)
 		aux->next = new_envi;
         aux->next->next = NULL;
     }
-}
-
-void delone_env(t_env *one_env)
-{
-    free(one_env->name);
-	free(one_env->content);
 }
 
 void ini_env(char **env)
@@ -77,6 +71,12 @@ void ini_env(char **env)
             free(split[j++]);
         free(split);
     }
+}
+
+static void delone_env(t_env *one_env)
+{
+    free(one_env->name);
+	free(one_env->content);
 }
 
 void env_free(void)

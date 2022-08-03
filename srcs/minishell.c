@@ -60,7 +60,6 @@ int	main(int argc, char **argv, char **env)
 	ini_paths();
 	read_loop();
 	rl_clear_history();
-	//env_free();
 	base_free();
 	return (0);
 }

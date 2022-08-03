@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <errno.h>
 
 typedef enum
 {
@@ -31,6 +32,14 @@ typedef enum
 	EXIT,
 	UNSET,
 } BUILTIN;
+
+typedef enum
+{
+	BEGINNING,
+	PIPE,
+	AND,
+	OR,
+} OPERATORS;
 
 typedef struct s_env
 {
@@ -50,6 +59,7 @@ typedef struct s_base
 {
 	t_env	*env;
 	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
+	char	*home;
 	t_args	*args;
 }	t_base;
 
@@ -61,7 +71,7 @@ t_base	*base(void);
 // parsing.c
 int     ft_isBuiltIn(char *cmd);
 void    parser(char *str);
-int     check_cmd(char *str);
+// int     check_cmd(char *str);
 char    **get_path();
 
 //base.c
@@ -69,12 +79,14 @@ void	ini_paths(void);
 void	base_free(void);
 
 //environment.c
-t_env	*new_env(char *name, char *content);
-void	env_append(t_env **head, t_env *add_env);
-void	delone_env(t_env *one_env);
 void	ini_env(char **env);
 void	env_free(void);
 
+//cd.c
+int cd(char *str);
+
+
+void ls();
 
 
 

@@ -2,10 +2,11 @@
 
 void ini_paths(void)
 {
-	char *str;
+	char	*paths;
 
-	str = getenv("PATH");
-	base()->paths = ft_split(str, ':');
+	paths = getenv("PATH");
+	base()->paths = ft_split(paths, ':');
+	base()->home = getenv("HOME");
 }
 
 
