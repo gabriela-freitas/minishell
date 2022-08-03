@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/03 19:44:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:45:49 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,14 @@ char	**double_quotes_pipes(char *str)
 		}
 		if (*str == '|')
 			parse_pipe(str, begin);
+		str++;
 	}
-	return (1);
+	return (args);
 }
 
-int	parse_pipe(char *str, char *begin)
+void	first_parse(char *line)
 {
-	(void) begin;
-
+	remove_spaces(line);
 	double_quotes_pipes(line);
 	printf("%s\n", line);
 }
