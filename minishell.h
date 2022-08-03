@@ -57,6 +57,14 @@ int     check_cmd(char *str);
 char    **get_path();
 
 
+//environment.c
+t_env *new_env(char *name, char *content);
+void env_append(t_env **head, t_env *add_env);
+void delone_env(t_env *one_env);
+t_env *ini_env(char **env);
+void env_clear(t_env **mini_env);
+
+
 
 
 
