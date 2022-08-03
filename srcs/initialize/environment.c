@@ -54,16 +54,15 @@ void delone_env(t_env *one_env)
 	free(one_env->content);
 }
 
-t_env *ini_env(char **env)
+void ini_env(char **env)
 {
-    t_env   *mini_env;
     t_env   *aux_env;
     int     i;
     int     j;
     char    **split;
 
     split = ft_split(env[0], '=');
-    mini_env = new_env(split[0], split[1]);
+    base()->env = new_env(split[0], split[1]);
     free(split[0]);
     free(split[1]);
     free(split);
@@ -72,26 +71,26 @@ t_env *ini_env(char **env)
     {
         split = ft_split(env[i], '=');
         aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
-        env_append(&mini_env, aux_env);
+        env_append(&(base()->env), aux_env);
         j = 0;
         while (split[j])
             free(split[j++]);
         free(split);
     }
-    return (mini_env);
 }
 
-void env_clear(t_env **mini_env)
+void env_free(void)
 {
 	t_env *aux;
 
-    aux = (*mini_env)->next;
-    while (*mini_env)
+    aux = (base()->env)->next;
+    while (base()->env)
     {
-        delone_env(*mini_env);
-        free(*mini_env);
-        (*mini_env) = aux;
-        if (*mini_env)
-            aux = (*mini_env)->next;
+        delone_env(base()->env);
+        free(base()->env);
+        (base()->env) = aux;
+        if (base()->env)
+            aux = (base()->env)->next;
     }
+    free(base()->env);
 }

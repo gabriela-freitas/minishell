@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+t_base	*base(void)
+{
+	static t_base	base;
+
+	return (&base);
+}
+
+
 void	inthandler(int sig)
 {
 	(void) sig;
@@ -47,12 +55,12 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	(void) env;
-	t_env	*mini_env;
 
-	mini_env = NULL;
-	mini_env = ini_env(env);
+	ini_env(env);
+	ini_paths();
 	read_loop();
 	rl_clear_history();
-	env_clear(&mini_env);
+	//env_free();
+	base_free();
 	return (0);
 }
