@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 23:26:13 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/03 19:44:23 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,43 +21,95 @@
 	//update a variable >> pipe to true
 //everything inside a "" is printed
 
-void	first_parse(char *line)
+//remove extra spaces outside " " and ' '
+static void	remove_spaces(const char *str)
 {
-	char	*temp;
-	char	*str;
-	char	*index;
-	int		i;
+	size_t	i;
+	size_t	j;
+	char	*aux;
 
-	temp = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	j = -1;
+	while(ft_isspace(str[++j]));
+	ft_memmove((void *)str, (void *)&str[j], ft_strlen(&str[j]) + 1);
 	i = -1;
-	while (*line)
+	while (str[++i])
 	{
-
+		j = i;
+		while(ft_isspace(str[j]) && str[j + 1] && ft_isspace(str[j + 1]))
+			j++;
+		ft_memmove((void *)&str[i], (void *)&str[j], ft_strlen(&str[j]) + 1);
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			aux = ft_strchr(&(str[i + 1]), str[i]);
+			if (aux)
+				i += (size_t)aux - (size_t)(&str[i]);
+		}
 	}
-	temp[++i] = '\0';
-	str = ft_strdup(temp);
-	free(temp);
-	printf("%s\n", str);
+}
+
+int	check_pipes(const char *str)
+{
+	while (ft_isspace(*(++str)))
+	{
+		if (*(str + 1) == '|')
+		{
+			return (0);
+		}
+	}
+	return (1);
+}
+
+int	parse_pipe(char *str, char *begin)
+{
+	(void) begin;
+
+	if (*(str + 1) == '|')
+	{
+		if (!check_pipes(str))
+		{
+			printf("parse error near `||'\n");
+			return (0);
+		}
+			//create a new list;
+	}
+	else
+	{
+		if (!check_pipes(str))
+		{
+			printf("parse error near `|'\n");
+			return (0);
+		}
+			//split to a new one
+	}
+	return (1);
 }
 
 char	**double_quotes_pipes(char *str)
 {
-	int		i;
 	char	**args;
-	char	*temp;
+	char	*begin;
 
-	while (str)
+	args = malloc(sizeof(char *) * 2);
+	begin = str;
+	while (*str)
 	{
 		if (*str == '\"')
 		{
-			ft_memmove(str, ++str, ft_strlen(str) + 1);
-			str = ftstrchr(str, '\"');
-			ft_memmove(str, ++str, ft_strlen(str) + 1);
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
+			str = ft_strchr(str, *str);
+			ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
 		}
 		if (*str == '|')
-		{
-			
-		}
+			parse_pipe(str, begin);
 	}
-	return (args));
+	return (1);
 }
+
+int	parse_pipe(char *str, char *begin)
+{
+	(void) begin;
+
+	double_quotes_pipes(line);
+	printf("%s\n", line);
+}
+

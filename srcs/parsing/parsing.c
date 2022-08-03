@@ -21,8 +21,9 @@ int	ft_is_builtin(char *cmd)
 
 int	check_cmd(char *str)
 {
-	printf("%d\n", ft_is_builtin(str));
-	printf("%s\n", getenv("PATH"));
+	(void) str;
+	// printf("%d\n", ft_is_builtin(str));
+	// printf("%s\n", getenv("PATH"));
 	return (0);
 }
 
@@ -51,8 +52,8 @@ void	parser(char *str)
 	check_cmd(cmd);
 	while (str[i] && ft_isspace(str[++i]) == 1);
 	args = ft_substr(str, i, length); //criar saida para erro do cmd
-	printf("cmd = %s\n", cmd);
-	printf("args = %s\n", args);
+	// printf("cmd = %s\n", cmd);
+	// printf("args = %s\n", args);
 	free(cmd); //nao libertar se der erro
 	free(args); // nao libertar se der erro
 	return ;
