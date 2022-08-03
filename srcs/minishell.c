@@ -31,6 +31,7 @@ void	read_loop(void)
 	while (str != NULL)
 	{
 		add_history(str);
+		// first_parse(str);
 		parser(str);
 		free(str);
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
@@ -45,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 {
 	(void) argc;
 	(void) argv;
+	(void) env;
 	t_env	*mini_env;
 
 	mini_env = NULL;
