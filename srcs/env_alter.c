@@ -12,37 +12,37 @@
 
 #include "minishell.h"
 
-//returns zero (0) on success. -1 is returned on an error and errno is set appropriately
-int cd(char *str)
+void print_env(void)
 {
-    char    *new_path;
-    char    *path;
-    int     length;
-    
-    length = 100;
-    path = malloc(sizeof(char) * length);
-    getcwd(path, length);
-    old_pwd();
-    new_path = str;
-    if (!ft_strncmp("", str, 1))
-        new_path = base()->home;
-    if (chdir(new_path) == -1)
+    t_env *aux;
+
+    aux = base()->env;
+    while (aux)
     {
-        if (errno == ENOENT)
-        {
-            printf("cd: %s: No such file or directory\n", str);
-            free(path);
-            return (-1);
-        }            
-        if (errno == EACCES)
-        {
-            printf("cd: %s: Permission denied\n", str);
-            free(path);
-            return (-1);
-        }
+        printf("%s=%s\n", aux->name, aux->content);
+        aux = aux->next;
     }
-    free(path);
-    return (0);
 }
 
+// searches for name in env, if it doesnt exist creates it and adds it to the env
+// if it exists changes the content for the given one
+void change_env(char *name, char *content)
+{
+    t_env *aux;
+    t_env *last;
 
+    aux = base()->env;
+    while (aux->next && aux->next->next)
+    {
+        if (!ft_strncmp(name, aux->name, ft_strlen(name)))
+        {
+            free(aux->content);
+            aux->content = ft_strdup(content);
+            return ;
+        }
+        aux = aux->next;
+    }
+    last = new_env(name, content);
+    last->next = aux->next;
+    aux->next = last;
+}

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static t_env *new_env(char *name, char *content)
+t_env *new_env(char *name, char *content)
 {
 	t_env *new_env;
 
@@ -48,7 +48,7 @@ static void env_append(t_env **head, t_env *add_env)
     }
 }
 
-void ini_env(char **env)
+void ini_env(char **env) //has more than 25 lines
 {
     t_env   *aux_env;
     int     i;
@@ -65,6 +65,7 @@ void ini_env(char **env)
     {
         split = ft_split(env[i], '=');
         aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
+
         env_append(&(base()->env), aux_env);
         j = 0;
         while (split[j])

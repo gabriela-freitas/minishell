@@ -43,10 +43,12 @@ void	parser(char *str)
 	cmd = ft_substr(str, 0, i); //criar saida para erro do cmd
 	while (str[i] && ft_isspace(str[++i]) == 1);
 	args = ft_substr(str, i, length); //criar saida para erro do cmd
-	if (!strcmp("ls", cmd))
-		ls();
+	if (!strcmp("pwd", cmd))
+		pwd();
 	else if (!strcmp("cd", cmd))
 		cd(args);
+	else if (!strcmp("env", cmd))
+		print_env();
 //	printf("cmd = %s\n", cmd);
 //	printf("args = %s\n", args);
 	free(cmd); //nao libertar se der erro

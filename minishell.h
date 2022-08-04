@@ -41,6 +41,9 @@ typedef enum
 	OR,
 } OPERATORS;
 
+# define FALSE 0
+# define TRUE 1
+
 typedef struct s_env
 {
 	char			*name;
@@ -81,14 +84,16 @@ void	base_free(void);
 //environment.c
 void	ini_env(char **env);
 void	env_free(void);
+t_env	*new_env(char *name, char *content);
 
-//cd.c
+//builtins.c
 int cd(char *str);
+void pwd();
+void old_pwd(void);
+void print_env(void);
 
-
-void ls();
-
-
+//env_alter.c
+void change_env(char *name, char *content);
 
 
 #endif

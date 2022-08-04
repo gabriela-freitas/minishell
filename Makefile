@@ -14,10 +14,12 @@ NAME = minishell
 
 SRC =	srcs/minishell.c \
 		srcs/parsing/parsing.c \
-		srcs/initialize/environment.c \
 		srcs/parsing/first_parse.c \
+		srcs/initialize/environment.c \
 		srcs/initialize/base.c \
-		srcs/builtins/cd.c
+		srcs/builtins/cd.c \
+		srcs/builtins/pwd.c \
+		srcs/env_alter.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
