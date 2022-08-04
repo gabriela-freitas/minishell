@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 #include <errno.h>
+# include <sys/wait.h>
 
 typedef enum
 {
@@ -60,7 +61,8 @@ typedef struct s_args
 
 typedef struct s_base
 {
-	t_env	*env;
+	char	**env;
+	t_env	*env_split;
 	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
 	char	*home;
 	t_args	*args;
@@ -72,10 +74,8 @@ void	read_loop(void);
 t_base	*base(void);
 
 // parsing.c
-int     ft_isBuiltIn(char *cmd);
+int		exe_builtin(char **cmd);
 void    parser(char *str);
-// int     check_cmd(char *str);
-char    **get_path();
 
 //base.c
 void	ini_paths(void);
@@ -89,16 +89,22 @@ void	delone_env(t_env *one_env);
 
 
 //builtins.c
-int cd(char *str);
-void pwd();
-void old_pwd(void);
-void print_env(void);
+int		cd(char *str);
+void	pwd();
+void	old_pwd(void);
+void	print_env(void);
 
 //env_alter.c
-void change_var(char *name, char *content);
+void	change_var(char *name, char *content);
 
 //export.c
-void export(char *str);
-void unset(char *str);
+void	export(char *str);
+void	unset(char *str);
+
+//execute.c
+int		exe_builtin(char **cmd);
+int		ft_execve(char *path, char **cmd);
+int		exe_cmd(char **cmd);
+int		execute(char **cmds);
 
 #endif

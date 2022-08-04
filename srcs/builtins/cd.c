@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 //returns zero (0) on success. -1 is returned on an error and errno is set appropriately
-int cd(char *str)
+int cd(char *str) //function has more than 25 lines
 {
     char    *new_path;
     char    *path;
@@ -44,5 +44,3 @@ int cd(char *str)
     free(path);
     return (0);
 }
-
-

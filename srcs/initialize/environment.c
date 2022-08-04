@@ -55,8 +55,9 @@ void ini_env(char **env) //has more than 25 lines
     int     j;
     char    **split;
 
+    base()->env = env;
     split = ft_split(env[0], '=');
-    base()->env = new_env(split[0], split[1]);
+    base()->env_split = new_env(split[0], split[1]);
     free(split[0]);
     free(split[1]);
     free(split);
@@ -66,7 +67,7 @@ void ini_env(char **env) //has more than 25 lines
         split = ft_split(env[i], '=');
         aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
 
-        env_append(&(base()->env), aux_env);
+        env_append(&(base()->env_split), aux_env);
         j = 0;
         while (split[j])
             free(split[j++]);
@@ -84,14 +85,14 @@ void env_free(void)
 {
 	t_env *aux;
 
-    aux = (base()->env)->next;
-    while (base()->env)
+    aux = (base()->env_split)->next;
+    while (base()->env_split)
     {
-        delone_env(base()->env);
-        free(base()->env);
-        (base()->env) = aux;
-        if (base()->env)
-            aux = (base()->env)->next;
+        delone_env(base()->env_split);
+        free(base()->env_split);
+        (base()->env_split) = aux;
+        if (base()->env_split)
+            aux = (base()->env_split)->next;
     }
-    free(base()->env);
+    free(base()->env_split);
 }

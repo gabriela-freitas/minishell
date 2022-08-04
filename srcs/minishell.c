@@ -19,7 +19,6 @@ t_base	*base(void)
 	return (&base);
 }
 
-
 void	inthandler(int sig)
 {
 	(void) sig;

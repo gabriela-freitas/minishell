@@ -17,7 +17,7 @@ void print_env(void)
 {
     t_env *aux;
 
-    aux = base()->env;
+    aux = base()->env_split;
     while (aux)
     {
         if (aux->content)
@@ -33,7 +33,7 @@ void change_var(char *name, char *content)
     t_env *aux;
     t_env *last;
 
-    aux = base()->env;
+    aux = base()->env_split;
     while (aux->next)
     {
         if (!ft_strncmp(name, aux->name, ft_strlen(name)))
@@ -68,7 +68,7 @@ void    unset(char *str)
     t_env *aux;
     t_env *aux_next;
 
-    aux = base()->env;
+    aux = base()->env_split;
     if (!aux->next)
         return ;
     aux_next = aux->next;
@@ -76,7 +76,7 @@ void    unset(char *str)
     {
         delone_env(aux);
         free(aux);
-        base()->env = aux_next;
+        base()->env_split = aux_next;
         return ;
     }
     while (aux_next)
