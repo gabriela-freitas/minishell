@@ -72,6 +72,8 @@ void    unset(char *str)
     if (!aux->next)
         return ;
     aux_next = aux->next;
+    if (!strncmp("HOME", str, 5))
+        base()->home = NULL;
     if (!strncmp(str, aux->name, ft_strlen(str)))
     {
         delone_env(aux);

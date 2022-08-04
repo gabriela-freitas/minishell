@@ -11,11 +11,21 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 void	error_message(char *cmd, char *error)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
+}
+*/
+
+void	error_message(char *cmd, char *error)
+{
+	char    *message;
+
+	message = ft_strjoin(cmd, error);
+	perror(message);
+	free(message);
 }

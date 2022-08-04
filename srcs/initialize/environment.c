@@ -66,7 +66,6 @@ void ini_env(char **env) //has more than 25 lines
     {
         split = ft_split(env[i], '=');
         aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
-
         env_append(&(base()->env_split), aux_env);
         j = 0;
         while (split[j])

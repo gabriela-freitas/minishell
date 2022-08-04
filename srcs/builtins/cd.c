@@ -15,32 +15,25 @@
 //returns zero (0) on success. -1 is returned on an error and errno is set appropriately
 int cd(char *str) //function has more than 25 lines
 {
-    char    *new_path;
-    char    *path;
-    int     length;
-    
-    length = 100;
-    path = malloc(sizeof(char) * length);
-    getcwd(path, length);
-    old_pwd();
-    new_path = str;
-    if (!ft_strncmp("", str, 1))
-        new_path = base()->home;
-    if (chdir(new_path) == -1)
-    {
-        if (errno == ENOENT)
-        {
-            printf("cd: %s: No such file or directory\n", str);
-            free(path);
-            return (-1);
-        }            
-        if (errno == EACCES)
-        {
-            printf("cd: %s: Permission denied\n", str);
-            free(path);
-            return (-1);
-        }
-    }
-    free(path);
-    return (0);
+	char    *new_path;
+
+	old_pwd();
+	new_path = str;
+	if (!ft_strncmp("", str, 1))
+	{
+		new_path = base()->home;
+		if (!new_path)
+		{
+			ft_putstr_fd("sh: cd: HOME not set\n", 2);
+			return (-1);
+		}
+	}
+	if (!ft_strncmp("~", str, 1))
+		new_path = ft_strjoin(getenv("HOME"), &str[1]);
+	if (chdir(new_path) == -1)
+	{
+		error_message("cd: ", str);
+		return (-1);
+	}
+	return (0);
 }
