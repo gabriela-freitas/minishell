@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 19:00:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 15:51:17 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef enum
+enum	e_builtins
 {
 	ECHO,
 	CD,
@@ -30,7 +30,7 @@ typedef enum
 	ENV,
 	EXIT,
 	UNSET,
-} BUILTIN;
+};
 
 typedef struct s_env
 {
@@ -39,11 +39,29 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_cmds
+{
+	char			**cmds; //separados do pipe
+	int				operator;
+	struct s_args	*next;
+}	t_cmds;
+
+typedef struct s_args
+{
+	char			*args; //com pipe
+
+	int				operator;
+	struct s_args	*next;
+}	t_args;
+
 typedef struct s_base
 {
 	t_env	*env;
 	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
+	char	*home;
+	t_args	*args;
 }	t_base;
+
 
 // minishell.c
 void	inthandler(int sig);

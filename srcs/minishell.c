@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+t_base	*base(void)
+{
+	static t_base	base;
+
+	return (&base);
+}
+
 void	inthandler(int sig)
 {
 	(void) sig;
