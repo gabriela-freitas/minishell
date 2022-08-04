@@ -6,11 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/03 19:45:49 by gafreita         ###   ########.fr       */
-=======
 /*   Updated: 2022/08/04 19:50:46 by gafreita         ###   ########.fr       */
->>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +72,7 @@ static int	parse_pipe(char *pipe, char **begin)
 
 	if (!check_pipes(pipe))
 	{
-		if (!check_pipes(str))
+		if (!check_pipes(pipe))
 		{
 			printf("parse error near `||'\n");
 			return (0);
@@ -108,7 +104,7 @@ static void	search_pipes(char *str)
 				return ;
 		}
 		if (*str == '|')
-			parse_pipe(str, begin);
+			parse_pipe(str, &begin);
 		str++;
 	}
 	sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
