@@ -17,7 +17,8 @@ SRC =	srcs/minishell.c \
 		srcs/initialize/environment.c \
 		srcs/parsing/first_parse.c \
 		srcs/initialize/base.c \
-		srcs/builtins/cd.c
+		srcs/builtins/cd.c \
+		srcs/utils.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
@@ -52,6 +53,8 @@ fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)
 	@echo "$(COLOUR_YELLOW) minishell cleaned $(COLOUR_END)"
 
+test: re
+	./minishell
 
 re: fclean all
 

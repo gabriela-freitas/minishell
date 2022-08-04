@@ -19,17 +19,13 @@ t_base	*base(void)
 	return (&base);
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> main
 void	inthandler(int sig)
 {
 	(void) sig;
-    printf("\n"); // Move to a new line
-    rl_on_new_line(); // Regenerate the prompt on a newline
-    rl_replace_line("", 0); // Clear the previous text
-    rl_redisplay();
+	printf("\n"); // Move to a new line
+	rl_on_new_line(); // Regenerate the prompt on a newline
+	rl_replace_line("", 0); // Clear the previous text
+	rl_redisplay();
 }
 
 void	read_loop(void)
@@ -42,8 +38,8 @@ void	read_loop(void)
 	while (str != NULL)
 	{
 		add_history(str);
-		// first_parse(str);
-		parser(str);
+		first_parse(str);
+		// parser(str);
 		free(str);
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
 		signal(SIGINT, inthandler);

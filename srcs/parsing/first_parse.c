@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 16:58:19 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:11:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int	parse_pipe(char *str, char *begin)
 
 	if (!check_pipes(str))
 	{
-		printf("parse error near `|'\n");
+		error_message("", "parse error near `|'");
 		return (0);
 	}
-	printf("found a valid pipe!\n");
+	printf("found a valid pipe!");
 		//create a new list
 	return (1);
 }
@@ -83,7 +83,10 @@ char	**search_pipes(char *str)
 		if (*str == '\"' || *str == '\'')
 			str = ft_strchr(str + 1, *str);
 		if (*str == '|')
-			parse_pipe(str, begin);
+		{
+			if (!parse_pipe(str, begin))
+				return (NULL);
+		}
 		str++;
 	}
 	return (args);
