@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 19:00:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:19:00 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <errno.h>
 # include <sys/wait.h>
 
-typedef enum
+enum	e_builtins
 {
 	ECHO,
 	CD,
@@ -32,15 +32,15 @@ typedef enum
 	ENV,
 	EXIT,
 	UNSET,
-} BUILTIN;
+};
 
-typedef enum
+enum e_operators
 {
-	BEGINNING,
+	NONE,
 	PIPE,
 	AND,
 	OR,
-} OPERATORS;
+};
 
 # define FALSE 0
 # define TRUE 1
@@ -52,21 +52,15 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_args
-{
-	char			**cmds;
-	int				operator;
-	struct s_args	*next;
-}	t_args;
-
 typedef struct s_base
 {
 	char	**env;
 	t_env	*env_split;
 	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
 	char	*home;
-	t_args	*args;
+	t_list	*cmds;
 }	t_base;
+
 
 // minishell.c
 void	inthandler(int sig);
@@ -76,6 +70,9 @@ t_base	*base(void);
 // parsing.c
 int		exe_builtin(char **cmd);
 void    parser(char *str);
+// int     check_cmd(char *str);
+char    **get_path();
+void	first_parse(char *line);
 
 //base.c
 void	ini_paths(void);
@@ -87,6 +84,8 @@ void	env_free(void);
 t_env	*new_env(char *name, char *content);
 void	delone_env(t_env *one_env);
 
+//utils.c
+void	error_message(char *cmd, char *error);
 
 //builtins.c
 int		cd(char *str);

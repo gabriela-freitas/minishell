@@ -21,6 +21,7 @@ SRC =	srcs/minishell.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/exp_unset.c \
 		srcs/execution/execute.c
+		srcs/utils.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
@@ -55,6 +56,8 @@ fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)
 	@echo "$(COLOUR_YELLOW) minishell cleaned $(COLOUR_END)"
 
+test: re
+	./minishell
 
 re: fclean all
 
