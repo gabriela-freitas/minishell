@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 19:00:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 18:19:00 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <errno.h>
+# include <errno.h>
 
-typedef enum
+enum	e_builtins
 {
 	ECHO,
 	CD,
@@ -31,15 +31,15 @@ typedef enum
 	ENV,
 	EXIT,
 	UNSET,
-} BUILTIN;
+};
 
-typedef enum
+enum e_operators
 {
-	BEGINNING,
+	NONE,
 	PIPE,
 	AND,
 	OR,
-} OPERATORS;
+};
 
 typedef struct s_env
 {
@@ -48,20 +48,14 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_args
-{
-	char			**cmds;
-	int				operator;
-	struct s_args	*next;
-}	t_args;
-
 typedef struct s_base
 {
 	t_env	*env;
 	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
 	char	*home;
-	t_args	*args;
+	t_list	*cmds;
 }	t_base;
+
 
 // minishell.c
 void	inthandler(int sig);
@@ -73,6 +67,7 @@ int     ft_isBuiltIn(char *cmd);
 void    parser(char *str);
 // int     check_cmd(char *str);
 char    **get_path();
+void	first_parse(char *line);
 
 //base.c
 void	ini_paths(void);
@@ -85,10 +80,9 @@ void	env_free(void);
 //cd.c
 int cd(char *str);
 
+//utils.c
+void	error_message(char *cmd, char *error);
 
 void ls();
-
-
-
 
 #endif
