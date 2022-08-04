@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 19:38:11 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 21:44:53 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	error_message(char *cmd, char *error)
 */
 void	error_message(char *cmd, char *error)
 {
-	char    *message;
+	char	*message;
 
 	message = ft_strjoin(cmd, error);
 	perror(message);

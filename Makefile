@@ -15,6 +15,8 @@ NAME = minishell
 SRC =	srcs/minishell.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/first_parse.c \
+		srcs/parsing/second_parse.c \
+		srcs/parsing/utils_parsing.c \
 		srcs/initialize/environment.c \
 		srcs/initialize/base.c \
 		srcs/builtins/cd.c \

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 18:19:00 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 22:00:25 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ t_base	*base(void);
 
 // parsing.c
 int		exe_builtin(char **cmd);
-void    parser(char *str);
+void	parser(char *str);
 // int     check_cmd(char *str);
-char    **get_path();
+char	**get_path();
 void	first_parse(char *line);
 
 //base.c
@@ -86,6 +86,9 @@ void	delone_env(t_env *one_env);
 
 //utils.c
 void	error_message(char *cmd, char *error);
+
+//utils_parsing.c
+char	**ft_my_realloc(char **ptr, size_t size);
 
 //builtins.c
 int		cd(char *str);
@@ -105,5 +108,8 @@ int		exe_builtin(char **cmd);
 int		ft_execve(char *path, char **cmd);
 int		exe_cmd(char **cmd);
 int		execute(char **cmds);
+
+//second_parse.c
+void	second_parse(void);
 
 #endif
