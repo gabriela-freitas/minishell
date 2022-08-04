@@ -6,20 +6,25 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 18:11:22 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 19:50:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
- * @brief deals with double quotes and quotes
- * expand env variables
- */
-
 #include "minishell.h"
 
-//if I find a valid pipe, I'm gonna split it already
-	//update a variable >> pipe to true
-//everything inside a "" is printed
+static void	remove_spaces(const char *str);
+static int	check_pipes(const char *str);
+static int	parse_pipe(char *pipe, char **begin);
+static void	search_pipes(char *str);
+
+/*Removes extra spaces outside ' ' and " "
+	Checks whether the pipe is valid and
+	fills the command list (base()->cmds)*/
+void	first_parse(char *line)
+{
+	remove_spaces(line);
+	search_pipes(line);
+}
 
 //remove extra spaces outside " " and ' '
 static void	remove_spaces(const char *str)
@@ -48,7 +53,8 @@ static void	remove_spaces(const char *str)
 	}
 }
 
-int	check_pipes(const char *str)
+/*check if it's a valid pipe*/
+static int	check_pipes(const char *str)
 {
 	while (ft_isspace(*(++str)))
 		;
@@ -57,26 +63,32 @@ int	check_pipes(const char *str)
 	return (1);
 }
 
-int	parse_pipe(char *str, char *begin)
+/*fills the commands list*/
+static int	parse_pipe(char *pipe, char **begin)
 {
-	(void) begin;
+	char			*sub_str;
 
-	if (!check_pipes(str))
+	if (!check_pipes(pipe))
 	{
 		error_message("", "parse error near `|'");
 		return (0);
 	}
-	printf("found a valid pipe!");
-		//create a new list
+	if (**begin == '|')
+		*begin = *begin + 1;
+	sub_str = ft_substr(*begin, 0, (size_t)pipe - (size_t)(*begin));
+	*begin = pipe;
+	ft_lstadd_back(&base()->cmds, ft_lstnew((void *)ft_strtrim(sub_str, " ")));
+	free(sub_str);
+	printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
 	return (1);
 }
 
-char	**search_pipes(char *str)
+/*searchs for the pipes ignoring quotes*/
+static void	search_pipes(char *str)
 {
-	char	**args;
 	char	*begin;
+	char	*sub_str;
 
-	args = malloc(sizeof(char *) * 2);
 	begin = str;
 	while (*str)
 	{
@@ -84,17 +96,13 @@ char	**search_pipes(char *str)
 			str = ft_strchr(str + 1, *str);
 		if (*str == '|')
 		{
-			if (!parse_pipe(str, begin))
-				return (NULL);
+			if (!parse_pipe(str, &begin))
+				return ;
 		}
 		str++;
 	}
-	return (args);
-}
-
-void	first_parse(char *line)
-{
-	remove_spaces(line);
-	search_pipes(line);
-	printf("%s\n", line);
+	sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
+	ft_lstadd_back(&base()->cmds, ft_lstnew((void *)ft_strtrim(sub_str, " ")));
+	free(sub_str);
+	printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
 }
