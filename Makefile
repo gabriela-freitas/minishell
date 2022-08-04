@@ -27,7 +27,7 @@ LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft -lreadline
 
-CCFLAGS = gcc -Wall -Wextra -Werror
+CCFLAGS = gcc -Wall -Wextra -Werror -fsanitize=address
 
 DEP = ./libft/libft.a
 
@@ -58,6 +58,9 @@ fclean: clean
 
 test: re
 	./minishell
+
+valgrind: re
+	valgrind --leak-check=full --show-leak-kinds=all ./minishell
 
 re: fclean all
 
