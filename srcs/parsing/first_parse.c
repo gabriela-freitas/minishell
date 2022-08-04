@@ -34,14 +34,13 @@ static void	remove_spaces(const char *str)
 	char	*aux;
 
 	j = -1;
-	while (ft_isspace(str[++j]))
-		;
+	while(ft_isspace(str[++j]));
 	ft_memmove((void *)str, (void *)&str[j], ft_strlen(&str[j]) + 1);
 	i = -1;
 	while (str[++i])
 	{
 		j = i;
-		while (ft_isspace(str[j]) && str[j + 1] && ft_isspace(str[j + 1]))
+		while(ft_isspace(str[j]) && str[j + 1] && ft_isspace(str[j + 1]))
 			j++;
 		ft_memmove((void *)&str[i], (void *)&str[j], ft_strlen(&str[j]) + 1);
 		if (str[i] == '\"' || str[i] == '\'')
@@ -57,9 +56,12 @@ static void	remove_spaces(const char *str)
 static int	check_pipes(const char *str)
 {
 	while (ft_isspace(*(++str)))
-		;
-	if (*str == '|')
-		return (0);
+	{
+		if (*(str + 1) == '|')
+		{
+			return (0);
+		}
+	}
 	return (1);
 }
 
@@ -70,8 +72,12 @@ static int	parse_pipe(char *pipe, char **begin)
 
 	if (!check_pipes(pipe))
 	{
-		error_message("", "parse error near `|'");
-		return (0);
+		if (!check_pipes(pipe))
+		{
+			printf("parse error near `||'\n");
+			return (0);
+		}
+			//create a new list;
 	}
 	if (**begin == '|')
 		*begin = *begin + 1;
@@ -92,13 +98,13 @@ static void	search_pipes(char *str)
 	begin = str;
 	while (*str)
 	{
-		if (*str == '\"' || *str == '\'')
-			str = ft_strchr(str + 1, *str);
-		if (*str == '|')
+		if (*str == '\"')
 		{
 			if (!parse_pipe(str, &begin))
 				return ;
 		}
+		if (*str == '|')
+			parse_pipe(str, &begin);
 		str++;
 	}
 	sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));

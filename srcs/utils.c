@@ -20,15 +20,10 @@ void	free_pipes(void)
 	// while (temp)
 	// {
 	// 	base()->cmds = base()->cmds->next;
-	// 	free(temp->content);
-	// 	free(temp);
-	// 	temp = base()->cmds;
-	// }
-	// ft_lstclear(&base()->cmds, free);
-	// free(base()->cmds);
+	// 	freerbase()->cmds);
 	return ;
 }
-
+/*
 void	error_message(char *cmd, char *error)
 {
 	free_pipes();
@@ -37,4 +32,12 @@ void	error_message(char *cmd, char *error)
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
 }
+*/
+void	error_message(char *cmd, char *error)
+{
+	char    *message;
 
+	message = ft_strjoin(cmd, error);
+	perror(message);
+	free(message);
+}
