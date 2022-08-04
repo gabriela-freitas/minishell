@@ -21,7 +21,7 @@ int	exe_builtin(char **cmd)
 	return (0);
 }
 
-int ft_execve(char *path, char **cmd)
+int	ft_execve(char *path, char **cmd)
 {
 	int	pid;
 
@@ -62,7 +62,7 @@ int	exe_cmd(char **cmd)
 	return (-1);
 }
 
-int execute(char **cmds)
+int	execute(char **cmds)
 {	
 	if (exe_builtin(cmds) == 0)
 		return (0);
