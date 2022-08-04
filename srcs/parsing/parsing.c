@@ -49,6 +49,10 @@ void	parser(char *str)
 		cd(args);
 	else if (!strcmp("env", cmd))
 		print_env();
+	else if (!strcmp("export", cmd))
+		export(args);
+	else if (!strcmp("unset", cmd))
+		unset(args);
 //	printf("cmd = %s\n", cmd);
 //	printf("args = %s\n", args);
 	free(cmd); //nao libertar se der erro

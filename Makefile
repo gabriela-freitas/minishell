@@ -19,7 +19,7 @@ SRC =	srcs/minishell.c \
 		srcs/initialize/base.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
-		srcs/env_alter.c
+		srcs/builtins/export.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/

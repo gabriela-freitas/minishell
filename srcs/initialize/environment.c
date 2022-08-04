@@ -74,7 +74,7 @@ void ini_env(char **env) //has more than 25 lines
     }
 }
 
-static void delone_env(t_env *one_env)
+void delone_env(t_env *one_env)
 {
     free(one_env->name);
 	free(one_env->content);

@@ -32,6 +32,6 @@ void old_pwd(void)
     length = 100;
     path = malloc(sizeof(char) * length);
     getcwd(path, length);
-    change_env("OLDPWD", path);
+    change_var("OLDPWD", path);
     free(path);
 }

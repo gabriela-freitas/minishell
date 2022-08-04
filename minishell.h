@@ -85,6 +85,8 @@ void	base_free(void);
 void	ini_env(char **env);
 void	env_free(void);
 t_env	*new_env(char *name, char *content);
+void	delone_env(t_env *one_env);
+
 
 //builtins.c
 int cd(char *str);
@@ -93,7 +95,10 @@ void old_pwd(void);
 void print_env(void);
 
 //env_alter.c
-void change_env(char *name, char *content);
+void change_var(char *name, char *content);
 
+//export.c
+void export(char *str);
+void unset(char *str);
 
 #endif
