@@ -21,7 +21,7 @@ int cd(char *str) //function has more than 25 lines
 	new_path = str;
 	if (!ft_strncmp("", str, 1))
 	{
-		new_path = base()->home;
+		new_path = ft_strdup(base()->home);
 		if (!new_path)
 		{
 			ft_putstr_fd("sh: cd: HOME not set\n", 2);
@@ -33,7 +33,9 @@ int cd(char *str) //function has more than 25 lines
 	if (chdir(new_path) == -1)
 	{
 		error_message("cd: ", str);
+		free(new_path);
 		return (-1);
 	}
+	free(new_path);
 	return (0);
 }
