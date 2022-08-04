@@ -19,14 +19,6 @@ int	ft_is_builtin(char *cmd)
 	return (-1);
 }
 
-int	check_cmd(char *str)
-{
-	(void) str;
-	// printf("%d\n", ft_is_builtin(str));
-	// printf("%s\n", getenv("PATH"));
-	return (0);
-}
-
 //has more than 25 lines
 void	parser(char *str)
 {
@@ -49,13 +41,18 @@ void	parser(char *str)
 			break ;
 	}
 	cmd = ft_substr(str, 0, i); //criar saida para erro do cmd
-	check_cmd(cmd);
 	while (str[i] && ft_isspace(str[++i]) == 1);
 	args = ft_substr(str, i, length); //criar saida para erro do cmd
-	// printf("cmd = %s\n", cmd);
-	// printf("args = %s\n", args);
+	if (!strcmp("ls", cmd))
+		ls();
+	else if (!strcmp("cd", cmd))
+		cd(args);
+//	printf("cmd = %s\n", cmd);
+//	printf("args = %s\n", args);
 	free(cmd); //nao libertar se der erro
 	free(args); // nao libertar se der erro
 	return ;
 }
+
+
 

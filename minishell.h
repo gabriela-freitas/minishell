@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 15:51:17 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/04 17:00:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 enum	e_builtins
 {
@@ -32,6 +33,14 @@ enum	e_builtins
 	UNSET,
 };
 
+enum e_operators
+{
+	NONE,
+	PIPE,
+	AND,
+	OR,
+};
+
 typedef struct s_env
 {
 	char			*name;
@@ -39,17 +48,9 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_cmds
-{
-	char			**cmds; //separados do pipe
-	int				operator;
-	struct s_args	*next;
-}	t_cmds;
-
 typedef struct s_args
 {
-	char			*args; //com pipe
-
+	char			**cmds;
 	int				operator;
 	struct s_args	*next;
 }	t_args;
@@ -66,13 +67,26 @@ typedef struct s_base
 // minishell.c
 void	inthandler(int sig);
 void	read_loop(void);
+t_base	*base(void);
 
 // parsing.c
-int		ft_isspace(char c);
-int		ft_is_builtin(char *cmd);
-void	parser(char *str);
-int		check_cmd(char *str);
-char	**get_path();
-void	first_parse(char *line);
+int     ft_isBuiltIn(char *cmd);
+void    parser(char *str);
+// int     check_cmd(char *str);
+char    **get_path();
+
+//base.c
+void	ini_paths(void);
+void	base_free(void);
+
+//environment.c
+void	ini_env(char **env);
+void	env_free(void);
+
+//cd.c
+int cd(char *str);
+
+
+void ls();
 
 #endif
