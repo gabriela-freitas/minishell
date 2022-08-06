@@ -1,1 +1,1 @@
-{"buildTargets":[".PHONY","all","clean","fclean","libft/libft.a","minishell","re","submodule"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[]},"fileIndex":[]}}
+{"buildTargets":[],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}

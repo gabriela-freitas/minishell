@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 22:23:02 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/06 10:38:58 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,60 +28,79 @@ char	*find_env(char	*name)
 	return (NULL);
 }
 
+int ft_isquote(char c)
+{
+    if (c == '\'' || c == '\"')
+        return (1);
+    return (0);
+}
+
+void my_realloc(char ***split, int size)
+{
+    char    **new_split;
+    int     i;
+
+    new_split = malloc(sizeof(char*) * size);
+    i = 0;
+    while ((*split)[i])
+    {
+        new_split[i] = ft_strdup((*split)[i]);
+        i++;
+    }
+    new_split[i] = NULL;
+    free_split(*split);
+    *split = new_split;
+}
+
 char	**split_command(char	*cmd)
 {
-	char	*sub_str;
-	char	*begin;
-	char	**cmd_split;
-	int		i;
+    char    **split;
+    int     i;
+    int     j;
+    int     k;
 
-	if (!ft_strchr(cmd, '\"'))
-		return (ft_split(cmd, ' '));
-	begin = cmd;
-	i = 1;
-	while (*cmd)
-	{
-		cmd_split = malloc(sizeof(char **) * (i + 1));
-		cmd_split[i] = '\0';
-		if (*cmd == '\"' || *cmd == '\'')
-		{
-			begin = ft_strchr((cmd + 1), *cmd);
-			printf("begin: %s\n", begin);
-			sub_str = ft_substr(cmd, 0, (size_t)begin - (size_t)cmd);
-			begin++;
-			cmd += (size_t)begin - (size_t)cmd;
-			cmd_split[i - 1] = sub_str;
-			i++;
-		}
-		else if (*cmd == ' ')
-		{
-			sub_str = ft_substr(cmd, 0, (size_t)cmd - (size_t)begin);
-			begin = cmd + 1;
-			cmd += (size_t)cmd - (size_t)begin;
-			cmd_split[i - 1] = sub_str;
-			i++;
-		}
-		cmd++;
-	}
-	cmd_split[i - 1] = '\0';
-	return (cmd_split);
+	// if (ft_strchr(cmd, '\"')) //entra aqui se nao tiver aspas
+	// 	return (ft_split(cmd, ' '));
+ 	i = 0;
+    j = 0;
+    k = 0;
+    split = malloc(sizeof(char*) * 2);
+    while (cmd[i])
+    {
+        if (ft_isquote(cmd[i]))
+            while (!ft_isquote(cmd[++i])) ;
+        if (ft_isspace(cmd[i]))
+        {
+            split[k] = ft_substr(cmd, j, i - j);
+            split[++k] = NULL;
+            my_realloc(&split, k + 2);
+            j = i + 1;
+        }
+        i++;
+    }
+    split[k] = ft_substr(cmd, j, i - j);
+    split[k + 1] = NULL;
+    return (split);
 }
 
 void	second_parse(void)
 {
 	t_list	*temp;
 	char	**split;
+	int		i;
 
+	i = 0;
 	temp = base()->cmds;
 	while (temp)
 	{
 		split = split_command((char *)temp->content);
-		while (*split)
+		while (split[i])
 		{
-			printf(">>%s\n", *split);
-			split++;
+			printf(">>%s\n", split[i]);
+			i++;
 		}
 		printf("----------\n");
 		temp = temp->next;
 	}
+	free_split(split);
 }

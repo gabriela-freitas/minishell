@@ -1,5 +1,4 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/nfs/homes/mfreixo-/minishell'
-make: 'minishell' is up to date.
-make: Leaving directory '/nfs/homes/mfreixo-/minishell'
- 
+make.exe --dry-run --keep-going --print-directory
+'make.exe' is not recognized as an internal or external command,
+operable program or batch file.
+
