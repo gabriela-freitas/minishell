@@ -53,8 +53,8 @@ char	*ft_strchr_valid(const char *s, int c) //se tiver o \ entao o que esta a fr
 		{
 			if (s[i - 1] && s[i - 1] != '\\')
 				return ((char *)&s[i]);
-            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
-                return ((char *)&s[i]);
+            // else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+            //     return ((char *)&s[i]);
 		}
 		i ++;
 	}
@@ -94,11 +94,31 @@ char *algo(char *str)
         else
             return (aux);
     }
-    else
+    else if (ft_isspace(*str))
     {
         aux = ft_find_space(str); 
         if (aux)
             return (aux + 1);
+    }
+    else
+    {
+        aux = str;
+        while (*aux && !ft_isspace(*aux) && !ft_isquote(*aux))
+        {
+            if (ft_isspace(*aux))
+                return (algo(aux));
+            if (*aux == '\\')
+            {
+                if (*(aux + 1) && ft_isquote(*(aux + 1)))
+                    return (aux);
+                ft_memmove(aux, aux + 1, ft_strlen(aux + 1) + 1);    
+            }
+            aux++;
+        }
+        if (*aux)
+            return (algo(aux));
+        else
+            return (NULL);
     }
     return (0);
 }
@@ -117,7 +137,13 @@ char **split_command(char *str)
     while (str && *str)
     {
         aux = algo(str);
-        if (ft_isquote(*str))
+        if (*aux && *aux == '\\')
+        {
+            printf("Entreo aqui%s\n", aux);
+            add_split(&split, &k, ft_substr(str, 1, aux - str));
+            str = aux + 2;
+        }
+        else if (ft_isquote(*str))
         {
             if (!aux)
             {
@@ -138,7 +164,6 @@ char **split_command(char *str)
     return (split);
 }
 
-
 int main()
 {
     char *str;
@@ -150,6 +175,7 @@ int main()
 	{
         add_history(str);
         split = split_command(str);
+        // parse_split(split);
         if (split)
         {
             i = 0;
