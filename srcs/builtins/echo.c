@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/02 17:43:24 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:30:45 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char *str)
+void	ft_echo(char **str)
 {
-	if (str)
-		printf("%s", str);
+	if (*str)
+		str++;
+	while (*str)
+	{
+		printf("%s ", *str);
+		str++;
+	}
+	printf("\n");
 }

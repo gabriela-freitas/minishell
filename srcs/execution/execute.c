@@ -3,7 +3,7 @@
 int	exe_builtin(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "echo", 5))
-		printf("%s\n", cmd[1]);
+		ft_echo(cmd);
 	else if (!ft_strncmp(cmd[0], "cd", 3))
 		cd(cmd[1]);
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
@@ -63,7 +63,7 @@ int	exe_cmd(char **cmd)
 }
 
 int	execute(char **cmds)
-{	
+{
 	if (exe_builtin(cmds) == 0)
 		return (0);
 	if (exe_cmd(cmds) == 0)

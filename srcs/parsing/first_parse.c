@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/05 15:54:49 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:20 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	first_parse(char *line)
 	remove_spaces(line);
 	search_pipes(line);
 }
-
-// echo      oioii         "     hello    world  " hi
 
 //remove extra spaces outside " " and ' '
 static void	remove_spaces(const char *str)
@@ -93,19 +91,54 @@ static int	parse_pipe(char *pipe, char **begin)
 	return (1);
 }
 
+char	*ft_strchr_valid(const char *s, int c) //se tiver o \ entao o que esta a frente vai ser ativado
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+		{
+			if (s[i - 1] && s[i - 1] != '\\')
+				return ((char *)&s[i]);
+            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+                return ((char *)&s[i]);
+		}
+		i ++;
+	}
+	if (c == 0)
+		return ((char *)&s[i]);
+	return (0);
+}
+
 /*searchs for the pipes ignoring quotes*/
 static void	search_pipes(char *str)
 {
 	char	*begin;
 	char	*sub_str;
+	int		pipe;
 
+	pipe = FALSE; //Se nao existir pipe nenhum ignoramos a primeira letra do comando, por isso criei esta variavel
 	begin = str;
 	while (*str)
 	{
+		if (*str == '\\')
+		{
+			str++;
+			if (ft_isquote(*str))
+				str++;
+		}
 		if (*str == '\"' || *str == '\'')
-			str = ft_strchr(str + 1, *str);
+			str = ft_strchr_valid(str + 1, *str);
+		if (!str)
+		{
+			ft_lstclear(&base()->cmds, free);
+			return ;
+		}
 		if (*str == '|')
 		{
+			pipe = TRUE;
 			if (!parse_pipe(str, &begin))
 				return ;
 		}
@@ -119,7 +152,10 @@ static void	search_pipes(char *str)
 			return ;
 		}
 	}
-	sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
+	if (!pipe)
+		sub_str = ft_substr(begin, 0, (size_t)str - (size_t)(begin));
+	else
+		sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
 	ft_lstadd_back(&base()->cmds, ft_lstnew((void *)ft_strtrim(sub_str, " ")));
 	free(sub_str);
 	// printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);

@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/05 12:32:21 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:34:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,10 @@ int		execute(char **cmds);
 
 //second_parse.c
 void	second_parse(void);
+
+int ft_isquote(char c);
+
+void	ft_echo(char **str);
+char	*ft_strchr_valid(const char *s, int c);
 
 #endif

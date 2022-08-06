@@ -23,13 +23,14 @@ SRC =	srcs/minishell.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/exp_unset.c \
 		srcs/execution/execute.c \
-		srcs/utils.c
+		srcs/utils.c \
+		srcs/builtins/echo.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft -lreadline
 
-CCFLAGS = gcc -Wall -Wextra -Werror #-fsanitize=address
+CCFLAGS = gcc # -Wall -Wextra -Werror #-fsanitize=address
 
 DEP = ./libft/libft.a
 

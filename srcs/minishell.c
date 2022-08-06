@@ -40,7 +40,7 @@ void	read_loop(void)
 		add_history(str);
 		first_parse(str);
 		second_parse();
-		//parser(str);
+		// parser(str);
 		free(str);
 		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
 		signal(SIGINT, inthandler);
