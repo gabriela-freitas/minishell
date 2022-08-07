@@ -53,8 +53,8 @@ char	*ft_strchr_valid(const char *s, int c) //se tiver o \ entao o que esta a fr
 		{
 			if (s[i - 1] && s[i - 1] != '\\')
 				return ((char *)&s[i]);
-            // else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
-            //     return ((char *)&s[i]);
+            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+                return ((char *)&s[i]);
 		}
 		i ++;
 	}
@@ -80,86 +80,109 @@ char	*ft_find_space(const char *s) //se tiver o \ entao o que esta a frente vai 
 	return (0);
 }
 
-char *algo(char *str)
+int    check_quotes(char *str, char c, int *i)  //em caso de erro devolve -1
+{
+    char *aux;
+    int j;
+
+    j = *i;
+    if (!str[j])
+        return (-1);
+    if (j > 0)
+    {
+        if (str[j - 1] && str[j - 1] == '\\')
+        {
+            ft_memmove(&str[j - 1], &str[j], ft_strlen(&str[j]) + 1);
+            *i = j;
+            return (0);
+        }
+    }
+    if (str[j])
+    {
+        ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
+        aux = ft_strchr_valid(&str[j], c);
+        if (!aux)
+            return (-1);
+        *i += ft_strlen(&str[j]) - ft_strlen(aux);
+        ft_memmove(aux, aux + 1, ft_strlen(aux));
+    }
+    else
+        return (-1);
+    return (0);
+}
+
+char *remove_slash(char *str)
 {
     int i;
     char *aux;
 
+    aux = ft_strdup(str);
     i = 0;
-    if (ft_isquote(*str))
+    while (aux[i])
     {
-        aux = ft_strchr_valid(str + 1, *str);
-        if (aux && *aux && *(aux + 1) && !ft_isspace(*(aux + 1)))
-            return (algo(aux));
-        else
-            return (aux);
+        if (aux[i] == '\\')
+            if (!aux[i + 1] || (aux[i + 1] && aux[i + 1] != '\\'))
+                ft_memmove(&aux[i], &aux[i + 1], ft_strlen(&aux[i + 1]) + 1);
+        i++;
     }
-    else if (ft_isspace(*str))
-    {
-        aux = ft_find_space(str); 
-        if (aux)
-            return (aux + 1);
-    }
-    else
-    {
-        aux = str;
-        while (*aux && !ft_isspace(*aux) && !ft_isquote(*aux))
-        {
-            if (ft_isspace(*aux))
-                return (algo(aux));
-            if (*aux == '\\')
-            {
-                if (*(aux + 1) && ft_isquote(*(aux + 1)))
-                    return (aux);
-                ft_memmove(aux, aux + 1, ft_strlen(aux + 1) + 1);    
-            }
-            aux++;
-        }
-        if (*aux)
-            return (algo(aux));
-        else
-            return (NULL);
-    }
-    return (0);
+    free(str);
+    return (aux);
 }
+
+char    *algo(char *str)
+{
+    int i;
+    char *aux;
+    char c;
+
+    i = 0;
+    while (str[i])
+    {
+        while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && str[i] != '\\')
+            i++;
+        if (!str[i] || ft_isspace(str[i]))
+            return (remove_slash(ft_substr(str, 0, i)));
+        else if (str[i] == '\\' && str[i + 1] && ft_isspace(str[i + 1]))
+            ft_memmove(&str[i], &str[i + 1], ft_strlen(&str[i + 1]) + 1);
+        else if (ft_isquote(str[i]))
+        {
+            if (check_quotes(str, str[i], &i) == -1)
+                return (0);
+            if (!str[i])
+                return (ft_substr(str, 0, i));
+            continue;
+        }
+        i++;
+    }
+    return (NULL);
+}
+
 
 char **split_command(char *str)
 {
     int i;
-    char *aux;
-    char **split;
-    int k;
+    char    *aux;
+    int     k;
+    char    **split;
 
+    k = 0;
     i = 0;
     split = malloc(sizeof(char*) * 2);
     split[0] = '\0';
-    k = 0;
-    while (str && *str)
+    while (str[i])
     {
-        aux = algo(str);
-        if (*aux && *aux == '\\')
-        {
-            printf("Entreo aqui%s\n", aux);
-            add_split(&split, &k, ft_substr(str, 1, aux - str));
-            str = aux + 2;
-        }
-        else if (ft_isquote(*str))
-        {
-            if (!aux)
-            {
-                free_split(split);
-                return (NULL);
-            }
-            add_split(&split, &k, ft_substr(str, 1, aux - str - 1));
-            str = aux + 2;
-        }
-        else
-        {
-            add_split(&split, &k, ft_substr(str, 0, aux - str));
-            str = aux;
-        }
+        aux = algo(&str[i]);
         if (!aux)
+        {
+            free_split(split);
+            split = NULL;
             break ;
+        }
+        i += ft_strlen(aux);
+        add_split(&split, &k, aux);
+        if (!str[i])
+            break;
+        i++;
     }
     return (split);
 }
