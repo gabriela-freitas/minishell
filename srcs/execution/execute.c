@@ -4,7 +4,7 @@ int	exe_builtin(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		ft_echo(cmd);
-	else if (!ft_strncmp(cmd[0], "cd", 3))
+	else if (!ft_strncmp(cmd[0], "cd", 3)) //rever este builtin
 		cd(cmd[1]);
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		pwd();

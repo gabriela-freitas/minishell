@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/06 11:32:02 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/07 04:02:44 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int cd(char *str) //function has more than 25 lines
 			return (-1);
 		}
 	}
-	if (!ft_strncmp("~", str, 1))
+	else if (!ft_strncmp("~", str, 1))
 		new_path = ft_strjoin(getenv("HOME"), &str[1]);
 	if (chdir(new_path) == -1)
 	{
@@ -36,6 +36,6 @@ int cd(char *str) //function has more than 25 lines
 		free(new_path);
 		return (-1);
 	}
-	free(new_path);
+	// free(new_path);
 	return (0);
 }
