@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:38:59 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 20:02:17 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,21 +90,29 @@ void	add_split(char ***split, int *size, char *str);
 //second_parse.c
 int		ft_special_char(char c);
 void	second_parse(void);
-char	*find_env(char	*name);
 
 // utils.c
 int ft_special_char(char c);
 char	*find_env(char	*name);
 
-//utils_env.c
-char	**convert_env_list(void);
+//execute.c
+int		exe_cmd(char **cmd);
+int		execute(char **cmds);
 
-// parsing.c
-int		exe_builtin(char **cmd);
-void	parser(char *str);
+//export.c
+void	export(char **str);
+void	unset(char *str);
+
+// pwd.c
+void	pwd();
+void	old_pwd(void);
+
+
+
+
+
 // int     check_cmd(char *str);
 char	**get_path();
-
 
 
 //utils.c
@@ -113,27 +121,15 @@ void	error_message(char *cmd, char *error);
 //utils_parsing.c
 void my_realloc(char ***split, int size);
 
+//utils_env.c
+char	**convert_env_list(void);
+
 //builtins.c
 int		cd(char *str);
-void	pwd();
-void	old_pwd(void);
 void	print_env(void);
 
 //env_alter.c
 void	change_var(char *name, char *content);
-
-//export.c
-void	export(char **str);
-void	unset(char *str);
-
-//execute.c
-int		exe_builtin(char **cmd);
-int		ft_execve(char *path, char **cmd);
-int		exe_cmd(char **cmd);
-int		execute(char **cmds);
-
-
-
 
 void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);

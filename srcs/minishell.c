@@ -48,7 +48,6 @@ int	main(int argc, char **argv, char **env)
 {
 	(void) argc;
 	(void) argv;
-
 	ini_env(env);
 	ini_paths();
 	read_loop();

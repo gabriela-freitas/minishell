@@ -47,7 +47,7 @@ static int    check_quotes(char *str, char c, int *i)  //em caso de erro devolve
 }
 
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
-char    *next_arg(char *str)
+static char    *next_arg(char *str)
 {
 	int i;
 	char *aux;
@@ -79,7 +79,7 @@ char    *next_arg(char *str)
 	then it's its arguments
 	this is the last parsing, args are ready to be executed
 */
-char **split_command(char *str)
+static char **split_command(char *str)
 {
 	int i;
 	char    *aux;
@@ -112,7 +112,8 @@ char **split_command(char *str)
 	return (split);
 }
 
-
+/*	given the list of commands (a command ends with pipe of end of input from terminal),
+	splits it, into valid arguments and executes */
 void	second_parse(void)
 {
 	t_list	*temp;

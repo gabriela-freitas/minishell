@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 /*checks if cmd[0] is builtin and executes it, if not returns -1*/
-int	exe_builtin(char **cmd)
+static int	exe_builtin(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		ft_echo(cmd);
@@ -22,8 +22,8 @@ int	exe_builtin(char **cmd)
 	return (0);
 }
 
-/*executes the list of commands*/
-int	ft_execve(char *path, char **cmd)
+/*executes the list of commands, and avoids the program to exit*/
+static int	ft_execve(char *path, char **cmd)
 {
 	int		pid;
 	char	**env;
@@ -45,6 +45,8 @@ int	ft_execve(char *path, char **cmd)
 }
 
 //GABI keep this working if the user passes the whole PATH
+/*tests if the list of commands can be executed with current paths,
+	if yes, executes it, else it prints the error and exits*/
 int	exe_cmd(char **cmd)
 {
 	int		i;

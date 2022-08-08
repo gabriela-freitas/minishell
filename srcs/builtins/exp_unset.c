@@ -6,18 +6,18 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 19:40:17 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:57:34 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //only prints variables with value
-void print_env(void)
+void	print_env(void)
 {
-	t_env *aux;
+	t_env	*aux;
 
-	aux = base()->env;
+	aux = (base()->env);
 	while (aux)
 	{
 		if (aux->content)
@@ -26,11 +26,14 @@ void print_env(void)
 	}
 }
 
- //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
-void	unset(char *str)
+/*
+	Simulates unset builtins
+	removes from base()->env the variable with name = *str
+*/
+void	unset(char *str) /*Marta, TOO MANY LINES*/
 {
-	t_env *aux;
-	t_env *aux_next;
+	t_env	*aux;
+	t_env	*aux_next;
 
 	aux = base()->env;
 	if (!aux->next)
@@ -60,7 +63,7 @@ void	unset(char *str)
 			aux->next = aux_next->next;
 			delone_env(aux_next);
 			free(aux_next);
-			break;
+			break ;
 		}
 		aux = aux_next;
 		aux_next = aux_next->next;

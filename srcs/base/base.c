@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/07/29 19:50:37 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:32:56 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_base	*base(void)
 void	ini_paths(void)
 {
 	char	*paths;
-	
+
 	paths = getenv("PATH");
 	(base()->paths) = ft_split(paths, ':');
 	(base()->home) = ft_strdup(getenv("HOME"));
