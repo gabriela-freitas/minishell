@@ -6,7 +6,7 @@
 #    By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/30 20:14:45 by gafreita          #+#    #+#              #
-#    Updated: 2022/07/30 20:14:45 by gafreita         ###   ########.fr        #
+#    Updated: 2022/08/08 15:42:29 by mfreixo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRC =	srcs/minishell.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/first_parse.c \
 		srcs/parsing/second_parse.c \
-		srcs/parsing/utils_parsing.c \
 		srcs/initialize/environment.c \
 		srcs/initialize/base.c \
 		srcs/builtins/cd.c \

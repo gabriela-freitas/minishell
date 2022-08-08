@@ -60,15 +60,15 @@ void    export(char *str) //GABI export without args, is ordered ASCII and join 
 	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
 	content = ft_strchr(str, '=') + 1;
 	change_var(name, content);
-	if (!strncmp("PATH", str, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	if (!strncmp("PATH", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 	{
 		free(base()->paths);
-		base()->paths = ft_strdup(str);
+		base()->paths = ft_split(content, ':');
 	}
-	if (!strncmp("HOME", str, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	if (!strncmp("HOME", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 	{
 		free(base()->home);
-		base()->home = ft_strdup(str);
+		base()->home = ft_strdup(content);
 	}
 	free(name);
 }
