@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/07/29 19:50:37 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:29:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*checks if c is ' or "*/
-int ft_isquote(char c)
+int	ft_isquote(char c)
 {
-    if (c == '\'' || c == '\"')
-        return (1);
-    return (0);
+	if (c == '\'' || c == '\"')
+		return (1);
+	return (0);
 }
 
 /*if the char c is found in string s, but is preceded by \, then its not valid */
