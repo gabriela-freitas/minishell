@@ -3,5 +3,6 @@
     "files.associations": {
         "history.h": "c",
         "minishell.h": "c"
-    }
+    },
+    "codam-norminette-3.command": "/var/data/python/bin/norminette"
 }
