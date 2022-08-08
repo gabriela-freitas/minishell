@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <errno.h>
+# include <errno.h>
 # include <sys/wait.h>
 
 enum	e_builtins
@@ -56,39 +56,65 @@ typedef struct s_base
 {
 	char	**env;
 	t_env	*env_split;
-	char	**paths; //se o user der unset no path isso fica nulo e nada funciona :(
+	char	**paths;	
 	char	*home;
 	t_list	*cmds;
 }	t_base;
 
 
 // minishell.c
-void	inthandler(int sig);
 void	read_loop(void);
+
+//environment.c
+t_env	*new_env(char *name, char *content);
+void	ini_env(char **env);
+void	delone_env(t_env *one_env);
+void	env_free(void);
+
+//base.c
 t_base	*base(void);
+void	ini_paths(void);
+void	base_free(void);
+
+// first_parsing.c
+void	first_parse(char *line);
+
+// parsing_pipes.c
+void	search_pipes(char *str);
+
+// utils_parsing.c
+int		ft_isquote(char c);
+char	*ft_strchr_valid(const char *s, int c);
+void	my_realloc(char ***split, int size);
+void	add_split(char ***split, int *size, char *str);
+
+//second_parse.c
+int		ft_special_char(char c);
+void	second_parse(void);
+char	*find_env(char	*name);
+
+// utils.c
+int ft_special_char(char c);
+char	*find_env(char	*name);
+
+
+
+
+
 
 // parsing.c
 int		exe_builtin(char **cmd);
 void	parser(char *str);
 // int     check_cmd(char *str);
 char	**get_path();
-void	first_parse(char *line);
 
-//base.c
-void	ini_paths(void);
-void	base_free(void);
 
-//environment.c
-void	ini_env(char **env);
-void	env_free(void);
-t_env	*new_env(char *name, char *content);
-void	delone_env(t_env *one_env);
 
 //utils.c
 void	error_message(char *cmd, char *error);
 
 //utils_parsing.c
-char	**ft_my_realloc(char **ptr, size_t size);
+void my_realloc(char ***split, int size);
 
 //builtins.c
 int		cd(char *str);
@@ -109,10 +135,8 @@ int		ft_execve(char *path, char **cmd);
 int		exe_cmd(char **cmd);
 int		execute(char **cmds);
 
-//second_parse.c
-void	second_parse(void);
 
-int ft_isquote(char c);
+
 
 void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);

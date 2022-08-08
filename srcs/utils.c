@@ -41,3 +41,33 @@ void	error_message_1(char *cmd, char *error)
 	perror(message);
 	free(message);
 }
+
+int ft_special_char(char c)
+{
+	if (c == 34 || c == 37 || c == 35)
+		return (1);
+	if (c >= 41 && c <= 47)
+		return (1);
+	if (c == 58 || c == 61 || c == 63 || c == 64)
+		return (1);
+	if (c == 91 || c == 93 || c == 93 || c == 94)
+		return (1);
+	if (c == 123 || c == 125 || c == 126)
+		return (1);
+	return (0);
+}
+
+//expand variables from env
+char	*find_env(char	*name)
+{
+	t_env	*aux;
+
+	aux = base()->env_split;
+	while (aux->next)
+	{
+		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
+			return (aux->content);
+		aux = aux->next;
+	}
+	return (NULL);
+}

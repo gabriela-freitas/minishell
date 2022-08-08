@@ -12,22 +12,17 @@
 
 #include "minishell.h"
 
-t_base	*base(void)
-{
-	static t_base	base;
-
-	return (&base);
-}
-
-void	inthandler(int sig)
+/*	ignores ^C and prints prompt in a new line	*/
+static void	inthandler(int sig)
 {
 	(void) sig;
-	printf("\n"); // Move to a new line
-	rl_on_new_line(); // Regenerate the prompt on a newline
-	rl_replace_line("", 0); // Clear the previous text
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
+/*	reads input from terminal and executes it, ignoring ^C and exiting with ^D */
 void	read_loop(void)
 {
 	char	*str;
@@ -41,7 +36,7 @@ void	read_loop(void)
 		first_parse(str);
 		second_parse();
 		free(str);
-		signal(SIGQUIT, SIG_IGN); //apanha o ctrl \\*
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
 	}
