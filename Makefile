@@ -13,7 +13,6 @@
 NAME = minishell
 
 SRC =	srcs/minishell.c \
-		srcs/parsing/parsing.c \
 		srcs/parsing/first_parse.c \
 		srcs/parsing/second_parse.c \
 		srcs/initialize/environment.c \
@@ -58,7 +57,7 @@ fclean: clean
 	@make fclean -s -C $(LIBFT_DIR)
 	@echo "$(COLOUR_YELLOW) minishell cleaned $(COLOUR_END)"
 
-test: re
+test: clean all
 	./minishell
 
 valgrind: re
