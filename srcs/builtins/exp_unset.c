@@ -52,14 +52,24 @@ void change_var(char *name, char *content)
 	aux->next = last;
 }
 
-void    export(char *str)
-{
+void    export(char *str) //GABI export without args, is ordered ASCII and join declare -x  in the beginnig
+{							//export with arguments but without = or value in front of = crashes
 	char *name;
 	char *content;
 
 	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
 	content = ft_strchr(str, '=') + 1;
 	change_var(name, content);
+	if (!strncmp("PATH", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	{
+		free(base()->paths);
+		base()->paths = ft_split(content, ':');
+	}
+	if (!strncmp("HOME", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	{
+		free(base()->home);
+		base()->home = ft_strdup(content);
+	}
 	free(name);
 }
 
@@ -72,7 +82,7 @@ void    unset(char *str)
 	if (!aux->next)
 		return ;
 	aux_next = aux->next;
-	if (!strncmp("HOME", str, 5))
+	if (!strncmp("HOME", str, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 		base()->home = NULL;
 	if (!strncmp(str, aux->name, ft_strlen(str)))
 	{

@@ -15,4 +15,5 @@ void	base_free(void) //ir atualizando esta funcao a medida que adicionamos coisa
 	env_free();
 	//args_free();
 	free_split(base()->paths);
+	ft_lstclear(&base()->cmds, free);
 }

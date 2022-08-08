@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 19:50:46 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:20 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ static int	check_pipes(const char *str);
 static int	parse_pipe(char *pipe, char **begin);
 static void	search_pipes(char *str);
 
+
 /*Removes extra spaces outside ' ' and " "
 	Checks whether the pipe is valid and
 	fills the command list (base()->cmds)*/
 void	first_parse(char *line)
-{
+{	
+	if (*line == '|')
+	{
+		error_message("", "parse error near `|'");
+		return ;
+	}
 	remove_spaces(line);
 	search_pipes(line);
 }
@@ -54,6 +60,7 @@ static void	remove_spaces(const char *str)
 }
 
 /*check if it's a valid pipe*/
+
 static int	check_pipes(const char *str)
 {
 	while (ft_isspace(*(++str)))
@@ -62,6 +69,7 @@ static int	check_pipes(const char *str)
 		return (0);
 	return (1);
 }
+
 
 /*fills the commands list*/
 static int	parse_pipe(char *pipe, char **begin)
@@ -79,8 +87,29 @@ static int	parse_pipe(char *pipe, char **begin)
 	*begin = pipe;
 	ft_lstadd_back(&base()->cmds, ft_lstnew((void *)ft_strtrim(sub_str, " ")));
 	free(sub_str);
-	printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
+	// printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
 	return (1);
+}
+
+char	*ft_strchr_valid(const char *s, int c) //se tiver o \ entao o que esta a frente vai ser ativado
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+		{
+			if (s[i - 1] && s[i - 1] != '\\')
+				return ((char *)&s[i]);
+            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+                return ((char *)&s[i]);
+		}
+		i ++;
+	}
+	if (c == 0)
+		return ((char *)&s[i]);
+	return (0);
 }
 
 /*searchs for the pipes ignoring quotes*/
@@ -88,21 +117,46 @@ static void	search_pipes(char *str)
 {
 	char	*begin;
 	char	*sub_str;
+	int		pipe;
 
+	pipe = FALSE; //Se nao existir pipe nenhum ignoramos a primeira letra do comando, por isso criei esta variavel
 	begin = str;
 	while (*str)
 	{
+		if (*str == '\\')
+		{
+			str++;
+			if (ft_isquote(*str))
+				str++;
+		}
 		if (*str == '\"' || *str == '\'')
-			str = ft_strchr(str + 1, *str);
+			str = ft_strchr_valid(str + 1, *str);
+		if (!str)
+		{
+			ft_lstclear(&base()->cmds, free);
+			return ;
+		}
 		if (*str == '|')
 		{
+			pipe = TRUE;
 			if (!parse_pipe(str, &begin))
 				return ;
 		}
 		str++;
 	}
-	sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
+	if ((size_t)str - (size_t)(begin) <= 2) //Gabi, adicionei isto para termos em conta o caso de o input acabar com pipe
+	{
+		if(!(*(begin + 1)) || ft_isspace(*(begin + 1)))
+		{
+			ft_lstclear(&base()->cmds, free);
+			return ;
+		}
+	}
+	if (!pipe)
+		sub_str = ft_substr(begin, 0, (size_t)str - (size_t)(begin));
+	else
+		sub_str = ft_substr(begin, 1, (size_t)str - (size_t)(begin));
 	ft_lstadd_back(&base()->cmds, ft_lstnew((void *)ft_strtrim(sub_str, " ")));
 	free(sub_str);
-	printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
+	// printf("cmd:%s\n", (char *)ft_lstlast(base()->cmds)->content);
 }

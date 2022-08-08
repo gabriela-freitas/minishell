@@ -6,7 +6,7 @@
 #    By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/30 20:14:45 by gafreita          #+#    #+#              #
-#    Updated: 2022/07/30 20:14:45 by gafreita         ###   ########.fr        #
+#    Updated: 2022/08/08 15:42:29 by mfreixo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,20 @@ SRC =	srcs/minishell.c \
 		srcs/parsing/parsing.c \
 		srcs/parsing/first_parse.c \
 		srcs/parsing/second_parse.c \
-		srcs/parsing/utils_parsing.c \
 		srcs/initialize/environment.c \
 		srcs/initialize/base.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/exp_unset.c \
 		srcs/execution/execute.c \
-		srcs/utils.c
+		srcs/utils.c \
+		srcs/builtins/echo.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft -lreadline
 
-CCFLAGS = gcc -Wall -Wextra -Werror -fsanitize=address
+CCFLAGS = gcc # -Wall -Wextra -Werror #-fsanitize=address
 
 DEP = ./libft/libft.a
 
