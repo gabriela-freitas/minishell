@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 20:41:04 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:24:15 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,54 +26,7 @@ void print_env(void)
 	}
 }
 
-// searches for name in env, if it doesnt exist creates it and adds it to the env
-// if it exists changes the content for the given one
-void change_var(char *name, char *content)
-{
-	t_env *aux;
-	t_env *last;
-
-	aux = base()->env_split;
-	while (aux->next)
-	{
-		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
-		{
-			free(aux->content);
-			aux->content = ft_strdup(content);
-			return ;
-		}
-		else if(!aux->next->next)
-			break;
-		else
-			aux = aux->next;
-	}
-	last = new_env(name, content);
-	last->next = aux->next;
-	aux->next = last;
-}
-
-void    export(char *str) //GABI export without args, is ordered ASCII and join declare -x  in the beginnig
-{							//export with arguments but without = or value in front of = crashes
-	char *name;
-	char *content;
-
-	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
-	content = ft_strchr(str, '=') + 1;
-	change_var(name, content);
-	if (!strncmp("PATH", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
-	{
-		free(base()->paths);
-		base()->paths = ft_split(content, ':');
-	}
-	if (!strncmp("HOME", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
-	{
-		free(base()->home);
-		base()->home = ft_strdup(content);
-	}
-	free(name);
-}
-
-void    unset(char *str)
+void	unset(char *str)
 {
 	t_env *aux;
 	t_env *aux_next;

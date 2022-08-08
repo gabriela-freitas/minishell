@@ -12,8 +12,8 @@ int	exe_builtin(char **cmd)
 	else if (!ft_strncmp(cmd[0], "env", 4))
 		print_env();
 	else if (!ft_strncmp(cmd[0], "export", 7))
-		export(cmd[1]);
-	else if (!ft_strncmp(cmd[0], "exit", 6)) 
+		export(cmd);
+	else if (!ft_strncmp(cmd[0], "exit", 6))
 		return (0); //GABI ft_exit(0);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		unset(cmd[1]);
