@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                     :+:      :+:    :+:   */
+/*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/07 07:06:16 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:39:15 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void add_str(char **str, char *add, int pos)
+/*	adds the string *add to *str, in position = pos
+	output is substr(str, 0, pos) + add + &str[pos]
+*/
+void	add_str(char **str, char *add, int pos)
 {
-	char *aux;
-	char *aux2;
+	char	*aux;
+	char	*aux2;
 
 	if (!add)
 		return ;
@@ -30,12 +33,12 @@ void add_str(char **str, char *add, int pos)
 	free(aux2);
 }
 
-void expand_str(char *str)
+void expand_str(char *str) //Marta norminette
 {
 	int i;
 	int j;
-	char    *aux;
-	char    *content;
+	char	*aux;
+	char	*content;
 
 	i = -1;
 	// printf("\nstr para expandir = %s\n", str);
@@ -74,7 +77,7 @@ void expand_str(char *str)
 	}
 }
 
-void cut_str(char **str)
+void cut_str(char **str) //Marta norminette
 {
 	int i;
 	int j;
@@ -82,6 +85,7 @@ void cut_str(char **str)
 
 	i = -1;
 	j = 0;
+
 	while ((*str)[i + 1])
 	{
 		while ((*str)[i + 1] && !ft_isspace((*str)[++i]) && !ft_isquote((*str)[i]) && !ft_special_char((*str)[i]))
@@ -92,7 +96,7 @@ void cut_str(char **str)
 			i = ft_strlen((*str)) - ft_strlen(ft_strchr_valid(&((*str)[i + 1]), (*str)[i]));
 			if ((*str)[i] == '\'')
 			{
-				i++;    
+				i++;	
 				continue ;
 			}
 			else

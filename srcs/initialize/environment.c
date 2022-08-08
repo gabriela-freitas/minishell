@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/07/29 19:50:37 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:35:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*appends add_env in the end of the current env*/
-static void env_append(t_env **head, t_env *add_env)
+static void	env_append(t_env **head, t_env *add_env)
 {
-	t_env *aux;
-    t_env *new_envi;
+	t_env	*aux;
+	t_env	*new_envi;
 
-    new_envi = new_env(add_env->name, add_env->content);
-    free(add_env->name);
-    free(add_env->content);
-    free(add_env);
+	new_envi = new_env(add_env->name, add_env->content);
+	free(add_env->name);
+	free(add_env->content);
+	free(add_env);
 	if (!head || !*head)
-        *head = new_envi;
+		*head = new_envi;
 	else
 	{
 		aux = *head;
@@ -32,14 +32,14 @@ static void env_append(t_env **head, t_env *add_env)
 			aux = aux->next;
 		}
 		aux->next = new_envi;
-        aux->next->next = NULL;
-    }
+		aux->next->next = NULL;
+	}
 }
 
 /*creates a list of variables and its content from env*/
-t_env *new_env(char *name, char *content)
+t_env	*new_env(char *name, char *content)
 {
-	t_env *new_env;
+	t_env	*new_env;
 
 	new_env = malloc(sizeof(t_env));
 	if (!new_env)
@@ -51,52 +51,51 @@ t_env *new_env(char *name, char *content)
 }
 
 /*creates base()->env - list of variables and its values from env*/
-void ini_env(char **env) //has more than 25 lines
+void	ini_env(char **env) //has more than 25 lines
 {
-    t_env   *aux_env;
-    int     i;
-    int     j;
-    char    **split;
+	t_env	*aux_env;
+	int		i;
+	int		j;
+	char	**split;
 
-    (base()->env) = env;
-    split = ft_split(env[0], '=');
-    (base()->env_split) = new_env(split[0], split[1]);
-    free(split[0]);
-    free(split[1]);
-    free(split);
-    i = 0;
-    while (env[++i])
-    {
-        split = ft_split(env[i], '=');
-        aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
-        env_append(&(base()->env_split), aux_env);
-        j = 0;
-        while (split[j])
-            free(split[j++]);
-        free(split);
-    }
+	split = ft_split(env[0], '=');
+	(base()->env) = new_env(split[0], split[1]);
+	free(split[0]);
+	free(split[1]);
+	free(split);
+	i = 0;
+	while (env[++i])
+	{
+		split = ft_split(env[i], '=');
+		aux_env = new_env(split[0], ft_strchr(env[i], '=') + 1);
+		env_append(&(base()->env), aux_env);
+		j = 0;
+		while (split[j])
+			free(split[j++]);
+		free(split);
+	}
 }
 
 /*deletes one element from environment list*/
-void delone_env(t_env *one_env)
+void	delone_env(t_env *one_env)
 {
-    free(one_env->name);
+	free(one_env->name);
 	free(one_env->content);
 }
 
 /*frees base()->env*/
-void env_free(void)
+void	env_free(void)
 {
-	t_env *aux;
+	t_env	*aux;
 
-    aux = (base()->env_split)->next;
-    while (base()->env_split)
-    {
-        delone_env(base()->env_split);
-        free(base()->env_split);
-        (base()->env_split) = aux;
-        if (base()->env_split)
-            aux = (base()->env_split)->next;
-    }
-    free(base()->env_split);
+	aux = (base()->env)->next;
+	while (base()->env)
+	{
+		delone_env(base()->env);
+		free(base()->env);
+		(base()->env) = aux;
+		if (base()->env)
+			aux = (base()->env)->next;
+	}
+	free(base()->env);
 }

@@ -6,18 +6,18 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/04 20:41:04 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:30:44 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //only prints variables with value
-void print_env(void)
+void	print_env(void)
 {
-	t_env *aux;
+	t_env	*aux;
 
-	aux = base()->env_split;
+	aux = (base()->env);
 	while (aux)
 	{
 		if (aux->content)
@@ -28,12 +28,12 @@ void print_env(void)
 
 // searches for name in env, if it doesnt exist creates it and adds it to the env
 // if it exists changes the content for the given one
-void change_var(char *name, char *content)
+void	change_var(char *name, char *content)
 {
-	t_env *aux;
-	t_env *last;
+	t_env	*aux;
+	t_env	*last;
 
-	aux = base()->env_split;
+	aux = (base()->env);
 	while (aux->next)
 	{
 		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
@@ -42,8 +42,8 @@ void change_var(char *name, char *content)
 			aux->content = ft_strdup(content);
 			return ;
 		}
-		else if(!aux->next->next)
-			break;
+		else if (!aux->next->next)
+			break ;
 		else
 			aux = aux->next;
 	}
@@ -52,43 +52,47 @@ void change_var(char *name, char *content)
 	aux->next = last;
 }
 
-void    export(char *str) //GABI export without args, is ordered ASCII and join declare -x  in the beginnig
+void	export(char *str)//GABI export without args, is ordered ASCII and join declare -x  in the beginnig
 {							//export with arguments but without = or value in front of = crashes
-	char *name;
-	char *content;
+	char	*name;
+	char	*content;
 
 	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
 	content = ft_strchr(str, '=') + 1;
 	change_var(name, content);
-	if (!strncmp("PATH", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	if (!strncmp("PATH", name, 5)) //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 	{
 		free(base()->paths);
-		base()->paths = ft_split(content, ':');
+		(base()->paths) = ft_split(content, ':');
 	}
-	if (!strncmp("HOME", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	if (!strncmp("HOME", name, 5)) //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 	{
 		free(base()->home);
-		base()->home = ft_strdup(content);
+		(base()->home) = ft_strdup(content);
 	}
 	free(name);
 }
 
-void    unset(char *str)
+/*	
+	Simulates unset builtins
+	removes from base()->env the variable with name = *str 
+*/
+void	unset(char *str) /*Marta, TOO MANY LINES*/
 {
-	t_env *aux;
-	t_env *aux_next;
+	t_env	*aux;
+	t_env	*aux_next;
 
-	aux = base()->env_split;
+	aux = base()->env;
 	if (!aux->next)
 		return ;
 	aux_next = aux->next;
-	if (!strncmp("HOME", str, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
+	if (!strncmp("HOME", str, 5)) //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
 		base()->home = NULL;
 	if (!strncmp(str, aux->name, ft_strlen(str)))
 	{
 		delone_env(aux);
 		free(aux);
-		base()->env_split = aux_next;
+		base()->env = aux_next;
 		return ;
 	}
 	while (aux_next)
@@ -98,7 +102,7 @@ void    unset(char *str)
 			aux->next = aux_next->next;
 			delone_env(aux_next);
 			free(aux_next);
-			break;
+			break ;
 		}
 		aux = aux_next;
 		aux_next = aux_next->next;

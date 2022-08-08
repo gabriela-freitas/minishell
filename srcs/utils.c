@@ -12,21 +12,8 @@
 
 #include "minishell.h"
 
-void	free_pipes(void)
-{
-	// t_list	*temp;
-
-	// temp = base()->cmds;
-	// while (temp)
-	// {
-	// 	base()->cmds = base()->cmds->next;
-	// 	freerbase()->cmds);
-	return ;
-}
-
 void	error_message(char *cmd, char *error)
 {
-	free_pipes();
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(error, 2);
@@ -42,7 +29,7 @@ void	error_message_1(char *cmd, char *error)
 	free(message);
 }
 
-int ft_special_char(char c)
+int	ft_special_char(char c)
 {
 	if (c == 34 || c == 37 || c == 35)
 		return (1);
@@ -62,7 +49,7 @@ char	*find_env(char	*name)
 {
 	t_env	*aux;
 
-	aux = base()->env_split;
+	aux = base()->env;
 	while (aux->next)
 	{
 		if (!ft_strncmp(name, aux->name, ft_strlen(name)))

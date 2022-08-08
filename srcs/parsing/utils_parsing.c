@@ -21,7 +21,7 @@ int	ft_isquote(char c)
 }
 
 /*if the char c is found in string s, but is preceded by \, then its not valid */
-char	*ft_strchr_valid(const char *s, int c) 
+char	*ft_strchr_valid(const char *s, int c)
 {
 	int	i;
 
@@ -32,8 +32,8 @@ char	*ft_strchr_valid(const char *s, int c)
 		{
 			if (s[i - 1] && s[i - 1] != '\\')
 				return ((char *)&s[i]);
-            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
-                return ((char *)&s[i]);
+			else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+				return ((char *)&s[i]);
 		}
 		i ++;
 	}
@@ -45,10 +45,10 @@ char	*ft_strchr_valid(const char *s, int c)
 /*	reallocs split to have new size	*/
 void	my_realloc(char ***split, int size)
 {
-	char    **new_split;
-	int     i;
+	char	**new_split;
+	int		i;
 
-	new_split = malloc(sizeof(char*) * size);
+	new_split = malloc(sizeof(char *) * size);
 	i = 0;
 	while ((*split)[i])
 	{
@@ -64,7 +64,7 @@ void	my_realloc(char ***split, int size)
 	the last element of **split */
 void	add_split(char ***split, int *size, char *str)
 {
-	int k;
+	int	k;
 
 	k = *size;
 	(*split)[k] = str;

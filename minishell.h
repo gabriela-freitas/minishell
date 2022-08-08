@@ -54,8 +54,7 @@ typedef struct s_env
 
 typedef struct s_base
 {
-	char	**env;
-	t_env	*env_split;
+	t_env	*env;
 	char	**paths;	
 	char	*home;
 	t_list	*cmds;
@@ -97,14 +96,20 @@ char	*find_env(char	*name);
 int ft_special_char(char c);
 char	*find_env(char	*name);
 
+//execute.c
+int		exe_cmd(char **cmd);
+int		execute(char **cmds);
+
+//export.c
+void	export(char *str);
+void	unset(char *str);
+
+// pwd.c
+void	pwd();
+void	old_pwd(void);
 
 
 
-
-
-// parsing.c
-int		exe_builtin(char **cmd);
-void	parser(char *str);
 // int     check_cmd(char *str);
 char	**get_path();
 
@@ -118,22 +123,11 @@ void my_realloc(char ***split, int size);
 
 //builtins.c
 int		cd(char *str);
-void	pwd();
-void	old_pwd(void);
 void	print_env(void);
 
 //env_alter.c
 void	change_var(char *name, char *content);
 
-//export.c
-void	export(char *str);
-void	unset(char *str);
-
-//execute.c
-int		exe_builtin(char **cmd);
-int		ft_execve(char *path, char **cmd);
-int		exe_cmd(char **cmd);
-int		execute(char **cmds);
 
 
 

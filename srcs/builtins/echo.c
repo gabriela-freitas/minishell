@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+/*	simulates echo builtin from bash
+	printf array of strigns separated by ' ' (space)
+*/
 void	ft_echo(char **str)
 {
 	if (*str)

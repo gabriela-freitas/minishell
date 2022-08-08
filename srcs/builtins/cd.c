@@ -6,16 +6,16 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/07 04:02:44 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:22:04 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //returns zero (0) on success. -1 is returned on an error and errno is set appropriately
-int cd(char *str) //function has more than 25 lines
+int	cd(char *str)
 {
-	char    *new_path;
+	char	*new_path;
 
 	old_pwd();
 	new_path = str;
