@@ -172,36 +172,35 @@ void add_str(char **str, char *add, int pos)
 void expand_str(char **str)
 {
     int i;
-    int j;
-    char    *cmd;
-    char    *aux3;
 
-    j = 0;
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '$')
+            printf("Encontrei\n");
+    }
+}
+
+void cut_str(char **str)
+{
+    int i;
+    int j;
+
     i = 0;
     while ((*str)[i])
     {
-        if ((*str)[i] == '$')
+        while ((*str)[i + 1] && !ft_isspace((*str)[++i]) && !ft_isquote((*str)[i]) && !is_expand((*str)[i]))
+            ;
+        j = i;
+        if (ft_isquote((*str)[i]))
         {
-            j = i;
-            while ((*str)[i] && !ft_isspace((*str)[i]))
-                i++;
-            aux3 = ft_substr((*str), j + 1, i - j - 1);
-            cmd = ft_strdup(find_env(aux3));
-            free(aux3);
-            if (cmd)
-            {
-                memmove(&(*str)[j], &(*str)[i], ft_strlen(&(*str)[i]) + 1);
-                add_str(str, ft_strdup(cmd), j);
-                i = j + ft_strlen(cmd);
-                free(cmd);
-            }
+            i = ft_strlen((*str)) - ft_strlen(ft_strchr_valid(&(*str)[i + 1], (*str)[i])) + 1;
+            if ((*str)[i] == '\'')
+                continue ;
             else
-            {
-                memmove(&(*str)[j], &(*str)[i], ft_strlen(&(*str)[i]) + 1);
-                i = j + 1;
-            }
+                ft_strchr_valid(&(*str)[i + 1], (*str)[i]);
+
         }
-        i++;
     }
 }
 
@@ -214,9 +213,10 @@ char **split_command(char *str)
 
     k = 0;
     i = 0;
+    // printf("%s\n", str);
+    cut_str(&str); //este expand nao esta a funcionar
     printf("%s\n", str);
-    expand_str(&str); //este expand nao esta a funcionar
-    printf("%s\n", str);
+    return(NULL);
     split = malloc(sizeof(char*) * 2);
     split[0] = '\0';
     while (str[i])
@@ -261,5 +261,5 @@ void	second_parse(void)
 		temp = temp->next;
 		free_split(split);
 	}
-	ft_lstclear(&(base()->cmds), free);
+    ft_lstclear(&(base()->cmds), free); //esta a dar double free aqui, nao sei bem pq
 }
