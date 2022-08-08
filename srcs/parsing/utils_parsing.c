@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 17:49:15 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:50:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char	*ft_strchr_valid(const char *s, int c)
 		{
 			if (s[i - 1] && s[i - 1] != '\\')
 				return ((char *)&s[i]);
-            else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
-                return ((char *)&s[i]);
+			else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
+				return ((char *)&s[i]);
 		}
 		i ++;
 	}

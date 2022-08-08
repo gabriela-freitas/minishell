@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 16:42:36 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:38:59 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ typedef struct s_env
 
 typedef struct s_base
 {
-	char	**env;
-	t_env	*env_split;
-	char	**paths;	
+	t_env	*env;
+	char	**paths;
 	char	*home;
 	t_list	*cmds;
 }	t_base;
@@ -97,10 +96,8 @@ char	*find_env(char	*name);
 int ft_special_char(char c);
 char	*find_env(char	*name);
 
-
-
-
-
+//utils_env.c
+char	**convert_env_list(void);
 
 // parsing.c
 int		exe_builtin(char **cmd);

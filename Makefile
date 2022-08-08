@@ -18,13 +18,15 @@ SRC =	srcs/minishell.c \
 		srcs/parsing/utils_parsing.c \
 		srcs/parsing/parsing_pipes.c \
 		srcs/parsing/expanding.c \
-		srcs/initialize/environment.c \
-		srcs/initialize/base.c \
+		srcs/base/environment.c \
+		srcs/base/base.c \
+		srcs/base/utils_env.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/exp_unset.c \
 		srcs/execution/execute.c \
 		srcs/utils.c \
+		srcs/builtins/export.c \
 		srcs/builtins/echo.c
 
 LIBFT_DIR = ./libft

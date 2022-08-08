@@ -25,22 +25,26 @@ int	exe_builtin(char **cmd)
 /*executes the list of commands*/
 int	ft_execve(char *path, char **cmd)
 {
-	int	pid;
+	int		pid;
+	char	**env;
 
+	env = convert_env_list();
 	pid = fork();
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
-		execve(path, cmd, base()->env); //GABI instead of using base()->env, we have to strjoin our *env_split
+		execve(path, cmd, env);
 	else
 	{
 		waitpid(pid, NULL, 0);
 		free(path);
+		free(env);
 		return (0);
 	}
 	return (0);
 }
 
+//GABI keep this working if the user passes the whole PATH
 int	exe_cmd(char **cmd)
 {
 	int		i;
@@ -48,7 +52,9 @@ int	exe_cmd(char **cmd)
 	char	*path_aux;
 
 	i = 0;
-	while (base()->paths[i])
+	if (!access(cmd[0], F_OK))
+		return (ft_execve(ft_strdup(cmd[0]), cmd));
+	while (base()->paths && base()->paths[i])
 	{
 		path_aux = ft_strjoin(base()->paths[i], "/");
 		path = ft_strjoin(path_aux, cmd[0]);

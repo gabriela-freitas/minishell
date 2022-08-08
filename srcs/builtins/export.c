@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 17:33:52 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 18:38:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void change_var(char *name, char *content)
 	t_env *aux;
 	t_env *last;
 
-	aux = base()->env_split;
+	aux = base()->env;
 	while (aux->next)
 	{
 		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
@@ -61,11 +61,11 @@ void    export_one(char *str) //GABI export without args, is ordered ASCII and j
 
 void export(char **str) //Esse o execute vai chamar GABI
 {
-    if (!str[1])
-    //Create a function to convert env list to char **
-    //ordenate this in ASCII code
-    //print
-        export_ordenate();
+    // if (!str[1])
+    // //Create a function to convert env list to char **
+    // //ordenate this in ASCII code
+    // //print
+    //     export_ordenate();
 	//str[0] = export
 	export_one(str[1]);
 }

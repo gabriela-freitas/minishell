@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/06 10:45:54 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:58:53 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,4 @@ int ft_special_char(char c)
 	if (c == 123 || c == 125 || c == 126)
 		return (1);
 	return (0);
-}
-
-//expand variables from env
-char	*find_env(char	*name)
-{
-	t_env	*aux;
-
-	aux = base()->env_split;
-	while (aux->next)
-	{
-		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
-			return (aux->content);
-		aux = aux->next;
-	}
-	return (NULL);
 }
