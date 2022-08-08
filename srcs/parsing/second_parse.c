@@ -140,7 +140,7 @@ char    *algo(char *str)
 
 int is_expand(char c)
 {
-    if (c >= 34 && c <= 37)
+    if (c == 34 || c == 37 || c == 35)
         return (1);
     if (c >= 41 && c <= 47)
         return (1);
@@ -158,6 +158,8 @@ void add_str(char **str, char *add, int pos)
     char *aux;
     char *aux2;
 
+    if (!add)
+        return ;
     aux = ft_substr(*str, pos, ft_strlen(&(*str)[pos]));
     ft_memmove(&(*str)[pos], add, ft_strlen(add) + 1);
     aux2 = malloc(sizeof(char) * (ft_strlen((*str)) + ft_strlen(aux) + 1));
@@ -169,15 +171,47 @@ void add_str(char **str, char *add, int pos)
     free(aux2);
 }
 
-void expand_str(char **str)
+void expand_str(char *str)
 {
     int i;
+    int j;
+    char    *aux;
+    char    *content;
 
-    i = 0;
-    while (str[i])
+    i = -1;
+    // printf("\nstr para expandir = %s\n", str);
+    while (str[++i])
     {
         if (str[i] == '$')
-            printf("Encontrei\n");
+        {
+            j = i;
+            while (str[i + 1] && !ft_isspace(str[++i]) && !ft_isquote(str[i]) && !is_expand(str[i]))
+                ;
+            if (str[i])
+            {
+                aux = ft_substr(str, j + 1, i - j);
+                // printf("VAR= %sKK\n", aux);
+                content = ft_strdup(find_env(aux));
+                // printf("CONTENT= %s\n", content);
+                if (content)
+                    ft_memmove(&str[j], &str[i + 1], ft_strlen(&str[i]) + 1);
+                // printf("CONTENT= %s\n", str);
+                add_str(&str, content, j);
+                printf("expanded str = %s\n", str);
+                i += ft_strlen(content) - 1;
+            }
+            else
+            {
+                i++;
+                aux = ft_substr(str, j + 1, i - j);
+                content = ft_strdup(find_env(aux));
+                if (content)
+                    ft_memmove(&str[j], &str[i], ft_strlen(&str[i]) + 1);
+                add_str(&str, content, j);
+                printf("expanded str = %s\n", str);
+                break ;
+            }
+        }
     }
 }
 
@@ -185,21 +219,46 @@ void cut_str(char **str)
 {
     int i;
     int j;
+    char *aux;
 
-    i = 0;
-    while ((*str)[i])
+    i = -1;
+    j = 0;
+    while ((*str)[i + 1])
     {
         while ((*str)[i + 1] && !ft_isspace((*str)[++i]) && !ft_isquote((*str)[i]) && !is_expand((*str)[i]))
             ;
-        j = i;
         if (ft_isquote((*str)[i]))
         {
-            i = ft_strlen((*str)) - ft_strlen(ft_strchr_valid(&(*str)[i + 1], (*str)[i])) + 1;
+            j = i;
+            i = ft_strlen((*str)) - ft_strlen(ft_strchr_valid(&((*str)[i + 1]), (*str)[i]));
             if ((*str)[i] == '\'')
+            {
+                i++;    
                 continue ;
+            }
             else
-                ft_strchr_valid(&(*str)[i + 1], (*str)[i]);
-
+            {
+                aux = ft_substr(*str, j, i - j);
+                // printf("substr = %s\n", aux);
+                expand_str(aux);
+            }
+            if (!(*str)[i])
+                break ;
+        }
+        else if (!(*str)[i + 1])
+        {
+            aux = ft_substr(*str, j, i - j + 1);
+            printf("aux = %s\n", aux);
+            // return ;
+            expand_str(aux);
+            i++;
+        }
+        else
+        {
+            aux = ft_substr(*str, j, i - j);
+            // printf("substr = %s\n", aux);
+            expand_str(aux);
+            i = j + ft_strlen(ft_strchr_valid(&((*str)[j + 1]), (*str)[i])) + 1;
         }
     }
 }
@@ -214,9 +273,9 @@ char **split_command(char *str)
     k = 0;
     i = 0;
     // printf("%s\n", str);
-    cut_str(&str); //este expand nao esta a funcionar
-    printf("%s\n", str);
-    return(NULL);
+    // cut_str(&str); //este expand nao esta a funcionar
+    // printf("%s\n", str);
+    // return(NULL);
     split = malloc(sizeof(char*) * 2);
     split[0] = '\0';
     while (str[i])
@@ -250,7 +309,7 @@ void	second_parse(void)
 	{
 		// printf("line = %s\n", (char *) temp->content);
 		split = split_command((char *)temp->content);
-		// execute(split);
+		execute(split);
 		// i = 0;
 		// while (split[i])
 		// {
