@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 20:02:17 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/08 22:32:20 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void	pwd();
 void	old_pwd(void);
 
 
+// expanding.c
+void expand_str(char *str);
+void expand(char **str);
 
 
 

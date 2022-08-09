@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 17:49:10 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 01:34:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 /*	finds the quotes given by c, (" or ') in str, starting in pos = i
 	pos is given as pointer so its value is altered to be used in next_arg
+	returns -1 if no quotes were found (they were open but not closed)	
 */
-static int    check_quotes(char *str, char c, int *i)  //em caso de erro devolve -1
+static int    check_quotes(char *str, char c, int *i)
 {
 	char *aux;
 	int j;
@@ -50,8 +51,8 @@ static int    check_quotes(char *str, char c, int *i)  //em caso de erro devolve
 static char    *next_arg(char *str)
 {
 	int i;
-	char *aux;
-	char c;
+	// char *aux;
+	// char c;
 
 	i = 0;
 	while (str[i])
@@ -89,8 +90,7 @@ static char **split_command(char *str)
 	k = 0;
 	i = 0;
 	// printf("%s\n", str);
-	// cut_str(&str); //este expand nao esta a funcionar
-	// printf("%s\n", str);
+	// expand(&str); //este expand nao esta a funcionar
 	// return(NULL);
 	split = malloc(sizeof(char*) * 2);
 	split[0] = '\0';
@@ -118,9 +118,9 @@ void	second_parse(void)
 {
 	t_list	*temp;
 	char	**split;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	temp = base()->cmds;
 	while (temp)
 	{
