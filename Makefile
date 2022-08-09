@@ -23,11 +23,12 @@ SRC =	srcs/minishell.c \
 		srcs/base/utils_env.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
-		srcs/builtins/exp_unset.c \
+		srcs/builtins/unset.c \
 		srcs/execution/execute.c \
 		srcs/utils.c \
 		srcs/builtins/export.c \
-		srcs/builtins/echo.c
+		srcs/builtins/echo.c \
+		srcs/builtins/exit.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/

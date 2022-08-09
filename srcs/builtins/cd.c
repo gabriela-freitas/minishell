@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:22:04 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:51:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	cd(char *str)
 {
 	char	*new_path;
 
-	old_pwd();
+	update_env_pwd("OLDPWD");
 	new_path = str;
 	if (!ft_strncmp("", str, 1))
 	{
@@ -32,10 +32,12 @@ int	cd(char *str)
 		new_path = ft_strjoin(getenv("HOME"), &str[1]);
 	if (chdir(new_path) == -1)
 	{
-		error_message("cd: ", str);
+		new_path = ft_strjoin(str, ": No such file or directory");
+		error_message("cd: ", new_path);
 		free(new_path);
 		return (-1);
 	}
+	update_env_pwd("PWD");
 	// free(new_path);
 	return (0);
 }

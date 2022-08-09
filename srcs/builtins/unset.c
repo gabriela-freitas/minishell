@@ -6,25 +6,13 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 19:57:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 15:57:43 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//only prints variables with value
-void	print_env(void)
-{
-	t_env	*aux;
-
-	aux = (base()->env);
-	while (aux)
-	{
-		if (aux->content)
-			printf("%s=%s\n", aux->name, aux->content);
-		aux = aux->next;
-	}
-}
+//unset also receives more than one value
 
 /*
 	Simulates unset builtins

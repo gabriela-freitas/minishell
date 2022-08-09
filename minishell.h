@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 20:02:17 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:51:13 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	unset(char *str);
 
 // pwd.c
 void	pwd();
-void	old_pwd(void);
+void	update_env_pwd(char	*var);
 
 
 
@@ -127,6 +127,8 @@ char	**convert_env_list(void);
 //builtins.c
 int		cd(char *str);
 void	print_env(void);
+void	ft_exit(char **str);
+
 
 //env_alter.c
 void	change_var(char *name, char *content);

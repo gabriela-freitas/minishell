@@ -14,7 +14,10 @@ static int	exe_builtin(char **cmd)
 	else if (!ft_strncmp(cmd[0], "export", 7))
 		export(cmd);
 	else if (!ft_strncmp(cmd[0], "exit", 6))
+	{
+		ft_exit(cmd);
 		return (0); //GABI ft_exit(0);
+	}
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		unset(cmd[1]);
 	else

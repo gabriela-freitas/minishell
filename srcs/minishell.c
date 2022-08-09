@@ -22,7 +22,8 @@ static void	inthandler(int sig)
 	rl_redisplay();
 }
 
-/*	reads input from terminal and executes it, ignoring ^C and exiting with ^D */
+/*	reads input from terminal and executes it,
+ignoring ^C and exiting with ^D */
 void	read_loop(void)
 {
 	char	*str;

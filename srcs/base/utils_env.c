@@ -6,14 +6,13 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 19:35:22 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 15:58:18 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*returns the content of a env variable or NULL if it doesn't exists
-searchs inside env list*/
+/*returns the content of a env variable or NULL if it doesn't exists*/
 char	*find_env(char	*name)
 {
 	t_env	*aux;
@@ -28,7 +27,21 @@ char	*find_env(char	*name)
 	return (NULL);
 }
 
-/*converts the env list to a string's array
+/*prints env variables if content exists*/
+void	print_env(void)
+{
+	t_env	*aux;
+
+	aux = (base()->env);
+	while (aux)
+	{
+		if (aux->content)
+			printf("%s=%s\n", aux->name, aux->content);
+		aux = aux->next;
+	}
+}
+
+/*	converts the env list to a string's array
 	return a allocated memory area, needs to be freed after*/
 char	**convert_env_list(void)
 {

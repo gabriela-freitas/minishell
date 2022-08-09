@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:31:17 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/09 18:51:35 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	pwd(void)
 }
 
 /*	sets the variable OLDPWD, in env to the current directory
-	it has to be called before changing current directory (eg. with cd)	
+	it has to be called before changing current directory (eg. with cd)
 */
-void	old_pwd(void)
+void	update_env_pwd(char	*var)
 {
 	char	*path;
 	int		length;
@@ -38,6 +38,6 @@ void	old_pwd(void)
 	length = 100;
 	path = malloc(sizeof(char) * length);
 	getcwd(path, length);
-	change_var("OLDPWD", path);
+	change_var(var, path);
 	free(path);
 }
