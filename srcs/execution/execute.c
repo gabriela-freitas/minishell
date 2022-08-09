@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
+/*   Updated: 2022/08/09 20:17:47 by gafreita         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*checks if cmd[0] is builtin and executes it, if not returns -1*/
@@ -69,7 +81,7 @@ int	exe_cmd(char **cmd)
 		free(path);
 		i++;
 	}
-	ft_putstr_fd("zsh: command not found: ", 2);
+	ft_putstr_fd("minishell: command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
 	return (-1);

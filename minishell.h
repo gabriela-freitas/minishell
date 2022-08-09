@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 18:51:13 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 20:55:48 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	second_parse(void);
 
 // utils.c
 int ft_special_char(char c);
-char	*find_env(char	*name);
 
 //execute.c
 int		exe_cmd(char **cmd);
@@ -123,10 +122,12 @@ void my_realloc(char ***split, int size);
 
 //utils_env.c
 char	**convert_env_list(void);
+void	export_ordenate(void);
+char	*find_env(char	*name);
+void	print_env(void);
 
 //builtins.c
 int		cd(char *str);
-void	print_env(void);
 void	ft_exit(char **str);
 
 

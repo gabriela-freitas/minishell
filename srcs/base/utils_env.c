@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 15:58:18 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 21:05:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*find_env(char	*name)
 }
 
 /*prints env variables if content exists*/
+//GABI revisar isso pois variaveis sem content são impressas no bash também
 void	print_env(void)
 {
 	t_env	*aux;
@@ -66,3 +67,56 @@ char	**convert_env_list(void)
 	}
 	return (mini_env);
 }
+
+/*	returns the env matrix adding "declare -x " in front, as in bash
+	to be used next in ordenate_env*/
+static char	**env_to_export(char	**env)
+{
+	char	**env_to_print;
+	char	*temp;
+	int		size;
+	int		i;
+
+	size = 0;
+	env_to_print = malloc(sizeof(char *) * 2);
+	env_to_print[0] = '\0';
+	i = -1;
+	while (env[++i])
+	{
+		temp = ft_strjoin("declare -x ", env[i]);
+		add_split(&env_to_print, &size, temp);
+	}
+	free_split(env);
+	return (env_to_print);
+}
+
+/*Ordenates in ASCII order the env, adding "declare -x " in front, as in bash*/
+void	export_ordenate(void)
+{
+	char	**env;
+	char	*temp;
+	int		i;
+	int		j;
+
+	env = convert_env_list();
+	i = -1;
+	while (env[++i])
+	{
+		j = i;
+		while (env[++j])
+		{
+			if (ft_strncmp(env[i], env[j], ft_strlen(env[i])) > 0)
+			{
+				temp = env[i];
+				env[i] = env[j];
+				env[j] = temp;
+			}
+		}
+	}
+	env = env_to_export(env);
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
+	free_split(env);
+}
+

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 15:55:46 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/09 21:04:27 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,42 @@ void	change_var(char *name, char *content)
 
 /*GABI export without args, is ordered ASCII
 	and join declare -x  in the beginnig*/
-//export with arguments but without = or value in front of = crashes
+// GABI falta checar aqueles caracteres invalidos no name
 void	export_one(char *str)
 {
-	char	*name;
-	char	*content;
+	char	**split;
 
-	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
-	content = ft_strchr(str, '=') + 1;
-	change_var(name, content);
-	if (!strncmp("PATH", name, 5))
+	if (!ft_strchr(str, '='))
+		return ;
+	split = ft_split(str, '=');
+	if (!split[0])
+	{
+		ft_printf("minishell: export: `=': not a valid identifier\n");
+		free_split(split);
+		return ;
+	}
+	change_var(split[0], split[1]);
+	if (!strncmp("PATH", split[0], 5))
 	{
 		free(base()->paths);
-		(base()->paths) = ft_split(content, ':');
+		(base()->paths) = ft_split(split[1], ':');
 	}
-	if (!strncmp("HOME", name, 5))
+	if (!strncmp("HOME", split[0], 5))
 	{
 		free(base()->home);
-		base()->home = ft_strdup(content);
+		base()->home = ft_strdup(split[1]);
 	}
-	free(name);
+	free(split[0]);
+	free(split);
 }
 
-// if (!str[1])
-// //Create a function to convert env list to char **
-// //ordenate this in ASCII code
-// //print
-//     export_ordenate();
 //str[0] = export
 void	export(char **str) //Esse o execute vai chamar GABI
 {
 	int	i;
 
+	if (!str[1])
+		export_ordenate();
 	i = 0;
 	while (str[++i])
 		export_one(str[i]);
