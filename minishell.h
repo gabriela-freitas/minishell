@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 20:55:48 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 20:02:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		execute(char **cmds);
 
 //export.c
 void	export(char **str);
-void	unset(char *str);
+void	unset(char **cmds);
 
 // pwd.c
 void	pwd();
@@ -118,7 +118,7 @@ char	**get_path();
 void	error_message(char *cmd, char *error);
 
 //utils_parsing.c
-void my_realloc(char ***split, int size);
+void	my_realloc(char ***split, int size);
 
 //utils_env.c
 char	**convert_env_list(void);
