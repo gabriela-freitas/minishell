@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 20:02:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 22:57:09 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,24 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_pipex
+{
+	char	***cmds;
+	int		num_cmds;
+	int		pipe_fd[2];
+	int		pipe_aux[2];
+}t_pipex;
+
 typedef struct s_base
 {
 	t_env	*env;
 	char	**paths;
 	char	*home;
-	t_list	*cmds;
+	t_list	*div_pipes;
+	t_pipex	pipe;
 }	t_base;
+
+
 
 
 // minishell.c
@@ -136,5 +147,10 @@ void	change_var(char *name, char *content);
 
 void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);
+
+//pipex.c
+void	first_child_process(int i);
+void	second_child_process(int i);
+void	pipex(void);
 
 #endif

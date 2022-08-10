@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 17:49:10 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 23:04:06 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,25 +117,25 @@ static char **split_command(char *str)
 void	second_parse(void)
 {
 	t_list	*temp;
-	char	**split;
 	int		i;
 
-	i = 0;
-	temp = base()->cmds;
+	i = -1;
+	temp = base()->div_pipes;
+	base()->pipe.num_cmds = ft_lstsize(temp);
+	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
 	while (temp)
 	{
-		// printf("line = %s\n", (char *) temp->content);
-		split = split_command((char *)temp->content);
-		execute(split);
-		// i = 0;
-		// while (split[i])
-		// {
-		// 	printf(">>%s<<\n", split[i]);
-		// 	i++;
-		// }
-		// printf("----------\n");
+		base()->pipe.cmds[++i] = split_command((char *)temp->content);
 		temp = temp->next;
-		free_split(split);
+		// execute(base()->pipe.cmds[i]);
 	}
-	ft_lstclear(&(base()->cmds), free); //esta a dar double free aqui, nao sei bem pq
+	base()->pipe.cmds[++i] = NULL;
+	printf("HEY\n");
+	pipex(); //adaptar o pipeex
+	i = -1;
+	while (base()->pipe.cmds[++i])
+		free_split(base()->pipe.cmds[i]);
+	free_split(base()->pipe.cmds[i]);
+	free(base()->pipe.cmds);
+	ft_lstclear(&(base()->div_pipes), free); //esta a dar double free aqui, nao sei bem pq
 }

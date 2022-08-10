@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:32:56 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/10 22:32:21 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	base_free(void) //ir atualizando esta funcao a medida que adicionamos coisa
 	//args_free();
 	free(base()->home);
 	free_split(base()->paths);
-	ft_lstclear(&base()->cmds, free);
+	ft_lstclear(&base()->div_pipes, free);
 }

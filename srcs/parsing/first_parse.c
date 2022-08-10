@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/06 20:28:20 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/10 22:32:21 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	remove_spaces(const char *str);
 
 /*Removes extra spaces outside ' ' and " "
 	Checks whether the pipe is valid and
-	fills the command list (base()->cmds)*/
+	fills the command list (base()->div_pipes)*/
 void	first_parse(char *line)
-{	
+{
 	if (*line == '|')
 	{
 		error_message("", "parse error near `|'");

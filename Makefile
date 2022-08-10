@@ -24,7 +24,9 @@ SRC =	srcs/minishell.c \
 		srcs/builtins/cd.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/unset.c \
+		srcs/execution/pipex.c \
 		srcs/execution/execute.c \
+		srcs/execution/pipex_child_process.c \
 		srcs/utils.c \
 		srcs/builtins/export.c \
 		srcs/builtins/echo.c \
