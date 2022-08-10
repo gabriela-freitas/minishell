@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/06 17:30:45 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/10 13:24:23 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,21 @@
 */
 void	ft_echo(char **str)
 {
+	int	new_line;
+
+	new_line = TRUE;
 	if (*str)
 		str++;
+	if (!ft_strncmp(*str, "-n", 3))
+	{
+		new_line = FALSE;
+		str++;
+	}
 	while (*str)
 	{
 		printf("%s ", *str);
 		str++;
 	}
-	printf("\n");
+	if (new_line)
+		printf("\n");
 }

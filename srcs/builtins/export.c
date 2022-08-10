@@ -6,11 +6,14 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 21:04:27 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 13:14:47 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_valid_identifier(char	*name);
+static void	export_one(char *str);
 
 /*searches for name in env, if it doesnt exist creates it and adds it to the env
 if it exists changes the content for the given one*/
@@ -38,19 +41,58 @@ void	change_var(char *name, char *content)
 	aux->next = last;
 }
 
-/*GABI export without args, is ordered ASCII
-	and join declare -x  in the beginnig*/
-// GABI falta checar aqueles caracteres invalidos no name
-void	export_one(char *str)
+/*	Simulates the export builtin, with no options:
+	if no args: prints the env ASCII ordenated
+	export the variables, one by one
+	str[0] = "export"*/
+void	export(char **str)
+{
+	int	i;
+
+	if (!str[1])
+		export_ordenate();
+	i = 0;
+	while (str[++i])
+		export_one(str[i]);
+}
+
+//GABI uniformizar esse erro!!
+//minishell: export: `a-=b': not a valid identifier
+/*	check if is a valid identifier i.e
+	exists and contains only valid characters: alphanumerics and '_'*/
+static int	is_valid_identifier(char	*name)
+{
+	if (!name)
+	{
+		ft_printf("minishell: export: `=': not a valid identifier\n");
+		return (0);
+	}
+	while (*name)
+	{
+		if (!(ft_isalnum(*name) || *name == '_'))
+		{
+			ft_printf("minishell: export: : not a valid identifier\n");
+			return (0);
+		}
+		name++;
+	}
+	return (1);
+}
+
+/*	Exports one variable to env, checks if:
+	it contains =, if not does nothing,
+	its a valid identifier (is_valid_identfier),
+	if it's PATH or HOME it will update our minishell struct (base())
+*/
+static void	export_one(char *str)
 {
 	char	**split;
 
 	if (!ft_strchr(str, '='))
 		return ;
 	split = ft_split(str, '=');
-	if (!split[0])
+	if (!is_valid_identifier(split[0]))
 	{
-		ft_printf("minishell: export: `=': not a valid identifier\n");
 		free_split(split);
 		return ;
 	}
@@ -67,16 +109,4 @@ void	export_one(char *str)
 	}
 	free(split[0]);
 	free(split);
-}
-
-//str[0] = export
-void	export(char **str) //Esse o execute vai chamar GABI
-{
-	int	i;
-
-	if (!str[1])
-		export_ordenate();
-	i = 0;
-	while (str[++i])
-		export_one(str[i]);
 }

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 21:05:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 13:18:12 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ char	*find_env(char	*name)
 	return (NULL);
 }
 
-/*prints env variables if content exists*/
-//GABI revisar isso pois variaveis sem content são impressas no bash também
+/*prints env variables*/
 void	print_env(void)
 {
 	t_env	*aux;
@@ -38,6 +37,8 @@ void	print_env(void)
 	{
 		if (aux->content)
 			printf("%s=%s\n", aux->name, aux->content);
+		else
+			printf("%s=\n", aux->name);
 		aux = aux->next;
 	}
 }

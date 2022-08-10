@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 20:00:32 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 20:03:19 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	delone_env(t_env *one_env)
 {
 	free(one_env->name);
 	free(one_env->content);
+	free(one_env);
 }
 
 /*frees base()->env*/
@@ -92,7 +93,7 @@ void	env_free(void)
 	while (base()->env)
 	{
 		delone_env(base()->env);
-		free(base()->env);
+		//free(base()->env);
 		(base()->env) = aux;
 		if (base()->env)
 			aux = (base()->env)->next;
