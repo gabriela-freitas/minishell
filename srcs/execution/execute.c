@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 20:17:47 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 16:17:12 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int	ft_execve(char *path, char **cmd)
 	return (0);
 }
 
-//GABI keep this working if the user passes the whole PATH
 /*tests if the list of commands can be executed with current paths,
 	if yes, executes it, else it prints the error and exits*/
 int	exe_cmd(char **cmd)
