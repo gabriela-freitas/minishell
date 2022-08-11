@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/11 09:21:50 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/11 09:28:36 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int expand_one(char **str)
 	while ((*str)[i] && !ft_isspace((*str)[i]) && !ft_special_char((*str)[i]) && !ft_isquote((*str)[i]))
 		i++;
 	aux = ft_substr(*str, 1, i);
-	content = 
-	
-	
+	printf("name = %s\n", aux);
+	content = find_env(aux);
+	printf("name = %s\n", content);
+	return (ft_strlen(content));
 		
 }
 

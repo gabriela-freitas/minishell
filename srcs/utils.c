@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/09 00:21:34 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/09 20:21:23 by gafreita         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +21,8 @@ void	error_message(char *cmd, char *error)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(error, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
 	ft_putstr_fd("\n", 2);
 }
 

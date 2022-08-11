@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/08 22:32:20 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/10 20:02:57 by gafreita         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +97,6 @@ void	second_parse(void);
 
 // utils.c
 int ft_special_char(char c);
-char	*find_env(char	*name);
 
 //execute.c
 int		exe_cmd(char **cmd);
@@ -101,11 +104,11 @@ int		execute(char **cmds);
 
 //export.c
 void	export(char **str);
-void	unset(char *str);
+void	unset(char **cmds);
 
 // pwd.c
 void	pwd();
-void	old_pwd(void);
+void	update_env_pwd(char	*var);
 
 
 // expanding.c
@@ -122,14 +125,18 @@ char	**get_path();
 void	error_message(char *cmd, char *error);
 
 //utils_parsing.c
-void my_realloc(char ***split, int size);
+void	my_realloc(char ***split, int size);
 
 //utils_env.c
 char	**convert_env_list(void);
+void	export_ordenate(void);
+char	*find_env(char	*name);
+void	print_env(void);
 
 //builtins.c
 int		cd(char *str);
-void	print_env(void);
+void	ft_exit(char **str);
+
 
 //env_alter.c
 void	change_var(char *name, char *content);

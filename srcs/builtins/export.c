@@ -6,18 +6,21 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 19:53:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/10 13:14:47 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// searches for name in env, if it doesnt exist creates it and adds it to the env
-// if it exists changes the content for the given one
-void change_var(char *name, char *content)
+static int	is_valid_identifier(char	*name);
+static void	export_one(char *str);
+
+/*searches for name in env, if it doesnt exist creates it and adds it to the env
+if it exists changes the content for the given one*/
+void	change_var(char *name, char *content)
 {
-	t_env *aux;
-	t_env *last;
+	t_env	*aux;
+	t_env	*last;
 
 	aux = base()->env;
 	while (aux->next)
@@ -28,8 +31,8 @@ void change_var(char *name, char *content)
 			aux->content = ft_strdup(content);
 			return ;
 		}
-		else if(!aux->next->next)
-			break;
+		else if (!aux->next->next)
+			break ;
 		else
 			aux = aux->next;
 	}
@@ -38,34 +41,72 @@ void change_var(char *name, char *content)
 	aux->next = last;
 }
 
-void    export_one(char *str) //GABI export without args, is ordered ASCII and join declare -x  in the beginnig
-{							//export with arguments but without = or value in front of = crashes
-	char *name;
-	char *content;
+/*	Simulates the export builtin, with no options:
+	if no args: prints the env ASCII ordenated
+	export the variables, one by one
+	str[0] = "export"*/
+void	export(char **str)
+{
+	int	i;
 
-	name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
-	content = ft_strchr(str, '=') + 1;
-	change_var(name, content);
-	if (!strncmp("PATH", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
-	{
-		free(base()->paths);
-		base()->paths = ft_split(content, ':');
-	}
-	if (!strncmp("HOME", name, 5))  //GABI if we unset the PATHS, we have to set base()->PATHS to NULL
-	{
-		free(base()->home);
-		base()->home = ft_strdup(content);
-	}
-	free(name);
+	if (!str[1])
+		export_ordenate();
+	i = 0;
+	while (str[++i])
+		export_one(str[i]);
 }
 
-void export(char **str) //Esse o execute vai chamar GABI
+//GABI uniformizar esse erro!!
+//minishell: export: `a-=b': not a valid identifier
+/*	check if is a valid identifier i.e
+	exists and contains only valid characters: alphanumerics and '_'*/
+static int	is_valid_identifier(char	*name)
 {
-    // if (!str[1])
-    // //Create a function to convert env list to char **
-    // //ordenate this in ASCII code
-    // //print
-    //     export_ordenate();
-	//str[0] = export
-	export_one(str[1]);
+	if (!name)
+	{
+		ft_printf("minishell: export: `=': not a valid identifier\n");
+		return (0);
+	}
+	while (*name)
+	{
+		if (!(ft_isalnum(*name) || *name == '_'))
+		{
+			ft_printf("minishell: export: : not a valid identifier\n");
+			return (0);
+		}
+		name++;
+	}
+	return (1);
+}
+
+/*	Exports one variable to env, checks if:
+	it contains =, if not does nothing,
+	its a valid identifier (is_valid_identfier),
+	if it's PATH or HOME it will update our minishell struct (base())
+*/
+static void	export_one(char *str)
+{
+	char	**split;
+
+	if (!ft_strchr(str, '='))
+		return ;
+	split = ft_split(str, '=');
+	if (!is_valid_identifier(split[0]))
+	{
+		free_split(split);
+		return ;
+	}
+	change_var(split[0], split[1]);
+	if (!strncmp("PATH", split[0], 5))
+	{
+		free(base()->paths);
+		(base()->paths) = ft_split(split[1], ':');
+	}
+	if (!strncmp("HOME", split[0], 5))
+	{
+		free(base()->home);
+		base()->home = ft_strdup(split[1]);
+	}
+	free(split[0]);
+	free(split);
 }

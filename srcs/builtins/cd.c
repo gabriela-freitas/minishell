@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:22:04 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/09 20:08:03 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	cd(char *str)
 {
 	char	*new_path;
 
-	old_pwd();
 	new_path = str;
 	if (!ft_strncmp("", str, 1))
 	{
@@ -29,13 +28,18 @@ int	cd(char *str)
 		}
 	}
 	else if (!ft_strncmp("~", str, 1))
-		new_path = ft_strjoin(getenv("HOME"), &str[1]);
+		new_path = ft_strjoin(find_env("HOME"), &str[1]);
+	else if (!ft_strncmp("-", str, 1))
+		new_path = ft_strjoin(find_env("OLDPWD"), &str[1]);
+	update_env_pwd("OLDPWD");
 	if (chdir(new_path) == -1)
 	{
+		//new_path = ft_strjoin(str, ": No such file or directory");
+		//error_message("cd: ", new_path);
+		//free(new_path);
 		error_message("cd: ", str);
-		free(new_path);
 		return (-1);
 	}
-	// free(new_path);
+	update_env_pwd("PWD");
 	return (0);
 }

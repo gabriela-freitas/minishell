@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
+/*   Updated: 2022/08/10 19:54:45 by gafreita         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*checks if cmd[0] is builtin and executes it, if not returns -1*/
@@ -14,9 +26,12 @@ static int	exe_builtin(char **cmd)
 	else if (!ft_strncmp(cmd[0], "export", 7))
 		export(cmd);
 	else if (!ft_strncmp(cmd[0], "exit", 6))
+	{
+		ft_exit(cmd);
 		return (0); //GABI ft_exit(0);
+	}
 	else if (!ft_strncmp(cmd[0], "unset", 6))
-		unset(cmd[1]);
+		unset(cmd);
 	else
 		return (-1);
 	return (0);
@@ -44,7 +59,6 @@ static int	ft_execve(char *path, char **cmd)
 	return (0);
 }
 
-//GABI keep this working if the user passes the whole PATH
 /*tests if the list of commands can be executed with current paths,
 	if yes, executes it, else it prints the error and exits*/
 int	exe_cmd(char **cmd)
@@ -66,7 +80,7 @@ int	exe_cmd(char **cmd)
 		free(path);
 		i++;
 	}
-	ft_putstr_fd("zsh: command not found: ", 2);
+	ft_putstr_fd("minishell: command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
 	return (-1);
