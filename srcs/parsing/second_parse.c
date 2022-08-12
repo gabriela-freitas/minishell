@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/11 19:08:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:19:54 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static int    check_quotes(char *str, char c, int *i)  //em caso de erro devolve
 static char    *next_arg(char *str)
 {
 	int i;
-	char *aux;
-	char c;
 
 	i = 0;
 	while (str[i])
@@ -130,7 +128,7 @@ void	second_parse(void)
 		// execute(base()->pipe.cmds[i]);
 	}
 	base()->pipe.cmds[++i] = NULL;
-	pipex(); //adaptar o pipeex
+	pipex(-1); //adaptar o pipeex
 	i = -1;
 	while (base()->pipe.cmds[++i])
 		free_split(base()->pipe.cmds[i]);

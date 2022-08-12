@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/11 18:40:35 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:59:08 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		ft_special_char(char c);
 void	second_parse(void);
 
 // utils.c
-int ft_special_char(char c);
+int		ft_special_char(char c);
 
 //execute.c
 int		exe_cmd(char **cmd);
@@ -148,6 +148,6 @@ char	*ft_strchr_valid(const char *s, int c);
 //pipex.c
 void	first_child_process(int i);
 void	second_child_process(int i);
-void	pipex(void);
+void	pipex(int i);
 
 #endif
