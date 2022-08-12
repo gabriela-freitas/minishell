@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 23:04:06 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:08:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	second_parse(void)
 		// execute(base()->pipe.cmds[i]);
 	}
 	base()->pipe.cmds[++i] = NULL;
-	printf("HEY\n");
 	pipex(); //adaptar o pipeex
 	i = -1;
 	while (base()->pipe.cmds[++i])

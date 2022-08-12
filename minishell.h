@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 22:57:09 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:40:35 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ typedef struct s_base
 	t_list	*div_pipes;
 	t_pipex	pipe;
 }	t_base;
-
-
-
 
 // minishell.c
 void	read_loop(void);

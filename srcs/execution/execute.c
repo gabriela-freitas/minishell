@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 19:54:45 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/11 18:59:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ static int	ft_execve(char *path, char **cmd)
 	char	**env;
 
 	env = convert_env_list();
-	pid = fork();
-	if (pid < 0)
-		return (-1);
-	else if (pid == 0)
+	// pid = fork();
+	// if (pid < 0)
+	// 	return (-1);
+	// else if (pid == 0)
 		execve(path, cmd, env);
-	else
-	{
-		waitpid(pid, NULL, 0);
-		free(path);
-		free(env);
-		return (0);
-	}
+	// else
+	// {
+	// 	waitpid(pid, NULL, 0);
+	// 	free(path);
+	// 	free(env);
+	// 	return (0);
+	// }
 	return (0);
 }
 

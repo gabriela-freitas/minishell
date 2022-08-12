@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:48:52 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 23:05:44 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/11 19:16:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ void		second_child_process(int i);
 /*execute command with execve*/
 static void	exec_command(int read, int write, char **command)
 {
-	if (dup2(read, STDIN_FILENO) == -1)
+	if (read != STDIN_FILENO && dup2(read, STDIN_FILENO) == -1)
 	{
 		// exit_message("could not dup read fd");
 		printf("could not dup read fd\n");
 		return ;
 	}
-	if (dup2(write, STDOUT_FILENO) == -1)
+	if (write != STDOUT_FILENO && dup2(write, STDOUT_FILENO) == -1)
 	{
 		// exit_message("could not dup output fd");
 		printf("could not dup output fd\n");
 		return ;
 	}
+	// close(read);
+	// close(write);
 	//execve(command[0], command, infos()->envp);
 	//exit_message("exec did not work");
 	if (!execute(command) < 0)
@@ -43,6 +45,8 @@ static void	exec_command(int read, int write, char **command)
 	and write on pipe_fd[1]*/
 void	first_child_process(int i)
 {
+	if (base()->pipe.num_cmds == 1)
+		exec_command(STDIN_FILENO, STDOUT_FILENO, base()->pipe.cmds[i]);
 	if (i == 0)
 		exec_command(STDIN_FILENO, base()->pipe.pipe_fd[1],
 			base()->pipe.cmds[i]);
