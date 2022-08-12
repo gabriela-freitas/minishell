@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/11 09:14:41 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/12 20:29:44 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char **split_command(char *str)
 
 	k = 0;
 	i = 0;
-	expand(&str); //este expand nao esta a funcionar
+	expand(&str);
 	split = malloc(sizeof(char*) * 2);
 	split[0] = '\0';
 	while (str[i])
@@ -124,7 +124,7 @@ void	second_parse(void)
 	{
 		// printf("line = %s\n", (char *) temp->content);
 		split = split_command((char *)temp->content);
-		// execute(split);
+		execute(split);
 		// i = 0;
 		// while (split[i])
 		// {

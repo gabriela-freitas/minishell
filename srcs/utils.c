@@ -6,13 +6,10 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/09 00:21:34 by mfreixo-         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/09 20:21:23 by gafreita         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/08/12 18:03:10 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -37,7 +34,7 @@ void	error_message_1(char *cmd, char *error)
 
 int	ft_special_char(char c)
 {
-	if (c == 34 || c == 37 || c == 35)
+	if (c >= 34 && c <= 37)
 		return (1);
 	if (c >= 41 && c <= 47)
 		return (1);
@@ -45,7 +42,7 @@ int	ft_special_char(char c)
 		return (1);
 	if (c == 91 || c == 93 || c == 93 || c == 94)
 		return (1);
-	if (c == 123 || c == 125 || c == 126)
+	if (c == 123 || c == 125 || c == 126 || c == 39)
 		return (1);
 	return (0);
 }
