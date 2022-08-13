@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/12 20:29:44 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/13 12:08:23 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 	pos is given as pointer so its value is altered to be used in next_arg
 	returns -1 if no quotes were found (they were open but not closed)	
 */
+
 static int    check_quotes(char *str, char c, int *i)
 {
 	char *aux;
@@ -46,6 +47,7 @@ static int    check_quotes(char *str, char c, int *i)
 		return (-1);
 	return (0);
 }
+
 
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
 static char    *next_arg(char *str)
@@ -80,22 +82,24 @@ static char    *next_arg(char *str)
 	then it's its arguments
 	this is the last parsing, args are ready to be executed
 */
-static char **split_command(char *str)
+static char **split_command(char **str)
 {
 	int i;
 	char    *aux;
 	int     k;
 	char    **split;
+	char	*aux1;
 
 	k = 0;
 	i = 0;
-	expand(&str);
+	expand((char **) str);
+	aux1 = *str;
 	split = malloc(sizeof(char*) * 2);
 	split[0] = '\0';
-	while (str[i])
+	while (aux1[i])
 	{
-		aux = next_arg(&str[i]);
-		if (!aux)
+		aux = next_arg(&aux1[i]);
+		if (!aux1)
 		{
 			free_split(split);
 			split = NULL;
@@ -103,7 +107,7 @@ static char **split_command(char *str)
 		}
 		i += ft_strlen(aux);
 		add_split(&split, &k, aux);
-		if (!str[i])
+		if (!aux1[i])
 			break;
 		i++;
 	}
@@ -123,7 +127,7 @@ void	second_parse(void)
 	while (temp)
 	{
 		// printf("line = %s\n", (char *) temp->content);
-		split = split_command((char *)temp->content);
+		split = split_command((char **)&temp->content);
 		execute(split);
 		// i = 0;
 		// while (split[i])

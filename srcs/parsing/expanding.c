@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/12 20:28:22 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/13 11:51:50 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void subs_str(char **str, char *add, int pos, int len)
 	last = ft_substr(*str, pos, ft_strlen(&(*str)[pos]));
 	first = ft_substr(*str, 0, pos);
 	join = ft_strjoin(first, add);
-	// free(*str);
+	free(*str);
 	*str = ft_strjoin(join, last);
 	free(join);
 	free(last);
@@ -42,10 +42,13 @@ void add_spaces(char **str)
 	char	*aux;
 
 	i = -1;
+	j = 0;
+	if (!str || !(*str) /*|| !(**str)*/)
+		return ;
 	while ((*str)[++i])
 		if (ft_isspace((*str)[i]))
 			j++;
-	aux = malloc(sizeof(char) * (ft_strlen((*str)) + j));
+	aux = malloc(sizeof(char) * (ft_strlen((*str)) + j + 1));
 	i = 0;
 	j = 0;
 	while ((*str)[i])
