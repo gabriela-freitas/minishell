@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/11 09:41:54 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/13 15:14:20 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,21 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+
+/*	HOME directory is in base, because when HOME
+	is unset cd ~ still goes to HOME directory
+	defined in the begining
+
+	base has paths, so it's not needed to search for PATH
+	in env before executing each command
+*/
 typedef struct s_base
 {
 	t_env	*env;
 	char	**paths;
 	char	*home;
 	t_list	*cmds;
+	int		errnumb;
 }	t_base;
 
 
@@ -119,6 +128,8 @@ char	**get_path();
 
 //utils.c
 void	error_message(char *cmd, char *error);
+void	error_message_1(char *cmd, char *arg, char *error);
+
 
 //utils_parsing.c
 void	my_realloc(char ***split, int size);

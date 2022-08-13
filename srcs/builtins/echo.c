@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 13:24:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/13 14:27:38 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	ft_echo(char **str)
 	}
 	if (new_line)
 		printf("\n");
+	(base()->errnumb) = 0;
 }

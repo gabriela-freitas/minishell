@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 13:14:47 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/13 13:12:00 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,5 @@ static void	export_one(char *str)
 		free(base()->home);
 		base()->home = ft_strdup(split[1]);
 	}
-	free(split[0]);
-	free(split);
+	free_split(split);
 }

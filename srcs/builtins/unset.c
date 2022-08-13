@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 20:40:02 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/13 15:31:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	unset_one(char *name) /*Marta, TOO MANY LINES*/
 		free_split(base()->paths);
 		base()->paths = NULL;
 	}
-	if (!strncmp("HOME", name, 5))
-	{
-		free(base()->home);
-		base()->home = NULL;
-	}
+	// if (!strncmp("HOME", name, 5))
+	// {
+	// 	free(base()->home);
+	// 	base()->home = NULL;
+	// }
 	delete_var(name);
 }
 

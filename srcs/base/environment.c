@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 20:03:19 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/13 14:25:13 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ini_env(char **env) //has more than 25 lines
 	int		j;
 	char	**split;
 
+	(base()->errnumb) = 0;
 	split = ft_split(env[0], '=');
 	(base()->env) = new_env(split[0], split[1]);
 	free(split[0]);
