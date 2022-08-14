@@ -51,9 +51,8 @@ void	read_loop(void)
 int	main(int argc, char **argv, char **env)
 {
 	(void) argc;
-	(void) argv;
-	ini_env(env);
-	ini_paths();
+	(void) argv;	
+	ini_base(env);
 	read_loop();
 	rl_clear_history();
 	base_free();

@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/13 15:14:20 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/14 10:41:43 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ typedef struct s_env
 typedef struct s_base
 {
 	t_env	*env;
+	t_list	*cmds;
 	char	**paths;
 	char	*home;
-	t_list	*cmds;
+	char	*oldpwd;
 	int		errnumb;
 }	t_base;
 
@@ -80,8 +81,8 @@ void	delone_env(t_env *one_env);
 void	env_free(void);
 
 //base.c
+void	ini_base(char **env);
 t_base	*base(void);
-void	ini_paths(void);
 void	base_free(void);
 
 // first_parsing.c

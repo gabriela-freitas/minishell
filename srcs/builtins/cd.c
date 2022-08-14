@@ -6,86 +6,74 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/13 15:38:56 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/14 13:14:40 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int cd_home(char **str)
+{
+	char	*path;
+	
+	path = find_env("HOME");
+	if (path)
+		*str = ft_strdup(path);	
+	else
+	{
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		(base()->errnumb) = 1;
+		return (0);
+	}
+	return (1);
+}
+
+static int cd_oldpwd(char **str)
+{
+	char	*path;
+	
+	path = find_env("OLDPWD");
+	if (path)
+		*str = ft_strdup(path);	
+	else
+	{
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		(base()->errnumb) = 1;
+		return (0);
+	}
+	return (1);
+}
+
+
 //returns zero (0) on success. -1 is returned on an error and errno is set appropriately
-int	cd(char *str) /*Marta, refazer o cd, ter em conta os erros, e os unsets do HOME e do OLDPWD*/
+int	cd(char *str) /*Marta, juntar o cd_home e cd_oldpwd, em principio depois disto ja tem o numero de linhas maximo*/
 {
-	char	*new_path;
-	char	*aux;
-
-	new_path = str;
-	if (!str)
-		str = ft_strdup("");
-	if (!ft_strncmp("", str, 1) || !ft_strncmp("-", str, 1))
+	char *path;
+	
+	if (!str || !ft_strncmp("", str, 1))
 	{
-		if (!ft_strncmp("", str, 1))
-			aux = ft_strdup("HOME");
-		else if (!ft_strncmp("-", str, 1))
-			aux = ft_strdup("OLDPWD");
-		new_path = ft_strjoin(find_env(aux), &str[1]);
-		if (!new_path)
-		{
-			error_message_1("cd: ", aux, " not set");
-			free(aux);
-			free(new_path);
-			(base()->errnumb) = EPERM;
-			return (-1);
-		}
+		if(!cd_home (&path))
+			return (0);
 	}
-	else if (!ft_strncmp("~", str, 1))
-		new_path = ft_strdup(base()->home);
-	update_env_pwd("OLDPWD");
-	if (chdir(new_path) == -1)
-	{
-		(base()->errnumb) = errno;
-		error_message("cd: ", str);
-		return (-1);
-	}
-	(base()->errnumb) = 0;
-	update_env_pwd("PWD");
-	return (0);
-}
-
-
-
-
-/*
-int	cd(char *str)
-{
-	char	*new_path;
-
-	new_path = str;
-	if (!ft_strncmp("", str, 1))
-	{
-		new_path = ft_strdup(base()->home);
-		if (!new_path)
-		{
-			ft_putstr_fd("sh: cd: HOME not set\n", 2);
-			(base()->errnumb) = EPERM;
-			return (-1);
-		}
-	}
-	else if (!ft_strncmp("~", str, 1))
-		new_path = ft_strjoin(find_env("HOME"), &str[1]);
 	else if (!ft_strncmp("-", str, 1))
-		new_path = ft_strjoin(find_env("OLDPWD"), &str[1]);
-	update_env_pwd("OLDPWD");
-	if (chdir(new_path) == -1)
 	{
-		//new_path = ft_strjoin(str, ": No such file or directory");
-		//error_message("cd: ", new_path);
-		//free(new_path);
+		if(!cd_oldpwd (&path))
+			return (0);
+	}
+	else if (!ft_strncmp("~", str, 1))
+		path = ft_strjoin(base()->home, &str[1]);
+	else
+		path = ft_strdup(str);
+	update_env_pwd("OLDPWD");
+	if (chdir(path) == -1)
+	{
 		(base()->errnumb) = errno;
-		error_message("cd: ", str);
+		error_message("cd: ", path);
+		free(path);
 		return (-1);
 	}
+	free(path);
 	(base()->errnumb) = 0;
 	update_env_pwd("PWD");
 	return (0);
 }
-*/

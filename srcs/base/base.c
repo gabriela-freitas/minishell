@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/08 18:32:56 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/14 10:42:12 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ t_base	*base(void)
 	return (&base);
 }
 
-/*	Initializes base()->base base()->home from the environment, where*/
-void	ini_paths(void)
+/*	Initializes all varibles from base()*/
+void	ini_base(char **env)
 {
 	char	*paths;
 
+	ini_env(env);
 	paths = getenv("PATH");
 	(base()->paths) = ft_split(paths, ':');
 	(base()->home) = ft_strdup(getenv("HOME"));
+	(base()->errnumb) = 0;
+	(base()->oldpwd) = ft_strdup(find_env("OLDPWD"));
 }
 
 /*frees everything from struct base*/
