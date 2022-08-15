@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/14 12:36:25 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/15 13:28:23 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	ft_echo(char **str)
 
 	new_line = TRUE;
 	if (!str || !str[1])
+	{
+		printf("\n");
 		return ;
+	}
 	if (*str)
 		str++;
 	if (!ft_strncmp(*str, "-n", 3))

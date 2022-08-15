@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 13:15:26 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/15 13:52:35 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ void	change_var(char *name, char *content)
 	aux->next = last;
 }
 
-/*	Simulates the export builtin, with no options:
-	if no args: prints the env ASCII ordenated
-	export the variables, one by one
-	str[0] = "export"*/
-void	export(char **str)
-{
-	int	i;
-
-	if (!str[1])
-		export_ordenate();
-	i = 0;
-	while (str[++i])
-		export_one(str[i]);
-}
 
 //GABI uniformizar esse erro!!
 //minishell: export: `a-=b': not a valid identifier
@@ -62,9 +48,10 @@ void	export(char **str)
 	exists and contains only valid characters: alphanumerics and '_'*/
 static int	is_valid_identifier(char	*name)
 {
-	if (!name)
+	if (!name || *name == '=')
 	{
-		ft_printf("minishell: export: `=': not a valid identifier\n");
+		ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
+		(base()->errnumb) = EPERM;
 		return (0);
 	}
 	while (*name)
@@ -72,11 +59,12 @@ static int	is_valid_identifier(char	*name)
 		if (!(ft_isalnum(*name) || *name == '_'))
 		{
 			ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
-			// (base()->errnumb) = 
+			(base()->errnumb) = EPERM;
 			return (0);
 		}
 		name++;
 	}
+	(base()->errnumb) = 0;
 	return (1);
 }
 
@@ -88,9 +76,16 @@ static int	is_valid_identifier(char	*name)
 static void	export_one(char *str)
 {
 	char	**split;
+	char	*eq_pos;
 
-	if (!ft_strchr(str, '='))
+	eq_pos = ft_strchr(str, '=');
+	if (!eq_pos)
 		return ;
+	if (eq_pos == str)
+	{
+		is_valid_identifier(eq_pos);
+		return ;
+	}
 	split = ft_split(str, '=');
 	if (!is_valid_identifier(split[0]))
 	{
@@ -106,7 +101,22 @@ static void	export_one(char *str)
 	if (!strncmp("HOME", split[0], 5))
 	{
 		free(base()->home);
-		base()->home = ft_strdup(split[1]);
+		(base()->home) = ft_strdup(split[1]);
 	}
 	free_split(split);
+}
+
+/*	Simulates the export builtin, with no options:
+	if no args: prints the env ASCII ordenated
+	export the variables, one by one
+	str[0] = "export"*/
+void	export(char **str)
+{
+	int	i;
+
+	if (!str[1])
+		export_ordenate();
+	i = 0;
+	while (str[++i])
+		export_one(str[i]);
 }
