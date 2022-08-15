@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 13:52:35 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:08:16 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,36 @@ static int	is_valid_identifier(char	*name)
 	return (1);
 }
 
+
+/*	adaptation of split to be used in the builtin - export
+	if the first value of str is =, instead of having split[0]
+	equal to whats after =, split[0] is set to ""
+*/
+char **export_split(char *str)
+{
+	char **split;
+	char *eq_pos;
+	
+	eq_pos = ft_strchr(str, '=');
+	if (!eq_pos)
+		return (0);
+	if (eq_pos == str)
+	{
+		split = malloc(sizeof(char*) * 2);
+		split[0] = ft_strdup(eq_pos);
+		split[1] = '\0';
+	}
+	else
+		split = ft_split(str, '=');
+	if (!is_valid_identifier(split[0]))
+	{
+		free_split(split);
+		return (0);
+	}
+	return (split);
+}
+
+
 /*	Exports one variable to env, checks if:
 	it contains =, if not does nothing,
 	its a valid identifier (is_valid_identfier),
@@ -76,22 +106,10 @@ static int	is_valid_identifier(char	*name)
 static void	export_one(char *str)
 {
 	char	**split;
-	char	*eq_pos;
-
-	eq_pos = ft_strchr(str, '=');
-	if (!eq_pos)
+	
+	split = export_split(str);
+	if (!split)
 		return ;
-	if (eq_pos == str)
-	{
-		is_valid_identifier(eq_pos);
-		return ;
-	}
-	split = ft_split(str, '=');
-	if (!is_valid_identifier(split[0]))
-	{
-		free_split(split);
-		return ;
-	}
 	change_var(split[0], split[1]);
 	if (!strncmp("PATH", split[0], 5))
 	{
