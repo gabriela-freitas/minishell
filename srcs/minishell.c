@@ -18,7 +18,7 @@
 static void	inthandler(int sig)
 {
 	(void) sig;
-	(base()->errnumb) = errno;
+	(base()->errnumb) = EOWNERDEAD;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

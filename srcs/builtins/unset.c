@@ -6,15 +6,13 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/14 13:05:47 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/15 12:56:50 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //unset also receives more than one value
-
-
 void	delete_var(char	*name)
 {
 	t_env	*aux;
@@ -69,7 +67,7 @@ int	is_valid_name(char *name)
 	Simulates unset builtins
 	removes from base()->env the variable with name = *str
 */
-void	unset_one(char *name) /*Marta, TOO MANY LINES*/
+void	unset_one(char *name)
 {
 	if (!is_valid_name(name))
 		return ;
@@ -78,11 +76,6 @@ void	unset_one(char *name) /*Marta, TOO MANY LINES*/
 		free_split(base()->paths);
 		base()->paths = NULL;
 	}
-	// if (!strncmp("HOME", name, 5))
-	// {
-	// 	free(base()->home);
-	// 	base()->home = NULL;
-	// }
 	delete_var(name);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/13 13:12:00 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/15 13:15:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ static int	is_valid_identifier(char	*name)
 	{
 		if (!(ft_isalnum(*name) || *name == '_'))
 		{
-			ft_printf("minishell: export: : not a valid identifier\n");
+			ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
+			// (base()->errnumb) = 
 			return (0);
 		}
 		name++;
