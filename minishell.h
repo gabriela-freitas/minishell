@@ -6,13 +6,10 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/14 10:41:43 by mfreixo-         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/17 12:29:09 by gafreita         ###   ########.fr       */
->>>>>>> origin/Gabi
+/*   Updated: 2022/08/17 22:02:03 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -56,8 +53,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-<<<<<<< HEAD
-
 /*	HOME directory is in base, because when HOME
 	is unset cd ~ still goes to HOME directory
 	defined in the begining
@@ -65,29 +60,25 @@ typedef struct s_env
 	base has paths, so it's not needed to search for PATH
 	in env before executing each command
 */
-=======
+
 typedef struct s_pipex
 {
 	char	***cmds;
 	int		num_cmds;
 	int		pipe_fd[2];
 	int		pipe_aux[2];
-}t_pipex;
+} t_pipex;
 
->>>>>>> origin/Gabi
 typedef struct s_base
 {
 	t_env	*env;
 	t_list	*cmds;
 	char	**paths;
 	char	*home;
-<<<<<<< HEAD
 	char	*oldpwd;
 	int		errnumb;
-=======
 	t_list	*div_pipes;
 	t_pipex	pipe;
->>>>>>> origin/Gabi
 }	t_base;
 
 // minishell.c
@@ -174,5 +165,6 @@ char	*ft_strchr_valid(const char *s, int c);
 void	first_child_process(int i);
 void	second_child_process(int i);
 void	pipex(int i);
+void	control_pipex(int i);
 
 #endif

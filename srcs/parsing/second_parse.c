@@ -6,13 +6,10 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/13 13:55:47 by mfreixo-         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/12 18:19:54 by gafreita         ###   ########.fr       */
->>>>>>> origin/Gabi
+/*   Updated: 2022/08/17 22:06:37 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -57,11 +54,8 @@ static int    check_quotes(char *str, char c, int *i)
 static char    *next_arg(char *str)
 {
 	int i;
-<<<<<<< HEAD
 	// char *aux;
 	// char c;
-=======
->>>>>>> origin/Gabi
 
 	i = 0;
 	while (str[i])
@@ -126,25 +120,6 @@ static char **split_command(char **str)
 void	second_parse(void)
 {
 	t_list	*temp;
-<<<<<<< HEAD
-	char	**split;
-	// int		i;
-
-	// i = 0;
-	temp = base()->cmds;
-	while (temp)
-	{
-		// printf("line = %s\n", (char *) temp->content);
-		split = split_command((char **)&temp->content);
-		execute(split);
-		// i = 0;
-		// while (split[i])
-		// {
-		// 	printf(">>%s<<\n", split[i]);
-		// 	i++;
-		// }
-		// printf("----------\n");
-=======
 	int		i;
 
 	i = -1;
@@ -153,13 +128,12 @@ void	second_parse(void)
 	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
 	while (temp)
 	{
-		base()->pipe.cmds[++i] = split_command((char *)temp->content);
->>>>>>> origin/Gabi
+		base()->pipe.cmds[++i] = split_command((char **)&temp->content);
 		temp = temp->next;
 		// execute(base()->pipe.cmds[i]);
 	}
 	base()->pipe.cmds[++i] = NULL;
-	pipex(-1); //adaptar o pipeex
+	control_pipex(-1); //adaptar o pipeex
 	i = -1;
 	while (base()->pipe.cmds[++i])
 		free_split(base()->pipe.cmds[i]);

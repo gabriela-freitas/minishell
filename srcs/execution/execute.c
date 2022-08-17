@@ -6,11 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/08/13 14:25:08 by mfreixo-         ###   ########.fr       */
-=======
-/*   Updated: 2022/08/17 17:25:32 by gafreita         ###   ########.fr       */
->>>>>>> origin/Gabi
+/*   Updated: 2022/08/17 21:42:54 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +51,14 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	else if (pid == 0)
 	{
 		execve(path, cmd, env);
-		write(2, "error in execve\n", 17);
+		// write(2, "error in execve\n", 17);
 	}
 	else
 	{
 		// close(fd);
 		waitpid(pid, NULL, 0);
 		// wait(NULL);
-		write(2, "in parent process of ft_execve\n", 31);
+		// write(2, "in parent process of ft_execve\n", 31);
 		free(path);
 		free_split(env);
 		return (0);
