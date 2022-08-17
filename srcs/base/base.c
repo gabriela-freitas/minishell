@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/14 10:42:12 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/10 22:32:21 by gafreita         ###   ########.fr       */
+>>>>>>> origin/Gabi
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +44,5 @@ void	base_free(void) //ir atualizando esta funcao a medida que adicionamos coisa
 	//args_free();
 	free(base()->home);
 	free_split(base()->paths);
-	ft_lstclear(&base()->cmds, free);
+	ft_lstclear(&base()->div_pipes, free);
 }

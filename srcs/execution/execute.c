@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/13 14:25:08 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/17 17:25:32 by gafreita         ###   ########.fr       */
+>>>>>>> origin/Gabi
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +42,29 @@ static int	exe_builtin(char **cmd)
 }
 
 /*executes the list of commands, and avoids the program to exit*/
-static int	ft_execve(char *path, char **cmd)
+static int	ft_execve(char *path, char **cmd, int fd)
 {
 	int		pid;
 	char	**env;
+	(void) fd;
 
 	env = convert_env_list();
 	pid = fork();
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
+	{
 		execve(path, cmd, env);
+		write(2, "error in execve\n", 17);
+	}
 	else
 	{
+		// close(fd);
 		waitpid(pid, NULL, 0);
+		// wait(NULL);
+		write(2, "in parent process of ft_execve\n", 31);
 		free(path);
-		free(env);
+		free_split(env);
 		return (0);
 	}
 	return (0);
@@ -61,7 +72,7 @@ static int	ft_execve(char *path, char **cmd)
 
 /*tests if the list of commands can be executed with current paths,
 	if yes, executes it, else it prints the error and exits*/
-int	exe_cmd(char **cmd)
+int	exe_cmd(char **cmd, int fd)
 {
 	int		i;
 	char	*path;
@@ -69,14 +80,14 @@ int	exe_cmd(char **cmd)
 
 	i = 0;
 	if (!access(cmd[0], F_OK))
-		return (ft_execve(ft_strdup(cmd[0]), cmd));
+		return (ft_execve(ft_strdup(cmd[0]), cmd, fd));
 	while (base()->paths && base()->paths[i])
 	{
 		path_aux = ft_strjoin(base()->paths[i], "/");
 		path = ft_strjoin(path_aux, cmd[0]);
 		free(path_aux);
 		if (!access(path, F_OK))
-			return (ft_execve(path, cmd));
+			return (ft_execve(path, cmd, fd));
 		free(path);
 		i++;
 	}
@@ -87,11 +98,13 @@ int	exe_cmd(char **cmd)
 }
 
 /*Executes the list if commands*/
-int	execute(char **cmds)
+int	execute(char **cmds, int fd)
 {
+	if (fd >= 0)
+		close(fd);
 	if (exe_builtin(cmds) == 0)
 		return (0);
-	if (exe_cmd(cmds) == 0)
+	if (exe_cmd(cmds, fd) == 0)
 		return (0);
 	else
 		return (-1);

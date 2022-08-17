@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/13 13:55:47 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/12 18:19:54 by gafreita         ###   ########.fr       */
+>>>>>>> origin/Gabi
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +57,11 @@ static int    check_quotes(char *str, char c, int *i)
 static char    *next_arg(char *str)
 {
 	int i;
+<<<<<<< HEAD
 	// char *aux;
 	// char c;
+=======
+>>>>>>> origin/Gabi
 
 	i = 0;
 	while (str[i])
@@ -119,6 +126,7 @@ static char **split_command(char **str)
 void	second_parse(void)
 {
 	t_list	*temp;
+<<<<<<< HEAD
 	char	**split;
 	// int		i;
 
@@ -136,8 +144,26 @@ void	second_parse(void)
 		// 	i++;
 		// }
 		// printf("----------\n");
+=======
+	int		i;
+
+	i = -1;
+	temp = base()->div_pipes;
+	base()->pipe.num_cmds = ft_lstsize(temp);
+	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
+	while (temp)
+	{
+		base()->pipe.cmds[++i] = split_command((char *)temp->content);
+>>>>>>> origin/Gabi
 		temp = temp->next;
-		free_split(split);
+		// execute(base()->pipe.cmds[i]);
 	}
-	ft_lstclear(&(base()->cmds), free); //esta a dar double free aqui, nao sei bem pq
+	base()->pipe.cmds[++i] = NULL;
+	pipex(-1); //adaptar o pipeex
+	i = -1;
+	while (base()->pipe.cmds[++i])
+		free_split(base()->pipe.cmds[i]);
+	free_split(base()->pipe.cmds[i]);
+	free(base()->pipe.cmds);
+	ft_lstclear(&(base()->div_pipes), free); //esta a dar double free aqui, nao sei bem pq
 }
