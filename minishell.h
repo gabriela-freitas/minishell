@@ -6,7 +6,11 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/08/14 10:41:43 by mfreixo-         ###   ########.fr       */
+=======
+/*   Updated: 2022/08/17 12:29:09 by gafreita         ###   ########.fr       */
+>>>>>>> origin/Gabi
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +56,7 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+<<<<<<< HEAD
 
 /*	HOME directory is in base, because when HOME
 	is unset cd ~ still goes to HOME directory
@@ -60,16 +65,30 @@ typedef struct s_env
 	base has paths, so it's not needed to search for PATH
 	in env before executing each command
 */
+=======
+typedef struct s_pipex
+{
+	char	***cmds;
+	int		num_cmds;
+	int		pipe_fd[2];
+	int		pipe_aux[2];
+}t_pipex;
+
+>>>>>>> origin/Gabi
 typedef struct s_base
 {
 	t_env	*env;
 	t_list	*cmds;
 	char	**paths;
 	char	*home;
+<<<<<<< HEAD
 	char	*oldpwd;
 	int		errnumb;
+=======
+	t_list	*div_pipes;
+	t_pipex	pipe;
+>>>>>>> origin/Gabi
 }	t_base;
-
 
 // minishell.c
 void	read_loop(void);
@@ -102,11 +121,10 @@ int		ft_special_char(char c);
 void	second_parse(void);
 
 // utils.c
-int ft_special_char(char c);
+int		ft_special_char(char c);
 
 //execute.c
-int		exe_cmd(char **cmd);
-int		execute(char **cmds);
+int		execute(char **cmds, int fd);
 
 //export.c
 void	export(char **str);
@@ -151,5 +169,10 @@ void	change_var(char *name, char *content);
 
 void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);
+
+//pipex.c
+void	first_child_process(int i);
+void	second_child_process(int i);
+void	pipex(int i);
 
 #endif
