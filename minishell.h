@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/12 15:59:08 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/17 12:29:09 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ void	second_parse(void);
 int		ft_special_char(char c);
 
 //execute.c
-int		exe_cmd(char **cmd);
-int		execute(char **cmds);
+int		execute(char **cmds, int fd);
 
 //export.c
 void	export(char **str);

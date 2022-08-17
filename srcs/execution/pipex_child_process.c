@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:48:52 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/12 19:20:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:56:30 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ static void	exec_command(int read, int write, char **command)
 	}
 	//execve(command[0], command, infos()->envp);
 	//exit_message("exec did not work");
-	if (execute(command) < 0)
-		printf("execute did not work\n");
+	// if (execute(command) < 0)
+	// 	printf("execute did not work\n");
+	(void) command;
 }
 
 /* write process ::: will allways read either from pipe_aux[0] or from STDIN
