@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 14:08:50 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/17 19:31:55 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	is_valid_identifier(char	*name)
 {
 	if (!name || *name == '=')
 	{
-		ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
+		// ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
 		(base()->errnumb) = EPERM;
 		return (0);
 	}
@@ -58,7 +58,7 @@ static int	is_valid_identifier(char	*name)
 	{
 		if (!(ft_isalnum(*name) || *name == '_'))
 		{
-			ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
+			// ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
 			(base()->errnumb) = EPERM;
 			return (0);
 		}
@@ -91,6 +91,7 @@ char **export_split(char *str)
 		split = ft_split(str, '=');
 	if (!is_valid_identifier(split[0]))
 	{
+		error_message_1("export: `", str, "': not a valid identifier");
 		free_split(split);
 		return (0);
 	}
