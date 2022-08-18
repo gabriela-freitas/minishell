@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 23:40:36 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/18 15:14:32 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void control_pipex(int i)
 	(void) i;
 	int pid;
 
+	if (base()->pipe.num_cmds == 1)
+	{
+		execute(base()->pipe.cmds[0], -1);
+		return ;
+	}
 	pipe(base()->pipe.pipe_fd);
 	pid = fork();
 	if (pid < 0)
