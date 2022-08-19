@@ -6,12 +6,38 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 23:40:36 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/18 12:34:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
+
+void child1(int i)
+{
+	int	fd_aux;
+
+	if (i != 1)
+	{
+		fd_aux = dup(base()->pipe.pipe_fd[0]);
+		// close(base()->pipe.pipe_fd[0]);
+		close(base()->pipe.pipe_fd[1]);
+	}
+	close(base()->pipe.pipe_fd[0]);
+	dup2(base()->pipe.pipe_fd[1], STDOUT_FILENO);
+	execute(base()->pipe.cmds[i], base()->pipe.pipe_fd[1]);
+	exit(0);
+}
+
+void child2(int i)
+{
+	close(base()->pipe.pipe_fd[1]);
+	dup2(base()->pipe.pipe_fd[0], STDIN_FILENO);
+	close(base()->pipe.pipe_fd[1]);
+	execute(base()->pipe.cmds[i], base()->pipe.pipe_fd[0]);
+	exit(0);
+}
+
 
  void pipex(int i)
 {
@@ -23,18 +49,11 @@
 		printf("error\n");
 	else if (pid == 0)
 	{
-		close(base()->pipe.pipe_fd[0]);
-		dup2(base()->pipe.pipe_fd[1], STDOUT_FILENO);
-		execute(base()->pipe.cmds[0], base()->pipe.pipe_fd[1]);
-		exit(0);
+		child1(0);
 	}
 	else
 	{
-		close(base()->pipe.pipe_fd[1]);
-		dup2(base()->pipe.pipe_fd[0], STDIN_FILENO);
-		close(base()->pipe.pipe_fd[1]);
-		execute(base()->pipe.cmds[1], base()->pipe.pipe_fd[0]);
-		exit(0);
+		child2(1);
 	}
 }
 
