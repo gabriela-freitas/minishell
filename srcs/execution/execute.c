@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 22:07:10 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/19 22:54:50 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ static int	ft_execve(char *path, char **cmd, int fd)
 {
 	int		pid;
 	char	**env;
-	(void) fd;
 
+	(void) fd;
+	if (!ft_strnstr(cmd[0], "minishell", 9))
+		change_var("SHLVL", ft_itoa(ft_atoi(find_env("SHLVL")) + 1));
 	env = convert_env_list();
 	pid = fork();
 	if (pid < 0)
@@ -101,7 +103,11 @@ int	execute(char **cmds, int fd)
 	if (exe_builtin(cmds) == 0)
 		return (0);
 	if (exe_cmd(cmds, fd) == 0)
+	{
+		if (!ft_strnstr(cmds[0], "minishell", 10))
+			change_var("SHLVL", ft_itoa(ft_atoi(find_env("SHLVL")) + 1));
 		return (0);
+	}
 	else
 		return (-1);
 }

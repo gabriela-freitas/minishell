@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 19:31:55 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:17:23 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	change_var(char *name, char *content)
 	aux->next = last;
 }
 
-
 //GABI uniformizar esse erro!!
 //minishell: export: `a-=b': not a valid identifier
 /*	check if is a valid identifier i.e
@@ -50,7 +49,7 @@ static int	is_valid_identifier(char	*name)
 {
 	if (!name || *name == '=')
 	{
-		// ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
+		ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
 		(base()->errnumb) = EPERM;
 		return (0);
 	}
@@ -58,7 +57,7 @@ static int	is_valid_identifier(char	*name)
 	{
 		if (!(ft_isalnum(*name) || *name == '_'))
 		{
-			// ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
+			ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
 			(base()->errnumb) = EPERM;
 			return (0);
 		}
@@ -68,27 +67,30 @@ static int	is_valid_identifier(char	*name)
 	return (1);
 }
 
-
 /*	adaptation of split to be used in the builtin - export
 	if the first value of str is =, instead of having split[0]
 	equal to whats after =, split[0] is set to ""
 */
-char **export_split(char *str)
+char	**export_split(char *str)
 {
-	char **split;
-	char *eq_pos;
-	
+	char	**split;
+	char	*eq_pos;
+
 	eq_pos = ft_strchr(str, '=');
 	if (!eq_pos)
 		return (0);
 	if (eq_pos == str)
 	{
-		split = malloc(sizeof(char*) * 2);
+		split = malloc(sizeof(char *) * 2);
 		split[0] = ft_strdup(eq_pos);
 		split[1] = '\0';
 	}
 	else
-		split = ft_split(str, '=');
+	{
+		split = malloc(sizeof(char *) * 2);
+		split[0] = ft_substr(str, 0, (size_t)eq_pos - (size_t)str);
+		split[1] = ft_substr(eq_pos, 1, ft_strlen(eq_pos));
+	}
 	if (!is_valid_identifier(split[0]))
 	{
 		error_message_1("export: `", str, "': not a valid identifier");
@@ -98,7 +100,6 @@ char **export_split(char *str)
 	return (split);
 }
 
-
 /*	Exports one variable to env, checks if:
 	it contains =, if not does nothing,
 	its a valid identifier (is_valid_identfier),
@@ -107,7 +108,7 @@ char **export_split(char *str)
 static void	export_one(char *str)
 {
 	char	**split;
-	
+
 	split = export_split(str);
 	if (!split)
 		return ;
