@@ -6,14 +6,14 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/18 15:14:32 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/18 15:49:47 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
 
- void pipex(int i)
+void pipex(int i)
 {
 	(void) i;
 	int pid;
