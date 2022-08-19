@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/18 12:34:06 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:34:11 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void control_pipex(int i)
 	(void) i;
 	int pid;
 
+	if (base()->pipe.num_cmds == 1)
+	{
+		execute(base()->pipe.cmds[0], -1);
+		return ;
+	}
 	pipe(base()->pipe.pipe_fd);
 	pid = fork();
 	if (pid < 0)
