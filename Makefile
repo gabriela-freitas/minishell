@@ -26,11 +26,11 @@ SRC =	srcs/minishell.c \
 		srcs/builtins/unset.c \
 		srcs/execution/pipex.c \
 		srcs/execution/execute.c \
-		srcs/execution/pipex_child_process.c \
 		srcs/utils.c \
 		srcs/builtins/export.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/exit.c
+	#	srcs/execution/pipex_child_process.c \	
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/

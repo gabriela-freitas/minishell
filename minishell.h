@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 23:22:27 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/19 20:15:12 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_pipex
 {
 	char	***cmds;
 	int		num_cmds;
-	int		pipe_fd[2];
+	int		**pipe_fd;
 	int		pipe_aux[2];
 } t_pipex;
 
