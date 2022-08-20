@@ -6,5 +6,5 @@
         "libft.h": "c",
         "errno.h": "c"
     },
-    "codam-norminette-3.command": "/var/data/python/bin/norminette"
+    "codam-norminette-3.command": "/home/gabriela/.local/bin/norminette"
 }

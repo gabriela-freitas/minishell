@@ -6,13 +6,13 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 01:03:48 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 01:19:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	close_pipes(int *pipes)
+void close_pipes(int *pipes)
 {
 	int	i;
 	int	pipe_nb;
