@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 18:14:10 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 20:12:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,15 @@ static int	check_quotes(char *str, char c, int *i)
 	}
 	if (str[j])
 	{
-		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
+		printf("entrei aqui\n");
+		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1); //tirar os quotes
 		aux = ft_strchr_valid(&str[j], c);
 		if (!aux)
 			return (-1);
 		*i += ft_strlen(&str[j]) - ft_strlen(aux);
 		ft_memmove(aux, aux + 1, ft_strlen(aux + 1) + 1);
+		activate_back_slash()
+		//criar funcao que ative os backslash DENTRO das aspas pq funciona de maneira diferente
 	}
 	else
 		return (-1);
@@ -89,7 +92,6 @@ static char	**split_command(char **str)
 
 	k = 0;
 	i = 0;
-	// expand((char **) str);
 	aux1 = *str;
 	split = malloc(sizeof(char *) * 2);
 	split[0] = '\0';
@@ -129,6 +131,7 @@ void	second_parse(void)
 	{
 		aux = (char *)temp->content;
 		expand(&aux);
+		// printf("aux = %s\n", aux);
 		base()->pipe.cmds[++i] = split_command(&aux);
 		temp = temp->next;
 	}

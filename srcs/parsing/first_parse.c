@@ -6,13 +6,44 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 14:57:36 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 19:46:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	remove_spaces(const char *str);
+
+/*	checks if open quotes are closed
+	returns 0 if they close, 1 otherwise
+*/
+static int	search_quotes(char *line) //Marta estas a verificar quotes no geral e nao se abre e fecha o mesmo tipo de quote
+{
+	int	open_quotes;
+	int	back_slash;
+	int	i;
+
+	i = -1;
+	back_slash = 0;
+	open_quotes = FALSE;
+	while (line[++i])
+	{
+		while (line[i] == '\\' && i++)
+			back_slash++;
+		if (ft_isquote(line[i]))
+		{
+			if (i > 0)
+			{
+				if (line[i - 1] != '\\' || back_slash % 2 == 0)
+					open_quotes = (open_quotes + 1) % 2;
+			}
+			else
+				open_quotes = (open_quotes + 1) % 2;
+		}
+		back_slash = 0;
+	}
+	return (open_quotes);
+}
 
 /*Removes extra spaces outside ' ' and " "
 	Checks whether the pipe is valid and
@@ -25,6 +56,11 @@ void	first_parse(char *line)
 		return ;
 	}
 	remove_spaces(line);
+	if (search_quotes(line))
+	{
+		ft_putstr_fd("unclosed quotes\n", 2);
+		return ;
+	}
 	search_pipes(line);
 }
 
