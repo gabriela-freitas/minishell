@@ -6,11 +6,29 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 20:12:01 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 22:29:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void activate_back_slash(char *str, int *i)
+{
+	int	j;
+
+	j = -1;
+	while (str[++j])
+	{
+		if (str[j] == '\\')
+		{
+			if (str[j + 1] == '\"' || str[j + 1] == '\\')
+			{
+				ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
+				(*i)--;	
+			}
+		}
+	}
+}
 
 /*	finds the quotes given by c, (" or ') in str, starting in pos = i
 	pos is given as pointer so its value is altered to be used in next_arg
@@ -26,7 +44,7 @@ static int	check_quotes(char *str, char c, int *i)
 		return (-1);
 	if (j > 0)
 	{
-		if (str[j - 1] && str[j - 1] == '\\')
+		if (str[j - 1] && str[j - 1] == '\\' && str[j] == '\"')
 		{
 			ft_memmove(&str[j - 1], &str[j], ft_strlen(&str[j]) + 1);
 			*i = j;
@@ -35,15 +53,17 @@ static int	check_quotes(char *str, char c, int *i)
 	}
 	if (str[j])
 	{
-		printf("entrei aqui\n");
 		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1); //tirar os quotes
-		aux = ft_strchr_valid(&str[j], c);
+		if (c == '\"')
+			aux = ft_strchr_valid(&str[j], c);
+		else
+			aux = ft_strchr(&str[j], c);
 		if (!aux)
 			return (-1);
 		*i += ft_strlen(&str[j]) - ft_strlen(aux);
 		ft_memmove(aux, aux + 1, ft_strlen(aux + 1) + 1);
-		activate_back_slash()
-		//criar funcao que ative os backslash DENTRO das aspas pq funciona de maneira diferente
+		if (c == '\"')
+			activate_back_slash(str, i);
 	}
 	else
 		return (-1);
@@ -131,7 +151,6 @@ void	second_parse(void)
 	{
 		aux = (char *)temp->content;
 		expand(&aux);
-		// printf("aux = %s\n", aux);
 		base()->pipe.cmds[++i] = split_command(&aux);
 		temp = temp->next;
 	}

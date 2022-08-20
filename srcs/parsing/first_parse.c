@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 19:46:06 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 22:32:20 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,51 @@
 
 static void	remove_spaces(const char *str);
 
+static int check_single_quotes(char *line)
+{
+	char	*aux;
+	int		open_quotes;
+
+	aux = line;
+	open_quotes = FALSE;
+	while (*aux)
+	{
+		if (*aux == '\"' && open_quotes == FALSE)
+			aux = ft_strchr_valid(aux + 1, '\"') + 1;
+		if (*aux == '\'')
+			open_quotes = (open_quotes + 1) % 2;
+		aux++;
+	}
+	return (open_quotes);
+}
+
 /*	checks if open quotes are closed
 	returns 0 if they close, 1 otherwise
 */
 static int	search_quotes(char *line) //Marta estas a verificar quotes no geral e nao se abre e fecha o mesmo tipo de quote
 {
-	int	open_quotes;
-	int	back_slash;
-	int	i;
+	int		open_quotes;
+	int		back_slash;
+	int		i;
+	char	c;
 
 	i = -1;
 	back_slash = 0;
 	open_quotes = FALSE;
+	if (check_single_quotes(line) == TRUE)
+		return (TRUE);
 	while (line[++i])
 	{
 		while (line[i] == '\\' && i++)
 			back_slash++;
 		if (ft_isquote(line[i]))
 		{
-			if (i > 0)
+			if (open_quotes == TRUE && line[i] != c)
+				continue;
+			c = line[i];
+			if (c == '\'')
+				open_quotes = (open_quotes + 1) % 2;
+			else if (i > 0)
 			{
 				if (line[i - 1] != '\\' || back_slash % 2 == 0)
 					open_quotes = (open_quotes + 1) % 2;

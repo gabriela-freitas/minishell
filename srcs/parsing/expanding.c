@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 19:44:55 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 22:11:44 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,23 @@ void	next_exp(char **str, int *pos)
 void	expand(char **str)
 {
 	int	i;
+	// int	back_slash;
 
 	i = 0;
+	// back_slash = 0;
 	while ((*str)[i])
 	{
+		// while ((*str)[i] == '\\' && i++)
+		// 	back_slash++;
 		while ((*str)[i] && (*str)[i] != '$' && (*str)[i] != '\'')
 			i++;
 		if ((*str)[i] == '\'')
 		{
+			// if (i > 0 && back_slash % 2 != 0 && i++)
+			// {
+			// 	back_slash = 0;
+			// 	continue ;
+			// }
 			while ((*str)[++i] != '\'')
 				;
 			i++;

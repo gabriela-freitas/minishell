@@ -58,8 +58,10 @@ void	search_pipes(char *str) //Marta, corrigir a norminette disto
 	{
 		while (*str == '\\' && str++)
 			back_slash++;
-		if (ft_isquote(*str) && back_slash % 2 == 0)
-			str = ft_strchr_valid(str + 1, *str) + 1;
+		if (*str == '\"' && back_slash % 2 == 0)
+			str = ft_strchr_valid(str + 1, *str) /*+1*/;
+		if (*str == '\'')
+			str = ft_strchr(str + 1, *str) /*+1*/;
 		if (!str)
 		{
 			ft_lstclear(&base()->div_pipes, free);
