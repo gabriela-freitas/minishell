@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 17:59:27 by gafreita         ###   ########.fr       */
+/*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
+/*   Updated: 2022/08/20 18:01:23 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static int	cd_oldpwd(char **str, char *var)
 
 	path = find_env(var);
 	if (path)
+	{
 		*str = ft_strdup(path);
+		printf("%s\n",*str);
+	}
 	else
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
