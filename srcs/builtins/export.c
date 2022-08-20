@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/19 19:17:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:59:41 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	is_valid_identifier(char	*name)
 {
 	if (!name || *name == '=')
 	{
-		ft_printf("minishell: export: `=': not a valid identifier\n"); // this is not CORRECT :(
 		(base()->errnumb) = EPERM;
 		return (0);
 	}
@@ -57,7 +56,6 @@ static int	is_valid_identifier(char	*name)
 	{
 		if (!(ft_isalnum(*name) || *name == '_'))
 		{
-			ft_printf("minishell: export: : not a valid identifier\n"); //Marta, add here the wrong identifier
 			(base()->errnumb) = EPERM;
 			return (0);
 		}
