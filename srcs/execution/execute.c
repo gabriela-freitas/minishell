@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 18:35:28 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:38:04 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	else if (pid == 0)
 	{
 		execve(path, cmd, env);
+		base()->errnumb = errno;
 		// write(2, "error in execve\n", 17);
 	}
 	else
