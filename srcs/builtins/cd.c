@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 12:58:34 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:49:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static int	cd_oldpwd(char **str, char *var)
 
 	path = find_env(var);
 	if (path)
+	{
 		*str = ft_strdup(path);
+		printf("%s\n",*str);
+	}
 	else
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
