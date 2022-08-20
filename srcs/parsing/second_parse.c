@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 17:42:47 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:14:10 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,6 @@ static char	**split_command(char **str)
 	return (split);
 }
 
-
-
-
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
 	splits it, into valid arguments and executes
@@ -136,7 +133,7 @@ void	second_parse(void)
 		temp = temp->next;
 	}
 	base()->pipe.cmds[++i] = NULL;
-	control_pipex();
+	exec_all();
 	i = -1;
 	while (base()->pipe.cmds[++i])
 		free_split(base()->pipe.cmds[i]);

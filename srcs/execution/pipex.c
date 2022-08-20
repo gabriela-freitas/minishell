@@ -6,13 +6,14 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 17:40:59 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:14:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void close_pipes(int *pipes)
+/*	auxiliar function that closes all pipes */
+static void close_pipes(int *pipes)
 {
 	int	i;
 	int	pipe_nb;
@@ -26,6 +27,9 @@ void close_pipes(int *pipes)
 	}
 }
 
+/*	initializes one pipe for each | on input
+	there are 2 enterings for each pipe, so we have to alloc 2 * number of pipes
+*/
 static int	*pipe_ini(void)
 {
 	int	*pipes;
@@ -41,6 +45,10 @@ static int	*pipe_ini(void)
 	return (pipes);
 }
 
+/*	executes the command in the position cmd, reading from stdin_fd and writin in stdout_fd
+	if this fd are -1 it reads and writes on STDIN_FILENO, STDOUT_FILENO
+	all pipes are closed to prevent the program to be waiting forever
+*/
 void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
 	if (stdout_fd >= 0)
@@ -52,6 +60,8 @@ void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 	exit (0);
 }
 
+/*	executes a list of commands delimited by pipes
+*/
 static void	loop_pipex(void)
 {
 	int	status;
@@ -81,7 +91,10 @@ static void	loop_pipex(void)
 	free(pipes);
 }
 
-void	control_pipex(void)
+/*	checks if there's any pipe, if not executes the only read command
+	if there's pipes, executes calls the function that executes them
+*/
+void	exec_all(void)
 {
 	if (base()->pipe.num_cmds == 1)
 	{
