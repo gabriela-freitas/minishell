@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 01:19:26 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:40:59 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	*pipe_ini(void)
 	return (pipes);
 }
 
-static void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
+void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
 	if (stdout_fd >= 0)
 		dup2(stdout_fd, STDOUT_FILENO);

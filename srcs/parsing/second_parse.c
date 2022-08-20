@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 01:14:06 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:42:47 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	check_quotes(char *str, char c, int *i)
 }
 
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
-static char	*next_arg(char *str)
+char	*next_arg(char *str)
 {
 	int	i;
 
@@ -89,7 +89,7 @@ static char	**split_command(char **str)
 
 	k = 0;
 	i = 0;
-	expand((char **) str);
+	// expand((char **) str);
 	aux1 = *str;
 	split = malloc(sizeof(char *) * 2);
 	split[0] = '\0';
@@ -111,6 +111,9 @@ static char	**split_command(char **str)
 	return (split);
 }
 
+
+
+
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
 	splits it, into valid arguments and executes
@@ -118,6 +121,7 @@ static char	**split_command(char **str)
 void	second_parse(void)
 {
 	t_list	*temp;
+	char	*aux;
 	int		i;
 
 	i = -1;
@@ -126,7 +130,9 @@ void	second_parse(void)
 	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
 	while (temp)
 	{
-		base()->pipe.cmds[++i] = split_command((char **)&temp->content);
+		aux = (char *)temp->content;
+		expand(&aux);
+		base()->pipe.cmds[++i] = split_command(&aux);
 		temp = temp->next;
 	}
 	base()->pipe.cmds[++i] = NULL;

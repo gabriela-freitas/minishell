@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 01:02:32 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:40:54 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 enum	e_builtins
 {
@@ -65,8 +66,6 @@ typedef struct s_pipex
 {
 	char	***cmds;
 	int		num_cmds;
-	int		**pipe_fd;
-	int		pipe_aux[2];
 } t_pipex;
 
 typedef struct s_base
@@ -110,6 +109,7 @@ void	add_split(char ***split, int *size, char *str);
 //second_parse.c
 int		ft_special_char(char c);
 void	second_parse(void);
+char	*next_arg(char *str);
 
 // utils.c
 int		ft_special_char(char c);
@@ -163,5 +163,10 @@ char	*ft_strchr_valid(const char *s, int c);
 
 //pipex.c
 void	control_pipex(void);
+void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes);
+
+
+//redir.c
+void	ini_redir(char **str, int pipe_no);
 
 #endif
