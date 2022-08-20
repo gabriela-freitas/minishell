@@ -6,10 +6,9 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 22:06:37 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 01:14:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -17,11 +16,10 @@
 	pos is given as pointer so its value is altered to be used in next_arg
 	returns -1 if no quotes were found (they were open but not closed)	
 */
-
-static int    check_quotes(char *str, char c, int *i)
+static int	check_quotes(char *str, char c, int *i)
 {
-	char *aux;
-	int j;
+	char	*aux;
+	int		j;
 
 	j = *i;
 	if (!str[j])
@@ -49,18 +47,16 @@ static int    check_quotes(char *str, char c, int *i)
 	return (0);
 }
 
-
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
-static char    *next_arg(char *str)
+static char	*next_arg(char *str)
 {
-	int i;
-	// char *aux;
-	// char c;
+	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && str[i] != '\\' /* && str[i] != '$'*/)
+		while (str[i] && !ft_isspace(str[i])
+			&& !ft_isquote(str[i]) && str[i] != '\\')
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
@@ -72,7 +68,7 @@ static char    *next_arg(char *str)
 				return (0);
 			if (!str[i])
 				return (ft_substr(str, 0, i));
-			continue;
+			continue ;
 		}
 		i++;
 	}
@@ -83,19 +79,19 @@ static char    *next_arg(char *str)
 	then it's its arguments
 	this is the last parsing, args are ready to be executed
 */
-static char **split_command(char **str)
+static char	**split_command(char **str)
 {
-	int i;
-	char    *aux;
-	int     k;
-	char    **split;
+	int		i;
+	char	*aux;
+	int		k;
+	char	**split;
 	char	*aux1;
 
 	k = 0;
 	i = 0;
 	expand((char **) str);
 	aux1 = *str;
-	split = malloc(sizeof(char*) * 2);
+	split = malloc(sizeof(char *) * 2);
 	split[0] = '\0';
 	while (aux1[i])
 	{
@@ -109,14 +105,16 @@ static char **split_command(char **str)
 		i += ft_strlen(aux);
 		add_split(&split, &k, aux);
 		if (!aux1[i])
-			break;
+			break ;
 		i++;
 	}
 	return (split);
 }
 
-/*	given the list of commands (a command ends with pipe of end of input from terminal),
-	splits it, into valid arguments and executes */
+/*	given the list of commands (a command ends with pipe
+	of end of input from terminal),
+	splits it, into valid arguments and executes
+*/
 void	second_parse(void)
 {
 	t_list	*temp;
@@ -130,14 +128,13 @@ void	second_parse(void)
 	{
 		base()->pipe.cmds[++i] = split_command((char **)&temp->content);
 		temp = temp->next;
-		// execute(base()->pipe.cmds[i]);
 	}
 	base()->pipe.cmds[++i] = NULL;
-	control_pipex(-1); //adaptar o pipeex
+	control_pipex();
 	i = -1;
 	while (base()->pipe.cmds[++i])
 		free_split(base()->pipe.cmds[i]);
 	free_split(base()->pipe.cmds[i]);
 	free(base()->pipe.cmds);
-	ft_lstclear(&(base()->div_pipes), free); //esta a dar double free aqui, nao sei bem pq
+	ft_lstclear(&(base()->div_pipes), free);
 }

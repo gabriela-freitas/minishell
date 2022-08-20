@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/19 20:15:12 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 01:02:32 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,6 @@ void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);
 
 //pipex.c
-void	first_child_process(int i);
-void	second_child_process(int i);
-// void	pipex(int i);
-void	control_pipex(int i);
+void	control_pipex(void);
 
 #endif
