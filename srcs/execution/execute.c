@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 16:46:30 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:35:28 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	exe_cmd(char **cmd, int fd)
 	ft_putstr_fd("minishell: command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
+	base()->errnumb = 127;
 	return (-1);
 }
 
