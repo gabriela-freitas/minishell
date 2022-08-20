@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 12:58:34 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/20 17:59:27 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ char	*find_path(char *str)
 {
 	char	*path;
 
-	if (!str || !ft_strncmp("", str, 1))
+	if (!str || !ft_strncmp("", str, 2))
 	{
 		if (!cd_oldpwd (&path, "HOME"))
 			return (0);
 	}
-	else if (!ft_strncmp("-", str, 1))
+	else if (!ft_strncmp("-", str, 2))
 	{
 		if (!cd_oldpwd (&path, "OLDPWD"))
 			return (0);
 	}
-	else if (!ft_strncmp("~", str, 1))
+	else if (!ft_strncmp("~", str, 2))
 		path = ft_strjoin(base()->home, &str[1]);
 	else
 		path = ft_strdup(str);
@@ -65,7 +65,7 @@ int	cd(char *str)
 	update_env_pwd("OLDPWD");
 	if (chdir(path) == -1)
 	{
-		(base()->errnumb) = errno;
+		(base()->errnumb) = 1;
 		error_message("cd: ", path);
 		free(path);
 		return (-1);
