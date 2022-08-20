@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 18:01:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:04:49 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	cd_oldpwd(char **str, char *var)
 	if (path)
 	{
 		*str = ft_strdup(path);
-		printf("%s\n",*str);
+		if (!ft_strncmp("OLDPWD", var, 7))
+			printf("%s\n",*str);
 	}
 	else
 	{
