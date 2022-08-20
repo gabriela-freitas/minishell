@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 17:49:22 by gafreita         ###   ########.fr       */
+/*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
+/*   Updated: 2022/08/20 18:04:49 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	cd_oldpwd(char **str, char *var)
 	if (path)
 	{
 		*str = ft_strdup(path);
-		printf("%s\n",*str);
+		if (!ft_strncmp("OLDPWD", var, 7))
+			printf("%s\n",*str);
 	}
 	else
 	{
@@ -40,17 +41,17 @@ char	*find_path(char *str)
 {
 	char	*path;
 
-	if (!str || !ft_strncmp("", str, 1))
+	if (!str || !ft_strncmp("", str, 2))
 	{
 		if (!cd_oldpwd (&path, "HOME"))
 			return (0);
 	}
-	else if (!ft_strncmp("-", str, 1))
+	else if (!ft_strncmp("-", str, 2))
 	{
 		if (!cd_oldpwd (&path, "OLDPWD"))
 			return (0);
 	}
-	else if (!ft_strncmp("~", str, 1))
+	else if (!ft_strncmp("~", str, 2))
 		path = ft_strjoin(base()->home, &str[1]);
 	else
 		path = ft_strdup(str);
@@ -68,7 +69,7 @@ int	cd(char *str)
 	update_env_pwd("OLDPWD");
 	if (chdir(path) == -1)
 	{
-		(base()->errnumb) = errno;
+		(base()->errnumb) = 1;
 		error_message("cd: ", path);
 		free(path);
 		return (-1);
