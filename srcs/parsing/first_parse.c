@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 22:32:20 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:07:32 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 static void	remove_spaces(const char *str);
 
-static int check_single_quotes(char *line)
+/*	checks if all open single quotes are closed
+	returns 0 if they are closed and 1 otherwise,
+	backslash are ignored 
+*/
+static int	check_single_quotes(char *line)
 {
 	char	*aux;
 	int		open_quotes;
@@ -24,7 +28,9 @@ static int check_single_quotes(char *line)
 	while (*aux)
 	{
 		if (*aux == '\"' && open_quotes == FALSE)
-			aux = ft_strchr_valid(aux + 1, '\"') + 1;
+			aux = ft_strchr_valid(aux + 1, '\"');
+		if (!aux)
+			return (TRUE);
 		if (*aux == '\'')
 			open_quotes = (open_quotes + 1) % 2;
 		aux++;
@@ -32,15 +38,40 @@ static int check_single_quotes(char *line)
 	return (open_quotes);
 }
 
-/*	checks if open quotes are closed
+/*	function to make search_quotes function pass
+	the norminette
+*/
+static void	search_quotes_aux(char *line, int i,
+	int *open_quotes, int back_slash)
+{
+	static char	c;
+
+	if (ft_isquote(line[i]))
+	{
+		if (*open_quotes == TRUE && line[i] != c)
+			return ;
+		c = line[i];
+		if (c == '\'')
+			*open_quotes = (*open_quotes + 1) % 2;
+		else if (i > 0)
+		{
+			if (line[i - 1] != '\\' || back_slash % 2 == 0)
+				*open_quotes = (*open_quotes + 1) % 2;
+		}
+		else
+			*open_quotes = (*open_quotes + 1) % 2;
+	}
+}
+
+/*	checks if open quotes are closed, 
+	\" is not considered valid double quotes
 	returns 0 if they close, 1 otherwise
 */
-static int	search_quotes(char *line) //Marta estas a verificar quotes no geral e nao se abre e fecha o mesmo tipo de quote
+static int	search_quotes(char *line)
 {
 	int		open_quotes;
 	int		back_slash;
 	int		i;
-	char	c;
 
 	i = -1;
 	back_slash = 0;
@@ -51,21 +82,7 @@ static int	search_quotes(char *line) //Marta estas a verificar quotes no geral e
 	{
 		while (line[i] == '\\' && i++)
 			back_slash++;
-		if (ft_isquote(line[i]))
-		{
-			if (open_quotes == TRUE && line[i] != c)
-				continue;
-			c = line[i];
-			if (c == '\'')
-				open_quotes = (open_quotes + 1) % 2;
-			else if (i > 0)
-			{
-				if (line[i - 1] != '\\' || back_slash % 2 == 0)
-					open_quotes = (open_quotes + 1) % 2;
-			}
-			else
-				open_quotes = (open_quotes + 1) % 2;
-		}
+		search_quotes_aux(line, i, &open_quotes, back_slash);
 		back_slash = 0;
 	}
 	return (open_quotes);

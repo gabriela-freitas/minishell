@@ -6,14 +6,14 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 18:14:01 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:26:05 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*	auxiliar function that closes all pipes */
-static void close_pipes(int *pipes)
+static void	close_pipes(int *pipes)
 {
 	int	i;
 	int	pipe_nb;
@@ -45,9 +45,10 @@ static int	*pipe_ini(void)
 	return (pipes);
 }
 
-/*	executes the command in the position cmd, reading from stdin_fd and writin in stdout_fd
-	if this fd are -1 it reads and writes on STDIN_FILENO, STDOUT_FILENO
-	all pipes are closed to prevent the program to be waiting forever
+/*	executes the command in the position cmd, reading from stdin_fd and
+	writing in stdout_fd if this fd are -1 it reads and writes on
+	STDIN_FILENO, STDOUT_FILENO all pipes are closed to prevent the
+	program to be waiting forever
 */
 void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {

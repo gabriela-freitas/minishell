@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/17 19:43:19 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:23:48 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ini_base(char **env)
 }
 
 /*frees everything from struct base*/
-void	base_free(void) //ir atualizando esta funcao a medida que adicionamos coisas no base
+void	base_free(void)
 {
 	env_free();
 	//args_free();

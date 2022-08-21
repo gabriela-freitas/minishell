@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/10 13:18:12 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:27:19 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	**convert_env_list(void)
 	{
 		temp = ft_strjoin(aux->name, "=");
 		var = ft_strjoin(temp, aux->content);
-		// printf("%s\n", var);
 		free(temp);
 		add_split(&mini_env, &size, var);
 		aux = aux->next;
@@ -120,4 +119,3 @@ void	export_ordenate(void)
 		printf("%s\n", env[i]);
 	free_split(env);
 }
-

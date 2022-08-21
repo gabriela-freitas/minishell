@@ -6,10 +6,9 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 19:02:50 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:29:34 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -61,12 +60,11 @@ typedef struct s_env
 	base has paths, so it's not needed to search for PATH
 	in env before executing each command
 */
-
 typedef struct s_pipex
 {
 	char	***cmds;
 	int		num_cmds;
-} t_pipex;
+}	t_pipex;
 
 typedef struct s_base
 {
@@ -122,24 +120,19 @@ void	export(char **str);
 void	unset(char **cmds);
 
 // pwd.c
-void	pwd();
+void	pwd(void);
 void	update_env_pwd(char	*var);
 
-
 // expanding.c
-void expand_str(char *str);
-void expand(char **str);
-
-
+void	expand_str(char *str);
+void	expand(char **str);
 
 // int     check_cmd(char *str);
-char	**get_path();
-
+char	**get_path(void);
 
 //utils.c
 void	error_message(char *cmd, char *error);
 void	error_message_1(char *cmd, char *arg, char *error);
-
 
 //utils_parsing.c
 void	my_realloc(char ***split, int size);
@@ -154,7 +147,6 @@ void	print_env(void);
 int		cd(char *str);
 void	ft_exit(char **str);
 
-
 //env_alter.c
 void	change_var(char *name, char *content);
 
@@ -164,7 +156,6 @@ char	*ft_strchr_valid(const char *s, int c);
 //pipex.c
 void	exec_all(void);
 void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes);
-
 
 //redir.c
 void	ini_redir(char **str, int pipe_no);

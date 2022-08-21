@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/14 10:36:25 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:27:34 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_env	*new_env(char *name, char *content)
 }
 
 /*creates base()->env - list of variables and its values from env*/
-void	ini_env(char **env) //has more than 25 lines
+void	ini_env(char **env)
 {
 	t_env	*aux_env;
 	int		i;
@@ -93,7 +93,6 @@ void	env_free(void)
 	while (base()->env)
 	{
 		delone_env(base()->env);
-		//free(base()->env);
 		(base()->env) = aux;
 		if (base()->env)
 			aux = (base()->env)->next;

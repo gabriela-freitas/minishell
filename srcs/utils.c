@@ -6,10 +6,9 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/13 15:26:24 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:23:33 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -47,4 +46,3 @@ int	ft_special_char(char c)
 		return (1);
 	return (0);
 }
-

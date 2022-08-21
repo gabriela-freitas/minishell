@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 16:46:30 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:26:53 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	exe_builtin(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		ft_echo(cmd);
-	else if (!ft_strncmp(cmd[0], "cd", 3)) //rever este builtin
+	else if (!ft_strncmp(cmd[0], "cd", 3))
 		cd(cmd[1]);
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		pwd();
@@ -28,7 +28,7 @@ static int	exe_builtin(char **cmd)
 	else if (!ft_strncmp(cmd[0], "exit", 6))
 	{
 		ft_exit(cmd);
-		return (0); //GABI ft_exit(0);
+		return (0);
 	}
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		unset(cmd);
@@ -51,16 +51,10 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
-	{
 		execve(path, cmd, env);
-		// write(2, "error in execve\n", 17);
-	}
 	else
 	{
-		// close(fd);
 		waitpid(pid, NULL, 0);
-		// wait(NULL);
-		// write(2, "in parent process of ft_execve\n", 31);
 		free(path);
 		free_split(env);
 		return (0);

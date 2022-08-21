@@ -6,13 +6,13 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 22:29:26 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:25:17 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void activate_back_slash(char *str, int *i)
+void	activate_back_slash(char *str, int *i)
 {
 	int	j;
 
@@ -24,7 +24,7 @@ void activate_back_slash(char *str, int *i)
 			if (str[j + 1] == '\"' || str[j + 1] == '\\')
 			{
 				ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
-				(*i)--;	
+				(*i)--;
 			}
 		}
 	}
@@ -53,7 +53,7 @@ static int	check_quotes(char *str, char c, int *i)
 	}
 	if (str[j])
 	{
-		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1); //tirar os quotes
+		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
 		if (c == '\"')
 			aux = ft_strchr_valid(&str[j], c);
 		else
