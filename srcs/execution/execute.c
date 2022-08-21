@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:26:53 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:34:32 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	if (pid < 0)
 		return (-1);
 	else if (pid == 0)
+	{
 		execve(path, cmd, env);
+		base()->errnumb = errno;
+	}
 	else
 	{
 		waitpid(pid, NULL, 0);
@@ -86,6 +89,7 @@ int	exe_cmd(char **cmd, int fd)
 	ft_putstr_fd("minishell: command not found: ", 2);
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
+	base()->errnumb = 127;
 	return (-1);
 }
 
