@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:23:48 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/22 21:28:28 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ t_base	*base(void)
 void	ini_base(char **env)
 {
 	char	*paths;
+	char	*shlvl;
 
 	ini_env(env);
+	if (find_env("SHLVL"))
+		shlvl = ft_itoa(ft_atoi(find_env("SHLVL")) + 1);
+	else
+		shlvl = ft_itoa(1);
+	change_var("SHLVL", shlvl);
+	free(shlvl);
 	paths = getenv("PATH");
 	(base()->paths) = ft_split(paths, ':');
 	(base()->home) = ft_strdup(getenv("HOME"));
