@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:25:17 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/22 22:10:20 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	activate_back_slash(char *str, int *i)
 
 /*	finds the quotes given by c, (" or ') in str, starting in pos = i
 	pos is given as pointer so its value is altered to be used in next_arg
-	returns -1 if no quotes were found (they were open but not closed)	
+	returns -1 if no quotes were found (they were open but not closed)
 */
 static int	check_quotes(char *str, char c, int *i)
 {

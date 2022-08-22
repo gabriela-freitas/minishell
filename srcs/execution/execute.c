@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/22 21:22:31 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/22 22:08:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,7 @@ int	execute(char **cmds, int fd)
 	if (exe_builtin(cmds) == 0)
 		return (0);
 	if (exe_cmd(cmds, fd) == 0)
-	{
-		if (!ft_strnstr(cmds[0], "minishell", 10))
-			change_var("SHLVL", ft_itoa(ft_atoi(find_env("SHLVL")) + 1));
 		return (0);
-	}
 	else
 		return (-1);
 }

@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*	ignores ^C and prints prompt in a new line
-	and sets errnum to errno (130)	
+	and sets errnum to errno (130)
 	*/
 static void	inthandler(int sig)
 {
@@ -31,18 +31,23 @@ void	read_loop(void)
 {
 	char	*str;
 
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, inthandler);
-	str = readline("minishell$: ");
-	while (str != NULL)
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, inthandler);
+	// str = readline("minishell$: ");
+	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, inthandler);
+		str = readline("minishell$: ");
+		if (str == NULL)
+		{
+			free(str);
+			break ;
+		}
 		add_history(str);
 		first_parse(str);
 		second_parse();
 		free(str);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, inthandler);
-		str = readline("minishell$: ");
 	}
 	free(str);
 	printf("exit\n");
