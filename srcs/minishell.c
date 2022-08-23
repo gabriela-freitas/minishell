@@ -31,18 +31,17 @@ void	read_loop(void)
 {
 	char	*str;
 
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, inthandler);
-	// str = readline("minishell$: ");
 	while (1)
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
 		if (str == NULL)
+			break ;
+		if (!ft_strncmp("", str, 1))
 		{
 			free(str);
-			break ;
+			continue ;
 		}
 		add_history(str);
 		first_parse(str);
