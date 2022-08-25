@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 15:56:20 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 21:49:17 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	sig_block(int sig)
 {
 	(void) sig;
 	signal(SIGINT, SIG_IGN);
+	base()->errnumb = 130;
 	printf("\n");
 }
 
