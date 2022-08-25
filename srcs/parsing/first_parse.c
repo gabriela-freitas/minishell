@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:07:32 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:50:11 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	remove_spaces(const char *str);
 
 /*	checks if all open single quotes are closed
 	returns 0 if they are closed and 1 otherwise,
-	backslash are ignored 
+	backslash are ignored
 */
 static int	check_single_quotes(char *line)
 {
@@ -63,7 +63,7 @@ static void	search_quotes_aux(char *line, int i,
 	}
 }
 
-/*	checks if open quotes are closed, 
+/*	checks if open quotes are closed,
 	\" is not considered valid double quotes
 	returns 0 if they close, 1 otherwise
 */
@@ -91,20 +91,21 @@ static int	search_quotes(char *line)
 /*Removes extra spaces outside ' ' and " "
 	Checks whether the pipe is valid and
 	fills the command list (base()->div_pipes)*/
-void	first_parse(char *line)
+int	first_parse(char *line)
 {
 	if (*line == '|')
 	{
 		error_message("", "parse error near `|'");
-		return ;
+		return (0);
 	}
 	remove_spaces(line);
 	if (search_quotes(line))
 	{
-		ft_putstr_fd("unclosed quotes\n", 2);
-		return ;
+		ft_putstr_fd("minishell :: unclosed quotes\n", 2);
+		return (0);
 	}
 	search_pipes(line);
+	return (1);
 }
 
 //remove extra spaces outside " " and ' '

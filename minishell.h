@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 19:31:11 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:49:35 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_base	*base(void);
 void	base_free(void);
 
 // first_parsing.c
-void	first_parse(char *line);
+int	first_parse(char *line);
 
 // parsing_pipes.c
 void	search_pipes(char *str);

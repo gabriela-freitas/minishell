@@ -44,8 +44,8 @@ void	read_loop(void)
 			continue ;
 		}
 		add_history(str);
-		first_parse(str);
-		second_parse();
+		if (first_parse(str))
+			second_parse();
 		free(str);
 	}
 	free(str);
