@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 19:41:29 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:56:31 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,6 @@ void	next_exp(char **str, int *pos)
 	}
 	else
 		*pos += expand_one(str, j, i - j);
-	// if (ft_isspace((*str)[i]))
-	// 	*pos += 1;
 }
 
 /*	changes the value of *str to its expanded version - when a valid $ is found
