@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:26:05 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:45:31 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	loop_pipex(void)
 	if (fork() == 0)
 		exec_pipe(-1, pipes[1], 0, pipes);
 	else
-	{	
+	{
 		i = 1;
 		while (i < (base()->pipe.num_cmds) - 1)
 		{

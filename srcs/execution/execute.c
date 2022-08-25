@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/22 22:08:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:56:20 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ static int	exe_builtin(char **cmd)
 	return (0);
 }
 
+/*	ignores the ctrl+C signal during command execution
+	so it's not interpreted twice,
+	as for pressing ctrl+C when a command waits for input*/
+static void	sig_block(int sig)
+{
+	(void) sig;
+	signal(SIGINT, SIG_IGN);
+	printf("\n");
+}
+
 /*executes the list of commands, and avoids the program to exit*/
 static int	ft_execve(char *path, char **cmd, int fd)
 {
@@ -55,6 +65,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	}
 	else
 	{
+		signal(SIGINT, sig_block);
 		waitpid(pid, NULL, 0);
 		free(path);
 		free_split(env);
