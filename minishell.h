@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:29:34 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:31:11 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	update_env_pwd(char	*var);
 
 // expanding.c
 void	expand_str(char *str);
-void	expand(char **str);
+void	*expand(char *str);
 
 // int     check_cmd(char *str);
 char	**get_path(void);

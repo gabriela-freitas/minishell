@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/22 22:19:47 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:41:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,36 +119,37 @@ void	next_exp(char **str, int *pos)
 	}
 	else
 		*pos += expand_one(str, j, i - j);
-	if (ft_isspace((*str)[i]))
-		*pos += 1;
+	// if (ft_isspace((*str)[i]))
+	// 	*pos += 1;
 }
 
 /*	changes the value of *str to its expanded version - when a valid $ is found
 	we change $NAME for its content in env
 */
-void	expand(char **str)
+void	*expand(char *str)
 {
 	int	i;
 
 	i = 0;
-	while ((*str)[i])
+	while (str[i])
 	{
-		while ((*str)[i] && (*str)[i] != '$' && (*str)[i] != '\'')
+		while (str[i] && str[i] != '$' && str[i] != '\'')
 			i++;
-		if ((*str)[i] == '\'')
+		if (str[i] == '\'')
 		{
-			while ((*str)[++i] != '\'')
+			while (str[++i] != '\'')
 				;
 			i++;
 		}
-		else if ((*str)[i] == '$')
+		else if (str[i] == '$')
 		{
-			if (!(*str)[i + 1] || (ft_special_char((*str)[i + 1])
-				&& (*str)[i + 1] != '?')
-			|| (ft_isspace((*str)[i + 1])))
+			if (!str[i + 1] || (ft_special_char(str[i + 1])
+					&& str[i + 1] != '?')
+				|| (ft_isspace(str[i + 1])))
 				i++;
 			else
-				next_exp(str, &i);
+				next_exp(&str, &i);
 		}
 	}
+	return ((void *)str);
 }

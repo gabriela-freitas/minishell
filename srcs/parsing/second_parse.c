@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/22 22:10:20 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:35:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ static char	**split_command(char **str)
 void	second_parse(void)
 {
 	t_list	*temp;
-	char	*aux;
+	// char	*aux;
 	int		i;
 
 	i = -1;
@@ -149,9 +149,9 @@ void	second_parse(void)
 	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
 	while (temp)
 	{
-		aux = (char *)temp->content;
-		expand(&aux);
-		base()->pipe.cmds[++i] = split_command(&aux);
+		// aux = (char *)temp->content;
+		temp->content = expand((char *)temp->content);
+		base()->pipe.cmds[++i] = split_command((char **)&temp->content);
 		temp = temp->next;
 	}
 	base()->pipe.cmds[++i] = NULL;
