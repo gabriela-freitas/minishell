@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 19:56:31 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:18:15 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,17 @@ void	next_exp(char **str, int *pos)
 void	*expand(char *str)
 {
 	int	i;
+	int	open_quotes;
 
 	i = 0;
+	open_quotes = FALSE;
 	while (str[i])
 	{
-		while (str[i] && str[i] != '$' && str[i] != '\'')
+		while (str[i] && str[i] != '$' && !ft_isquote(str[i]))
 			i++;
-		if (str[i] == '\'')
+		if (str[i] == '\"')
+			open_quotes = (open_quotes + 1) % 2;
+		if (str[i] == '\'' && open_quotes == FALSE)
 		{
 			while (str[++i] != '\'')
 				;
@@ -148,6 +152,8 @@ void	*expand(char *str)
 			else
 				next_exp(&str, &i);
 		}
+		else
+			i++;
 	}
 	return ((void *)str);
 }
