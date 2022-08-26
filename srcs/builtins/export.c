@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 17:59:41 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/26 17:31:28 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,17 @@ char	**export_split(char *str)
 
 	eq_pos = ft_strchr(str, '=');
 	if (!eq_pos)
-		return (0);
-	if (eq_pos == str)
-	{
-		split = malloc(sizeof(char *) * 2);
-		split[0] = ft_strdup(eq_pos);
-		split[1] = '\0';
-	}
-	else
-	{
-		split = malloc(sizeof(char *) * 2);
-		split[0] = ft_substr(str, 0, (size_t)eq_pos - (size_t)str);
-		split[1] = ft_substr(eq_pos, 1, ft_strlen(eq_pos));
-	}
-	if (!is_valid_identifier(split[0]))
+		return (NULL);
+	split = malloc(sizeof(char *) * 3);
+	split[0] = ft_substr(str, 0, (size_t)eq_pos - (size_t)str);
+	split[1] = ft_substr(eq_pos, 1, ft_strlen(eq_pos));
+	split[2] = '\0';
+	if (split[0][0] == '\0' || !is_valid_identifier(split[0]))
 	{
 		error_message_1("export: `", str, "': not a valid identifier");
+		base()->errnumb = 1;
 		free_split(split);
-		return (0);
+		return (NULL);
 	}
 	return (split);
 }
