@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/23 15:48:22 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/27 14:02:55 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ void	search_pipes(char *str)
 	back_slash = 0;
 	while (*str)
 	{
-		while (*str == '\\' && str++)
+		while (*str && *str == '\\' && str++)
 			back_slash++;
+		if (!*str)
+			continue ;
 		if (*str == '\"' && back_slash % 2 == 0)
 			str = ft_strchr_valid(str + 1, *str);
-		if (*str == '\'')
+		if (*str == '\'' && back_slash % 2 == 0)
 			str = ft_strchr(str + 1, *str);
 		if (!str)
 		{

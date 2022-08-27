@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 19:50:11 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/27 14:37:25 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,20 @@ static int	check_single_quotes(char *line)
 {
 	char	*aux;
 	int		open_quotes;
+	int		back_slash;
 
 	aux = line;
 	open_quotes = FALSE;
 	while (*aux)
 	{
-		if (*aux == '\"' && open_quotes == FALSE)
+		back_slash = 0;
+		while (*aux && *aux == '\\' && aux++)
+			back_slash++;
+		if (*aux && *aux == '\"' && open_quotes == FALSE && back_slash % 2 == 0)
 			aux = ft_strchr_valid(aux + 1, '\"');
-		if (!aux)
+		if (!*aux)
 			return (TRUE);
-		if (*aux == '\'')
+		if (back_slash % 2 == 0 && *aux == '\'')
 			open_quotes = (open_quotes + 1) % 2;
 		aux++;
 	}
@@ -52,7 +56,10 @@ static void	search_quotes_aux(char *line, int i,
 			return ;
 		c = line[i];
 		if (c == '\'')
-			*open_quotes = (*open_quotes + 1) % 2;
+		{	
+			if (open_quotes == FALSE && back_slash % 2 == 0)
+				*open_quotes = (*open_quotes + 1) % 2;
+		}
 		else if (i > 0)
 		{
 			if (line[i - 1] != '\\' || back_slash % 2 == 0)
@@ -82,6 +89,8 @@ static int	search_quotes(char *line)
 	{
 		while (line[i] == '\\' && i++)
 			back_slash++;
+		if (!line[i])
+			break ;
 		search_quotes_aux(line, i, &open_quotes, back_slash);
 		back_slash = 0;
 	}
@@ -101,7 +110,7 @@ int	first_parse(char *line)
 	remove_spaces(line);
 	if (search_quotes(line))
 	{
-		ft_putstr_fd("minishell :: unclosed quotes\n", 2);
+		ft_putstr_fd("minishell: unfinished input\n", 2);
 		return (0);
 	}
 	search_pipes(line);

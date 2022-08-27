@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 19:56:15 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/27 14:44:34 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ char	*next_arg(char *str)
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
-		else if (str[i] == '\\' && str[i + 1] && ft_isspace(str[i + 1]))
+		else if (str[i] == '\\' && str[i + 1]
+			&& (ft_isspace(str[i + 1]) || ft_isquote(str[i + 1])))
 			ft_memmove(&str[i], &str[i + 1], ft_strlen(&str[i + 1]) + 1);
 		else if (ft_isquote(str[i]))
 		{
@@ -94,6 +95,8 @@ char	*next_arg(char *str)
 			continue ;
 		}
 		i++;
+		if (!str[i])
+			return (ft_substr(str, 0, i));
 	}
 	return (NULL);
 }
