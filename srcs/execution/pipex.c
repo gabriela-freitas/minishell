@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 14:04:40 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/28 21:10:52 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,17 @@ static void	loop_pipex(void)
 */
 void	exec_all(void)
 {
+	// if (base()->pipe.num_cmds == 1 && !ft_strncmp("exit", base()->pipe.cmds[0][0], 5))
+	// {
+	// 	ft_exit(base()->pipe.cmds[0]);
+	// 	return ;
+	// }
+	// printf("num cmd = %d\n", base()->pipe.num_cmds);
 	if (base()->pipe.num_cmds == 1)
 	{
 		execute(base()->pipe.cmds[0], -1);
 		return ;
 	}
-	loop_pipex();
+	else
+		loop_pipex();
 }
