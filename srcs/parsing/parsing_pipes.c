@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 16:53:54 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:14:20 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	parse_pipe(char *pipe, char **begin)
 }
 
 /*searchs for the pipes ignoring quotes*/
-void	search_pipes(char *str)
+int	search_pipes(char *str)
 {
 	char	*begin;
 	char	*sub_str;
@@ -66,13 +66,13 @@ void	search_pipes(char *str)
 		if (!str)
 		{
 			ft_lstclear(&base()->div_pipes, free);
-			return ;
+			return (0);
 		}
 		if (*str == '|')
 		{
 			pipe = TRUE;
 			if (!parse_pipe(str, &begin))
-				return ;
+				return (0);
 		}
 		str++;
 		back_slash = 0;
@@ -92,4 +92,5 @@ void	search_pipes(char *str)
 	ft_lstadd_back(&base()->div_pipes,
 		ft_lstnew((void *)ft_strtrim(sub_str, " ")));
 	free(sub_str);
+	return (1);
 }

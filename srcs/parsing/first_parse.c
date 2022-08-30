@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 16:57:01 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:13:45 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	first_parse(char *line)
 		ft_putstr_fd("minishell: unfinished input\n", 2);
 		return (0);
 	}
-	search_pipes(line);
+	if (!search_pipes(line))
+		return (0);
 	return (1);
 }
 

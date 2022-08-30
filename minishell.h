@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 13:35:36 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:13:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	base_free(void);
 int		first_parse(char *line);
 
 // parsing_pipes.c
-void	search_pipes(char *str);
+int	search_pipes(char *str);
 
 // utils_parsing.c
 int		ft_isquote(char c);
