@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/28 21:10:52 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 20:53:45 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	close_pipes(int *pipes)
 }
 
 /*	initializes one pipe for each | on input
-	there are 2 enterings for each pipe, so we have to alloc 2 * number of pipes
+	there are 2 enterings for each pipe,
+	so we have to alloc 2 * number of pipes
 */
 static int	*pipe_ini(void)
 {
@@ -97,17 +98,9 @@ static void	loop_pipex(void)
 */
 void	exec_all(void)
 {
-	// if (base()->pipe.num_cmds == 1 && !ft_strncmp("exit", base()->pipe.cmds[0][0], 5))
-	// {
-	// 	ft_exit(base()->pipe.cmds[0]);
-	// 	return ;
-	// }
-	// printf("num cmd = %d\n", base()->pipe.num_cmds);
 	if (base()->pipe.num_cmds == 1)
-	{
 		execute(base()->pipe.cmds[0], -1);
-		return ;
-	}
 	else
 		loop_pipex();
+	free_command_line();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/25 20:23:14 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/30 20:21:07 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ void	error_message_1(char *cmd, char *arg, char *error)
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(error, 2);
 	ft_putstr_fd("\n", 2);
+}
+
+void	command_not_found(char *cmd)
+{
+	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd("\n", 2);
+	base()->errnumb = 127;
 }
 
 int	ft_special_char(char c)

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 17:25:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 21:12:30 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ char	*next_arg(char *str);
 
 // utils.c
 int		ft_special_char(char c);
+void	command_not_found(char *cmd);
 
 //execute.c
 int		execute(char **cmds, int fd);
@@ -146,7 +147,7 @@ void	print_env(void);
 
 //builtins.c
 int		cd(char *str);
-void	ft_exit(char **str);
+void	ft_exit(char **args);
 
 //env_alter.c
 void	change_var(char *name, char *content);

@@ -6,13 +6,13 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 17:13:45 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:29:33 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int remove_spaces(const char *str);
+static int	remove_spaces(const char *str);
 
 /*	checks if all open single quotes are closed
 	returns 0 if they are closed and 1 otherwise,

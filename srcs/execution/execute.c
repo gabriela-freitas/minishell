@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/28 20:57:07 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 20:22:14 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	sig_block(int sig)
 static int	ft_execve(char *path, char **cmd, int fd)
 {
 	int		pid;
+	int		exit_status;
 	char	**env;
 
 	(void) fd;
@@ -62,12 +63,13 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	else if (pid == 0)
 	{
 		execve(path, cmd, env);
-		base()->errnumb = errno;
+		exit(errno);
 	}
 	else
 	{
 		signal(SIGINT, sig_block);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &exit_status, 0);
+		base()->errnumb = WEXITSTATUS(exit_status); //is this macro allowed?
 		free(path);
 		free_split(env);
 		return (0);
@@ -84,7 +86,7 @@ int	exe_cmd(char **cmd, int fd)
 	char	*path_aux;
 
 	i = 0;
-	if (!access(cmd[0], F_OK))
+	if (!access(cmd[0], X_OK))
 		return (ft_execve(ft_strdup(cmd[0]), cmd, fd));
 	while (base()->paths && base()->paths[i])
 	{
@@ -96,10 +98,7 @@ int	exe_cmd(char **cmd, int fd)
 		free(path);
 		i++;
 	}
-	ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd("\n", 2);
-	base()->errnumb = 127;
+	command_not_found(cmd[0]);
 	return (-1);
 }
 
@@ -111,7 +110,11 @@ int	execute(char **cmds, int fd)
 	if (exe_builtin(cmds) == 0)
 		return (0);
 	if (exe_cmd(cmds, fd) == 0)
+	{
+		if (base()->errnumb == 13)
+			command_not_found(cmds[0]);
 		return (0);
+	}
 	else
 		return (-1);
 }

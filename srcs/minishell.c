@@ -31,29 +31,29 @@ void	read_loop(void)
 {
 	char	*str;
 
+	str = NULL;
 	while (1)
 	{
+		if (str)
+			free(str);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, inthandler);
 		str = readline("minishell$: ");
 		if (str == NULL)
-			break ;
-		if (!ft_strncmp("", str, 1))
 		{
-			free(str);
-			continue ;
+			printf("exit\n");
+			break ;
 		}
+		if (!ft_strncmp("", str, 1))
+			continue ;
 		add_history(str);
 		if (first_parse(str))
 		{
 			second_parse();
 			exec_all();
-			free_command_line();
 		}
-		free(str);
 	}
 	free(str);
-	printf("exit\n");
 }
 
 int	main(int argc, char **argv, char **env)
