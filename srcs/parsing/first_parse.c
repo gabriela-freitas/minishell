@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 14:37:25 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:57:01 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	remove_spaces(const char *str);
+static int remove_spaces(const char *str);
 
 /*	checks if all open single quotes are closed
 	returns 0 if they are closed and 1 otherwise,
@@ -56,7 +56,7 @@ static void	search_quotes_aux(char *line, int i,
 			return ;
 		c = line[i];
 		if (c == '\'')
-		{	
+		{
 			if (open_quotes == FALSE && back_slash % 2 == 0)
 				*open_quotes = (*open_quotes + 1) % 2;
 		}
@@ -107,7 +107,8 @@ int	first_parse(char *line)
 		error_message("", "parse error near `|'");
 		return (0);
 	}
-	remove_spaces(line);
+	if (!remove_spaces(line))
+		return (0);
 	if (search_quotes(line))
 	{
 		ft_putstr_fd("minishell: unfinished input\n", 2);
@@ -118,7 +119,7 @@ int	first_parse(char *line)
 }
 
 //remove extra spaces outside " " and ' '
-static void	remove_spaces(const char *str)
+static int	remove_spaces(const char *str)
 {
 	size_t	i;
 	size_t	j;
@@ -127,6 +128,8 @@ static void	remove_spaces(const char *str)
 	j = -1;
 	while (ft_isspace(str[++j]))
 		;
+	if (!str[j])
+		return (0);
 	ft_memmove((void *)str, (void *)&str[j], ft_strlen(&str[j]) + 1);
 	i = -1;
 	while (str[++i])
@@ -142,4 +145,5 @@ static void	remove_spaces(const char *str)
 				i += (size_t)aux - (size_t)(&str[i]);
 		}
 	}
+	return (1);
 }

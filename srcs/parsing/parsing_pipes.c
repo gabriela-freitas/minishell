@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 14:02:55 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:53:54 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void	search_pipes(char *str)
 		str++;
 		back_slash = 0;
 	}
-	if ((size_t)str - (size_t)(begin) <= 2)
-	{
-		if (!(*(begin + 1)) || ft_isspace(*(begin + 1)))
-		{
-			ft_lstclear(&base()->div_pipes, free);
-			return ;
-		}
-	}
+	// if ((size_t)str - (size_t)(begin) <= 2)
+	// {
+	// 	if (!(*(begin + 1)) || ft_isspace(*(begin + 1)))
+	// 	{
+	// 		ft_lstclear(&base()->div_pipes, free);
+	// 		return ;
+	// 	}
+	// }
 	if (!pipe)
 		sub_str = ft_substr(begin, 0, (size_t)str - (size_t)(begin));
 	else
