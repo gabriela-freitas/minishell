@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 17:13:29 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:25:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	env_free(void);
 //base.c
 void	ini_base(char **env);
 t_base	*base(void);
+void	free_command_line(void);
 void	base_free(void);
 
 // first_parsing.c

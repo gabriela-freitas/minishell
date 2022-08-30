@@ -45,7 +45,11 @@ void	read_loop(void)
 		}
 		add_history(str);
 		if (first_parse(str))
+		{
 			second_parse();
+			exec_all();
+			free_command_line();
+		}
 		free(str);
 	}
 	free(str);

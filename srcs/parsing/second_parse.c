@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 14:44:34 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:24:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,11 +156,4 @@ void	second_parse(void)
 		temp = temp->next;
 	}
 	base()->pipe.cmds[++i] = NULL;
-	exec_all();
-	i = -1;
-	while (base()->pipe.cmds[++i])
-		free_split(base()->pipe.cmds[i]);
-	free_split(base()->pipe.cmds[i]);
-	free(base()->pipe.cmds);
-	ft_lstclear(&(base()->div_pipes), free);
 }

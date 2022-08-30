@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/26 17:09:27 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/30 17:26:01 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,23 @@ void	ini_base(char **env)
 	(base()->oldpwd) = ft_strdup(find_env("OLDPWD"));
 }
 
-/*frees everything from struct base*/
+/*frees the command line after execution*/
+void	free_command_line(void)
+{
+	int	i;
+
+	i = -1;
+	while (base()->pipe.cmds[++i])
+		free_split(base()->pipe.cmds[i]);
+	free_split(base()->pipe.cmds[i]);
+	free(base()->pipe.cmds);
+	ft_lstclear(&(base()->div_pipes), free);
+}
+
+/*frees everything from struct base, before quitting the program*/
 void	base_free(void)
 {
 	env_free();
-	//args_free();
 	free(base()->home);
 	free_split(base()->paths);
 	ft_lstclear(&base()->div_pipes, free);
