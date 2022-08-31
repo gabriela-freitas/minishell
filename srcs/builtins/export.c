@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/26 17:31:28 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:58:23 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	is_valid_identifier(char	*name)
 		}
 		name++;
 	}
-	(base()->errnumb) = 0;
 	return (1);
 }
 
@@ -83,7 +82,7 @@ char	**export_split(char *str)
 	split[2] = '\0';
 	if (split[0][0] == '\0' || !is_valid_identifier(split[0]))
 	{
-		error_message_1("export: `", str, "': not a valid identifier");
+		error_message("export: `", str, "': not a valid identifier");
 		base()->errnumb = 1;
 		free_split(split);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:56:22 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:47:24 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char	**get_path(void);
 
 //utils.c
 void	parse_error_message(char *cmd, char *error, int error_code);
-void	error_message_1(char *cmd, char *arg, char *error);
+void	error_message(char *cmd, char *arg, char *error);
 
 //utils_parsing.c
 void	my_realloc(char ***split, int size);

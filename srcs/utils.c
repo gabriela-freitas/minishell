@@ -6,12 +6,14 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:56:06 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:47:47 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*	Function used to print errors in parsing: exit errors, parsing pipes
+	and unfinished quotes. It also updates the errnumb*/
 void	parse_error_message(char *cmd, char *error, int error_code)
 {
 	ft_putstr_fd("minishell: ", 2);
@@ -21,7 +23,8 @@ void	parse_error_message(char *cmd, char *error, int error_code)
 	base()->errnumb = error_code;
 }
 
-void	error_message_1(char *cmd, char *arg, char *error)
+/*Function to print errors during execution*/
+void	error_message(char *cmd, char *arg, char *error)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);

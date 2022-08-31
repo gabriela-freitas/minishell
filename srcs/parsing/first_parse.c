@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:34:10 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:44:32 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_single_quotes(char *line)
 			back_slash++;
 		if (*aux && *aux == '\"' && open_quotes == FALSE && back_slash % 2 == 0)
 			aux = ft_strchr_valid(aux + 1, '\"');
-		if (!*aux)
+		if (!aux || !*aux)
 			return (TRUE);
 		if (back_slash % 2 == 0 && *aux == '\'')
 			open_quotes = (open_quotes + 1) % 2;

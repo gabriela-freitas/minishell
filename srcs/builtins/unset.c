@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/15 12:56:50 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:54:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,10 @@ int	is_valid_name(char *name)
 	i = -1;
 	while (name[++i])
 	{
-		if (name[i] == '=')
-		{
-			ft_printf("minishell: unset: : invalid parameter name\n");
-			return (0);
-		}
 		if (!(ft_isalnum(name[i]) || name[i] == '_'))
 		{
-			ft_printf("minishell: unset: : not a valid identifier\n");
+			base()->errnumb = 1;
+			error_message("unset: `", name,"': not a valid identifier");
 			return (0);
 		}
 	}

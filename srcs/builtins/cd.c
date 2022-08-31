@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:57:33 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:49:03 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ static int	cd_oldpwd(char **str, char *var)
 	}
 	else
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(var, 2);
-		ft_putstr_fd(" not set\n", 2);
+		error_message("cd: ", var, " not set");
 		(base()->errnumb) = 1;
 		return (0);
 	}
@@ -70,7 +68,7 @@ int	cd(char *str)
 	if (chdir(path) == -1)
 	{
 		(base()->errnumb) = 1;
-		error_message_1("cd: ", path, ": No such file or directory");
+		error_message("cd: ", path, ": No such file or directory");
 		free(path);
 		return (-1);
 	}
