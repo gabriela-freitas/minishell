@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 18:04:49 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:57:33 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	cd(char *str)
 	if (chdir(path) == -1)
 	{
 		(base()->errnumb) = 1;
-		error_message("cd: ", path);
+		error_message_1("cd: ", path, ": No such file or directory");
 		free(path);
 		return (-1);
 	}

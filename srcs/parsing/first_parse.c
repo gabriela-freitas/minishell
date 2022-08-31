@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:38:33 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:34:10 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,14 @@ int	first_parse(char *line)
 {
 	if (*line == '|')
 	{
-		error_message("", "parse error near `|'");
-		base()->errnumb = 2;
+		parse_error_message("", "parse error near `|'", 2);
 		return (0);
 	}
 	if (!remove_spaces(line))
 		return (0);
 	if (search_quotes(line))
 	{
-		ft_putstr_fd("minishell: unfinished input\n", 2);
+		parse_error_message("", "unfinished input", 2);
 		return (0);
 	}
 	if (!search_pipes(line))

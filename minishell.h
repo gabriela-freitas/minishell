@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 21:12:30 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:56:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	*expand(char *str);
 char	**get_path(void);
 
 //utils.c
-void	error_message(char *cmd, char *error);
+void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message_1(char *cmd, char *arg, char *error);
 
 //utils_parsing.c
