@@ -30,6 +30,7 @@ SRC =	srcs/minishell.c \
 		srcs/builtins/export.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/exit.c \
+		srcs/builtins/env.c
 
 LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/

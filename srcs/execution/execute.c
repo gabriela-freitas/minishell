@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 20:22:14 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:11:49 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	exe_builtin(char **cmd)
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		pwd();
 	else if (!ft_strncmp(cmd[0], "env", 4))
-		print_env();
+		env(cmd);
 	else if (!ft_strncmp(cmd[0], "export", 7))
 		export(cmd);
 	else if (!ft_strncmp(cmd[0], "exit", 6))

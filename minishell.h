@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:47:24 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:12:07 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,9 @@ void	my_realloc(char ***split, int size);
 char	**convert_env_list(void);
 void	export_ordenate(void);
 char	*find_env(char	*name);
-void	print_env(void);
+
+//env.c
+void	env(char **args);
 
 //builtins.c
 int		cd(char *str);

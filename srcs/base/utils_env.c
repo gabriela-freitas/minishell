@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/21 12:27:19 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:11:14 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ char	*find_env(char	*name)
 		aux = aux->next;
 	}
 	return (NULL);
-}
-
-/*prints env variables*/
-void	print_env(void)
-{
-	t_env	*aux;
-
-	aux = (base()->env);
-	while (aux)
-	{
-		if (aux->content)
-			printf("%s=%s\n", aux->name, aux->content);
-		else
-			printf("%s=\n", aux->name);
-		aux = aux->next;
-	}
 }
 
 /*	converts the env list to a string's array
