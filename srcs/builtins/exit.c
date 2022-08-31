@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:00:53 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:33:44 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:46:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static	int	too_many_args(char **args)
 	i = -1;
 	while (args[++i])
 		;
-	if (i > 2)
+	if (i > 2 && check_alpha(args[1]))
 	{
 		printf("exit\n");
 		error_message("exit: ", ": too many arguments");
-		base()->errnumb = 2;
+		base()->errnumb = 1;
 		return (TRUE);
 	}
 	return (FALSE);
