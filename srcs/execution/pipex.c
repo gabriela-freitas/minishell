@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 17:18:01 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:31:04 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 		dup2(stdin_fd, STDIN_FILENO);
 	close_pipes(pipes);
 	execute(base()->pipe.cmds[cmd], -1);
-	exit (0);
+	exit (base()->errnumb);
 }
 
 /*	executes a list of commands delimited by pipes
