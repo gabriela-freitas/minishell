@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:00:53 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 21:11:54 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:08:07 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	check_alpha(char *s)
 {
 	int	i;
 
+	if (!s)
+		return (TRUE);
 	i = -1;
 	while (s[++i])
 	{
@@ -26,6 +28,7 @@ static int	check_alpha(char *s)
 	}
 	return (TRUE);
 }
+
 static	int	too_many_args(char **args)
 {
 	int	i;
