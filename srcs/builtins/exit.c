@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:00:53 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:28:52 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:33:44 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static	int	too_many_args(char **args)
 	{
 		printf("exit\n");
 		error_message("exit: ", ": too many arguments");
+		base()->errnumb = 2;
 		return (TRUE);
 	}
 	return (FALSE);

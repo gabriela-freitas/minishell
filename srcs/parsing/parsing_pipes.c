@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:17:50 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:38:41 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	parse_pipe(char *pipe, char **begin)
 	if (!check_pipes(pipe))
 	{
 		error_message("", "parse error near `|'");
+		base()->errnumb = 2;
 		return (0);
 	}
 	if (**begin == '|')
