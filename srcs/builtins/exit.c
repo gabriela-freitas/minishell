@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:00:53 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 15:08:07 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:28:52 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	ft_exit(char **args)
 		exit_status = 0;
 	printf("exit\n");
 	if (!check_alpha(args[1]))
+	{
 		error_message_1("exit: ", args[1], ": numeric argument required");
-	exit(exit_status);
+		exit(2);
+	}
+	else
+		exit(exit_status);
 }
