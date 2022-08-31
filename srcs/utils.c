@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:47:47 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 17:51:44 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	error_message(char *cmd, char *arg, char *error)
 	ft_putstr_fd("\n", 2);
 }
 
+/*	Prints the error for command not found
+	and updates the error number accordingly*/
 void	command_not_found(char *cmd)
 {
 	ft_putstr_fd("minishell: command not found: ", 2);
