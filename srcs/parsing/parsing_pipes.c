@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 17:14:20 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:17:50 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ int	search_pipes(char *str)
 		str++;
 		back_slash = 0;
 	}
-	// if ((size_t)str - (size_t)(begin) <= 2)
-	// {
-	// 	if (!(*(begin + 1)) || ft_isspace(*(begin + 1)))
-	// 	{
-	// 		ft_lstclear(&base()->div_pipes, free);
-	// 		return ;
-	// 	}
-	// }
+	if ((size_t)str - (size_t)(begin) <= 2)
+	{
+		if (!ft_isalpha(*begin) && (!(*(begin + 1)) || ft_isspace(*(begin + 1))))
+		{
+			ft_lstclear(&base()->div_pipes, free);
+			return (0);
+		}
+	}
 	if (!pipe)
 		sub_str = ft_substr(begin, 0, (size_t)str - (size_t)(begin));
 	else
