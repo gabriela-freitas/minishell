@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:24:20 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 22:13:40 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	base_free(void);
 int		first_parse(char *line);
 
 // parsing_pipes.c
-int	search_pipes(char *str);
+int		search_pipes(char *str);
 
 // utils_parsing.c
 int		ft_isquote(char c);
