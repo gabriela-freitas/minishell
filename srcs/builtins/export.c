@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 18:55:15 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 22:16:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	is_valid_identifier(char	*name)
 	if the first value of str is =, instead of having split[0]
 	equal to whats after =, split[0] is set to ""
 */
-char	**export_split(char *str)
+static char	**export_split(char *str)
 {
 	char	**split;
 	char	*eq_pos;
