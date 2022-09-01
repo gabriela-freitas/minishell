@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 17:31:04 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/01 22:03:35 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static void	loop_pipex(void)
 	while (++i < (base()->pipe.num_cmds))
 	{
 		wait(&status);
-		base()->errnumb = WEXITSTATUS(status);
+		if (base()->errnumb == 0)
+			base()->errnumb = WEXITSTATUS(status);
 	}
 	free(pipes);
 }
