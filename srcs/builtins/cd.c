@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 18:56:37 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:28:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,20 @@ char	*find_path(char *str)
 }
 
 /*	Simulates cd builtin*/
-int	cd(char *str)
+int	cd(char **args)
 {
 	char	*path;
+	int		i;
 
-	path = find_path(str);
+	i = 0;
+	while (args[i])
+		i ++;
+	if (i > 2)
+	{
+		parse_error_message("cd", ": too many arguments", 1);
+		return (-1);
+	}
+	path = find_path(args[1]);
 	if (!path)
 		return (0);
 	update_env_pwd("OLDPWD");

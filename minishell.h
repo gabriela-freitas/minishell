@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 18:56:15 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:24:20 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ char	*find_env(char	*name);
 void	env(char **args);
 
 //builtins.c
-int		cd(char *str);
+int		cd(char **args);
 void	ft_exit(char **args);
 
 //env_alter.c

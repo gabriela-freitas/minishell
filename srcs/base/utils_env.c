@@ -6,26 +6,11 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 19:18:54 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:43:30 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*returns the content of a env variable or NULL if it doesn't exists*/
-char	*find_env(char	*name)
-{
-	t_env	*aux;
-
-	aux = base()->env;
-	while (aux->next)
-	{
-		if (!ft_strncmp(name, aux->name, ft_strlen(name)))
-			return (aux->content);
-		aux = aux->next;
-	}
-	return (NULL);
-}
 
 /*formats the name and content to this format NAME="CONTENT"*/
 static char	*format_output(t_env *aux)
@@ -42,8 +27,9 @@ static char	*format_output(t_env *aux)
 }
 
 /*	converts the env list to a string's array
-	return a allocated memory area, needs to be freed after*/
-char	**convert_env_list(void)
+	return a allocated memory area, needs to be freed after
+	with formated output*/
+static char	**convert_env_list_export(void)
 {
 	t_env	*aux;
 	char	**mini_env;
@@ -96,7 +82,7 @@ void	export_ordenate(void)
 	int		i;
 	int		j;
 
-	env = convert_env_list();
+	env = convert_env_list_export();
 	i = -1;
 	while (env[++i])
 	{

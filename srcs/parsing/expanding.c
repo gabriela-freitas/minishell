@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/27 14:41:41 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:53:39 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	add_spaces(char **str)
 		if (ft_isspace((*str)[i]))
 			j++;
 	aux = malloc(sizeof(char) * (ft_strlen((*str)) + j + 1));
+	if (!aux)
+		return ;
 	i = 0;
 	j = 0;
 	while ((*str)[i])
