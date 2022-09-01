@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/30 17:24:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 21:00:42 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	activate_back_slash(char *str, int *i)
-{
-	int	j;
-
-	j = -1;
-	while (str[++j])
-	{
-		if (str[j] == '\\')
-		{
-			if (str[j + 1] == '\"' || str[j + 1] == '\\')
-			{
-				ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
-				(*i)--;
-			}
-		}
-	}
-}
 
 /*	finds the quotes given by c, (" or ') in str, starting in pos = i
 	pos is given as pointer so its value is altered to be used in next_arg
@@ -42,28 +24,17 @@ static int	check_quotes(char *str, char c, int *i)
 	j = *i;
 	if (!str[j])
 		return (-1);
-	if (j > 0)
-	{
-		if (str[j - 1] && str[j - 1] == '\\' && str[j] == '\"')
-		{
-			ft_memmove(&str[j - 1], &str[j], ft_strlen(&str[j]) + 1);
-			*i = j;
-			return (0);
-		}
-	}
 	if (str[j])
 	{
 		ft_memmove(&str[j], &str[j + 1], ft_strlen(&str[j + 1]) + 1);
 		if (c == '\"')
-			aux = ft_strchr_valid(&str[j], c);
+			aux = ft_strchr(&str[j], c);
 		else
 			aux = ft_strchr(&str[j], c);
 		if (!aux)
 			return (-1);
 		*i += ft_strlen(&str[j]) - ft_strlen(aux);
 		ft_memmove(aux, aux + 1, ft_strlen(aux + 1) + 1);
-		if (c == '\"')
-			activate_back_slash(str, i);
 	}
 	else
 		return (-1);
@@ -78,14 +49,10 @@ char	*next_arg(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && !ft_isspace(str[i])
-			&& !ft_isquote(str[i]) && str[i] != '\\')
+		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]))
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
-		else if (str[i] == '\\' && str[i + 1]
-			&& (ft_isspace(str[i + 1]) || ft_isquote(str[i + 1])))
-			ft_memmove(&str[i], &str[i + 1], ft_strlen(&str[i + 1]) + 1);
 		else if (ft_isquote(str[i]))
 		{
 			if (check_quotes(str, str[i], &i) == -1)
