@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 20:21:28 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/01 20:30:46 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,21 @@ static int	search_quotes(char *line)
 	char	c;
 
 	open_quotes = FALSE;
+	i = 0;
 	while (line[i])
 	{
 		if (ft_isquote(line[i]))
 		{
 			if (open_quotes == FALSE)
+			{
 				open_quotes = TRUE;
+				c = line[i];
+			}
 			else if (open_quotes == TRUE)
 			{
 				if (c == line[i])
 					open_quotes = FALSE;
 			}
-			c = line[i];
 		}
 		i++;	
 	}
