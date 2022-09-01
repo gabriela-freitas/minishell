@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 20:30:46 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/01 20:44:50 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	first_parse(char *line)
 		return (0);
 	if (search_quotes(line))
 	{
-		parse_error_message("", "unfinished input", 2);
+		parse_error_message("", "unclosed quotes", 2);
 		return (0);
 	}
 	if (!search_pipes(line))
