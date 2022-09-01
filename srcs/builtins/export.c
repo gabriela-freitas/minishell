@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:58:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:55:15 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,23 @@ char	**export_split(char *str)
 	char	*eq_pos;
 
 	eq_pos = ft_strchr(str, '=');
-	if (!eq_pos)
-		return (NULL);
 	split = malloc(sizeof(char *) * 3);
-	split[0] = ft_substr(str, 0, (size_t)eq_pos - (size_t)str);
-	split[1] = ft_substr(eq_pos, 1, ft_strlen(eq_pos));
+	if (!split)
+		return (NULL);
+	if (!eq_pos)
+	{
+		split[0] = ft_strdup(str);
+		split[1] = NULL;
+	}
+	else
+	{
+		split[0] = ft_substr(str, 0, (size_t)eq_pos - (size_t)str);
+		split[1] = ft_substr(eq_pos, 1, ft_strlen(eq_pos));
+	}
 	split[2] = '\0';
 	if (split[0][0] == '\0' || !is_valid_identifier(split[0]))
 	{
-		error_message("export: `", str, "': not a valid identifier");
-		base()->errnumb = 1;
+		error_message("export: `", str, "': not a valid identifier", 1);
 		free_split(split);
 		return (NULL);
 	}

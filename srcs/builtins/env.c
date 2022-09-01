@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 17:09:35 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 17:25:23 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:56:55 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	print_env(void)
 	{
 		if (aux->content)
 			printf("%s=%s\n", aux->name, aux->content);
-		else
+		else if (aux->content != NULL)
 			printf("%s=\n", aux->name);
 		aux = aux->next;
 	}
@@ -38,8 +38,5 @@ void	env(char **args)
 	if (i == 1)
 		print_env();
 	else
-	{
-		error_message("env: ‘", args[1], "’: No such file or directory");
-		base()->errnumb = 127;
-	}
+		error_message("env: ‘", args[1], "’: No such file or directory", 127);
 }

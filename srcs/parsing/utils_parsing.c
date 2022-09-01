@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/20 19:38:06 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:04:05 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char	*ft_strchr_valid(const char *s, int c)
 
 	i = -1;
 	back_slash = 0;
-	while (s[++i])
+	while (s[i] && s[++i])
 	{
-		while (s[i] == '\\' && i++)
+		while (s[i] == '\\' && s[i++])
 			back_slash++;
 		if (s[i] == (char) c)
 		{

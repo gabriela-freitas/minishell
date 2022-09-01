@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 16:00:53 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:47:24 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:57:15 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_exit(char **args)
 	printf("exit\n");
 	if (!check_alpha(args[1]))
 	{
-		error_message("exit: ", args[1], ": numeric argument required");
+		error_message("exit: ", args[1], ": numeric argument required", 2);
 		exit(2);
 	}
 	else

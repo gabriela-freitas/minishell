@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:54:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:57:36 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int	is_valid_name(char *name)
 	{
 		if (!(ft_isalnum(name[i]) || name[i] == '_'))
 		{
-			base()->errnumb = 1;
-			error_message("unset: `", name,"': not a valid identifier");
+			error_message("unset: `", name,"': not a valid identifier", 1);
 			return (0);
 		}
 	}

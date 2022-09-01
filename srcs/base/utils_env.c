@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 17:11:14 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 19:18:54 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,26 @@ char	*find_env(char	*name)
 	return (NULL);
 }
 
+/*formats the name and content to this format NAME="CONTENT"*/
+static char	*format_output(t_env *aux)
+{
+	char	*var;
+	char	*temp;
+
+	var = ft_strjoin(aux->name, "=\"");
+	temp = ft_strjoin(var, aux->content);
+	free(var);
+	var = ft_strjoin(temp, "\"");
+	free(temp);
+	return (var);
+}
+
 /*	converts the env list to a string's array
 	return a allocated memory area, needs to be freed after*/
 char	**convert_env_list(void)
 {
 	t_env	*aux;
 	char	**mini_env;
-	char	*temp;
 	char	*var;
 	int		size;
 
@@ -43,9 +56,10 @@ char	**convert_env_list(void)
 	mini_env[0] = '\0';
 	while (aux)
 	{
-		temp = ft_strjoin(aux->name, "=");
-		var = ft_strjoin(temp, aux->content);
-		free(temp);
+		if (aux->content == NULL)
+			var = ft_strdup(aux->name);
+		else
+			var = format_output(aux);
 		add_split(&mini_env, &size, var);
 		aux = aux->next;
 	}

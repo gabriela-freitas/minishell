@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:49:03 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:56:37 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static int	cd_oldpwd(char **str, char *var)
 	}
 	else
 	{
-		error_message("cd: ", var, " not set");
-		(base()->errnumb) = 1;
+		error_message("cd: ", var, " not set", 1);
 		return (0);
 	}
 	return (1);
@@ -67,8 +66,7 @@ int	cd(char *str)
 	update_env_pwd("OLDPWD");
 	if (chdir(path) == -1)
 	{
-		(base()->errnumb) = 1;
-		error_message("cd: ", path, ": No such file or directory");
+		error_message("cd: ", path, ": No such file or directory", 1);
 		free(path);
 		return (-1);
 	}
