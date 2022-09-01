@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/31 16:44:32 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/01 20:21:28 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,85 +14,28 @@
 
 static int	remove_spaces(const char *str);
 
-/*	checks if all open single quotes are closed
-	returns 0 if they are closed and 1 otherwise,
-	backslash are ignored
-*/
-static int	check_single_quotes(char *line)
-{
-	char	*aux;
-	int		open_quotes;
-	int		back_slash;
-
-	aux = line;
-	open_quotes = FALSE;
-	while (*aux)
-	{
-		back_slash = 0;
-		while (*aux && *aux == '\\' && aux++)
-			back_slash++;
-		if (*aux && *aux == '\"' && open_quotes == FALSE && back_slash % 2 == 0)
-			aux = ft_strchr_valid(aux + 1, '\"');
-		if (!aux || !*aux)
-			return (TRUE);
-		if (back_slash % 2 == 0 && *aux == '\'')
-			open_quotes = (open_quotes + 1) % 2;
-		aux++;
-	}
-	return (open_quotes);
-}
-
-/*	function to make search_quotes function pass
-	the norminette
-*/
-static void	search_quotes_aux(char *line, int i,
-	int *open_quotes, int back_slash)
-{
-	static char	c;
-
-	if (ft_isquote(line[i]))
-	{
-		if (*open_quotes == TRUE && line[i] != c)
-			return ;
-		c = line[i];
-		if (c == '\'')
-		{
-			if (open_quotes == FALSE && back_slash % 2 == 0)
-				*open_quotes = (*open_quotes + 1) % 2;
-		}
-		else if (i > 0)
-		{
-			if (line[i - 1] != '\\' || back_slash % 2 == 0)
-				*open_quotes = (*open_quotes + 1) % 2;
-		}
-		else
-			*open_quotes = (*open_quotes + 1) % 2;
-	}
-}
-
-/*	checks if open quotes are closed,
-	\" is not considered valid double quotes
-	returns 0 if they close, 1 otherwise
-*/
+/*	checks if all opened quotes are closed */
 static int	search_quotes(char *line)
 {
 	int		open_quotes;
-	int		back_slash;
 	int		i;
+	char	c;
 
-	i = -1;
-	back_slash = 0;
 	open_quotes = FALSE;
-	if (check_single_quotes(line) == TRUE)
-		return (TRUE);
-	while (line[++i])
+	while (line[i])
 	{
-		while (line[i] == '\\' && i++)
-			back_slash++;
-		if (!line[i])
-			break ;
-		search_quotes_aux(line, i, &open_quotes, back_slash);
-		back_slash = 0;
+		if (ft_isquote(line[i]))
+		{
+			if (open_quotes == FALSE)
+				open_quotes = TRUE;
+			else if (open_quotes == TRUE)
+			{
+				if (c == line[i])
+					open_quotes = FALSE;
+			}
+			c = line[i];
+		}
+		i++;	
 	}
 	return (open_quotes);
 }
