@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:24:56 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:46:07 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,6 @@ static int	exe_builtin(char **cmd)
 	return (0);
 }
 
-/*	ignores the ctrl+C signal during command execution
-	so it's not interpreted twice,
-	as for pressing ctrl+C when a command waits for input*/
-static void	sig_block(int sig)
-{
-	(void) sig;
-	signal(SIGINT, SIG_IGN);
-	base()->errnumb = 130;
-	printf("\n");
-}
-
 /*executes the list of commands, and avoids the program to exit*/
 static int	ft_execve(char *path, char **cmd, int fd)
 {
@@ -69,7 +58,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	{
 		signal(SIGINT, sig_block);
 		waitpid(pid, &exit_status, 0);
-		base()->errnumb = WEXITSTATUS(exit_status); //is this macro allowed?
+		base()->errnumb = WEXITSTATUS(exit_status);
 		free(path);
 		free_split(env);
 		return (0);
@@ -117,4 +106,16 @@ int	execute(char **cmds, int fd)
 	}
 	else
 		return (-1);
+}
+
+/*	checks if there's any pipe, if not executes the only read command
+	if there's pipes, executes calls the function that executes them
+*/
+void	exec_all(void)
+{
+	if (base()->pipe.num_cmds == 1)
+		execute(base()->pipe.cmds[0], -1);
+	else
+		loop_pipex();
+	free_command_line();
 }

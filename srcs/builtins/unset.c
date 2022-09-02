@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 18:57:36 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:29:53 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_valid_name(char *name)
 	{
 		if (!(ft_isalnum(name[i]) || name[i] == '_'))
 		{
-			error_message("unset: `", name,"': not a valid identifier", 1);
+			error_message("unset: `", name, "': not a valid identifier", 1);
 			return (0);
 		}
 	}

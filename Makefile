@@ -20,8 +20,8 @@ SRC =	srcs/minishell.c \
 		srcs/parsing/expanding.c \
 		srcs/base/environment.c \
 		srcs/base/base.c \
-		srcs/base/utils_env.c \
 		srcs/builtins/cd.c \
+		srcs/builtins/utils_export.c \
 		srcs/builtins/pwd.c \
 		srcs/builtins/unset.c \
 		srcs/execution/pipex.c \

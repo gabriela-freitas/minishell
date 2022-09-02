@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 20:47:10 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 09:37:24 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,30 @@ static int	parse_pipe(char *pipe, char **begin)
 	return (1);
 }
 
+static int	search_aux(char **str, char **begin, int *pipe)
+{
+	while (**str)
+	{
+		if (!**str)
+			continue ;
+		if (ft_isquote(**str))
+			*str = ft_strchr(*str + 1, **str);
+		if (!*str)
+		{
+			ft_lstclear(&base()->div_pipes, free);
+			return (0);
+		}
+		if (**str == '|')
+		{
+			*pipe = TRUE;
+			if (!parse_pipe(*str, begin))
+				return (0);
+		}
+		(*str)++;
+	}
+	return (1);
+}
+
 /*searchs for the pipes ignoring quotes*/
 int	search_pipes(char *str)
 {
@@ -52,28 +76,12 @@ int	search_pipes(char *str)
 
 	pipe = FALSE;
 	begin = str;
-	while (*str)
-	{
-		if (!*str)
-			continue ;
-		if (ft_isquote(*str))
-			str = ft_strchr(str + 1, *str);
-		if (!str)
-		{
-			ft_lstclear(&base()->div_pipes, free);
-			return (0);
-		}
-		if (*str == '|')
-		{
-			pipe = TRUE;
-			if (!parse_pipe(str, &begin))
-				return (0);
-		}
-		str++;
-	}
+	if (!search_aux(&str, &begin, &pipe))
+		return (0);
 	if ((size_t)str - (size_t)(begin) <= 2)
 	{
-		if (!ft_isalpha(*begin) && (!(*(begin + 1)) || ft_isspace(*(begin + 1))))
+		if (!ft_isalpha(*begin) && (!(*(begin + 1))
+				|| ft_isspace(*(begin + 1))))
 		{
 			ft_lstclear(&base()->div_pipes, free);
 			return (0);

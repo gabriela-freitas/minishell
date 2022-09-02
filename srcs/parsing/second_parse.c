@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:00:42 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 09:46:04 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,38 +68,44 @@ char	*next_arg(char *str)
 	return (NULL);
 }
 
+static void	split_aux(char *aux1, char ***split)
+{
+	int		i;
+	int		k;
+	char	*aux;
+
+	i = 0;
+	k = 0;
+	while (aux1[i])
+	{
+		aux = next_arg(&aux1[i]);
+		if (!aux1)
+		{
+			free_split(*split);
+			*split = NULL;
+			break ;
+		}
+		i += ft_strlen(aux);
+		add_split(split, &k, aux);
+		if (!aux1[i])
+			break ;
+		i++;
+	}
+}
+
 /*	returns an array of args, first is the command to be executed,
 	then it's its arguments
 	this is the last parsing, args are ready to be executed
 */
 static char	**split_command(char **str)
 {
-	int		i;
-	char	*aux;
-	int		k;
 	char	**split;
 	char	*aux1;
 
-	k = 0;
-	i = 0;
 	aux1 = *str;
 	split = malloc(sizeof(char *) * 2);
 	split[0] = '\0';
-	while (aux1[i])
-	{
-		aux = next_arg(&aux1[i]);
-		if (!aux1)
-		{
-			free_split(split);
-			split = NULL;
-			break ;
-		}
-		i += ft_strlen(aux);
-		add_split(&split, &k, aux);
-		if (!aux1[i])
-			break ;
-		i++;
-	}
+	split_aux(aux1, &split);
 	return (split);
 }
 

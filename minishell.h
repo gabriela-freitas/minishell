@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 22:13:40 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:46:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	command_not_found(char *cmd);
 
 //execute.c
 int		execute(char **cmds, int fd);
+void	exec_all(void);
 
 //export.c
 void	export(char **str);
@@ -135,6 +136,7 @@ char	**get_path(void);
 //utils.c
 void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message(char *cmd, char *arg, char *error, int error_code);
+void	sig_block(int sig);
 
 //utils_parsing.c
 void	my_realloc(char ***split, int size);
@@ -158,8 +160,8 @@ void	ft_echo(char **str);
 char	*ft_strchr_valid(const char *s, int c);
 
 //pipex.c
-void	exec_all(void);
-void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes);
+// void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes);
+void	loop_pipex(void);
 
 //redir.c
 void	ini_redir(char **str, int pipe_no);

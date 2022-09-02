@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 22:12:27 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:45:32 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	*pipe_ini(void)
 	STDIN_FILENO, STDOUT_FILENO all pipes are closed to prevent the
 	program to be waiting forever
 */
-void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
+static void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
 	if (stdout_fd >= 0)
 		dup2(stdout_fd, STDOUT_FILENO);
@@ -62,9 +62,21 @@ void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 	exit (base()->errnumb);
 }
 
+static void	wait_aux(int *status)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (base()->pipe.num_cmds))
+	{
+		wait(status);
+		base()->errnumb = WEXITSTATUS(*status);
+	}
+}
+
 /*	executes a list of commands delimited by pipes
 */
-static void	loop_pipex(void)
+void	loop_pipex(void)
 {
 	int	status;
 	int	i;
@@ -87,24 +99,6 @@ static void	loop_pipex(void)
 	if (fork() == 0)
 		exec_pipe(pipes[(i - 1) * 2], -1, i, pipes);
 	close_pipes(pipes);
-	i = -1;
-	while (++i < (base()->pipe.num_cmds))
-	{
-		wait(&status);
-		if (base()->errnumb == 0)
-			base()->errnumb = WEXITSTATUS(status);
-	}
+	wait_aux(&status);
 	free(pipes);
-}
-
-/*	checks if there's any pipe, if not executes the only read command
-	if there's pipes, executes calls the function that executes them
-*/
-void	exec_all(void)
-{
-	if (base()->pipe.num_cmds == 1)
-		execute(base()->pipe.cmds[0], -1);
-	else
-		loop_pipex();
-	free_command_line();
 }

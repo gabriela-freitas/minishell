@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 18:55:36 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:43:25 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,15 @@ int	ft_special_char(char c)
 	if (c == '\\')
 		return (1);
 	return (0);
+}
+
+/*	ignores the ctrl+C signal during command execution
+	so it's not interpreted twice,
+	as for pressing ctrl+C when a command waits for input*/
+void	sig_block(int sig)
+{
+	(void) sig;
+	signal(SIGINT, SIG_IGN);
+	base()->errnumb = 130;
+	printf("\n");
 }

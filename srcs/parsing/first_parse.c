@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 20:44:50 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:31:23 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	search_quotes(char *line)
 					open_quotes = FALSE;
 			}
 		}
-		i++;	
+		i++;
 	}
 	return (open_quotes);
 }

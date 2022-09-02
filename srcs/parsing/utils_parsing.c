@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:52:18 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 08:31:39 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,6 @@ int	ft_isquote(char c)
 		return (1);
 	return (0);
 }
-
-//DA PRA TIRAR ESTA
-// char	*ft_strchr_valid(const char *s, int c)
-// {
-// 	int	back_slash;
-// 	int	i;
-
-// 	i = -1;
-// 	back_slash = 0;
-// 	while (s[i] && s[++i])
-// 	{
-// 		while (s[i] == '\\' && s[i++])
-// 			back_slash++;
-// 		if (s[i] == (char) c)
-// 		{
-// 			if (i > 0)
-// 			{
-// 				if (s[i - 1] != '\\' || back_slash % 2 == 0)
-// 					return ((char *)&s[i]);
-// 			}
-// 			else
-// 				return ((char *)&s[i]);
-// 		}
-// 		back_slash = 0;
-// 	}
-// 	if (c == 0)
-// 		return ((char *)&s[i]);
-// 	return (0);
-// }
-
-/*	if the char c is found in string s,
-	but is preceded by \, then its not valid */
-// char	*ft_strchr_valid(const char *s, int c)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (s[i] == (char) c)
-// 		{
-// 			if (s[i - 1] && s[i - 1] != '\\')
-// 				return ((char *)&s[i]);
-// 			else if (s[i - 1] && s[i - 2] && s[i - 2] == '\\')
-// 				return ((char *)&s[i]);
-// 		}
-// 		i ++;
-// 	}
-// 	if (c == 0)
-// 		return ((char *)&s[i]);
-// 	return (0);
-// }
-
 
 /*	reallocs split to have new size	*/
 void	my_realloc(char ***split, int size)
