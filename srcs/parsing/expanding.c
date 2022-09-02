@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:36:29 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:36:59 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,21 @@ static void	next_exp(char **str, int *pos)
 	int	j;
 
 	i = *pos;
-	while ((*str)[i] && !ft_special_char((*str)[i]))
+	while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_'))
 		i++;
 	if ((*str)[i++] == '$')
 	{
 		j = i;
-		while ((*str)[i] && !ft_special_char((*str)[i])
+		if ((*str)[i] == '?')
+		{
+			*pos += expand_one(str, j, 1);
+			return ;
+		}
+		while ((*str)[i] && (ft_isalnum((*str)[i]) || (*str)[i] == '_')
 			&& !ft_isspace((*str)[i]))
 			i++;
 	}
-	if ((*str)[i] == '?')
-	{
-		*pos += expand_one(str, j, 1);
-	}
-	else
-		*pos += expand_one(str, j, i - j);
+	*pos += expand_one(str, j, i - j);
 }
 
 /*	Auxiliar function to make expand pass the norminette */
@@ -102,7 +102,7 @@ static void	expand_aux(char **str, int *i, int *open_quotes)
 	}
 	else if (str1[j] == '$')
 	{
-		if (!str1[j + 1] || (ft_special_char(str1[j + 1])
+		if (!str1[j + 1] || ((!ft_isalnum(str1[j + 1]) && str1[j + 1] != '_')
 				&& str1[j + 1] != '?') || (ft_isspace(str1[j + 1])))
 			j++;
 		else

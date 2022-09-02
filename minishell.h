@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:55:13 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:40:48 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-enum	e_builtins
-{
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	ENV,
-	EXIT,
-	UNSET,
-};
-
-enum e_operators
-{
-	NONE,
-	PIPE,
-	AND,
-	OR,
-};
-
 # define FALSE 0
 # define TRUE 1
 
@@ -53,6 +34,12 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_pipex
+{
+	char	***cmds;
+	int		num_cmds;
+}	t_pipex;
+
 /*	HOME directory is in base, because when HOME
 	is unset cd ~ still goes to HOME directory
 	defined in the begining
@@ -60,16 +47,9 @@ typedef struct s_env
 	base has paths, so it's not needed to search for PATH
 	in env before executing each command
 */
-typedef struct s_pipex
-{
-	char	***cmds;
-	int		num_cmds;
-}	t_pipex;
-
 typedef struct s_base
 {
 	t_env	*env;
-	t_list	*cmds;
 	char	**paths;
 	char	*home;
 	char	*oldpwd;
@@ -79,14 +59,10 @@ typedef struct s_base
 }	t_base;
 
 /********* SRCS *********/
-// minishell.c
-void	read_loop(void);
-
 //utils.c
 void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message(char *cmd, char *arg, char *error, int error_code);
 void	command_not_found(char *cmd);
-int		ft_special_char(char c);
 void	sig_block(int sig);
 
 /********* BASE *********/

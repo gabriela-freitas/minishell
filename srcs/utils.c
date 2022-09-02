@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:26:49 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 11:30:14 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,6 @@ void	command_not_found(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd("\n", 2);
 	base()->errnumb = 127;
-}
-
-/*	characters that delimit varibles
-	function used to find the end of a variable declaration 
-	(for example for expand builtin)
-*/
-int	ft_special_char(char c)
-{
-	if (c == '\"' || c == '#' || c == '$' || c == '%')
-		return (1);
-	if (c == ')' || c == '(' || c == '*' || c == '+')
-		return (1);
-	if (c == ',' || c == '-' || c == '.' || c == '/')
-		return (1);
-	if (c == ':' || c == '=' || c == '?' || c == '@')
-		return (1);
-	if (c == '[' || c == ']' || c == '^' || c == '\\')
-		return (1);
-	if (c == '{' || c == '}' || c == '~' || c == '\'')
-		return (1);
-	return (0);
 }
 
 /*	ignores the ctrl+C signal during command execution
