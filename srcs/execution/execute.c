@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:46:07 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:38:21 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 
 /*tests if the list of commands can be executed with current paths,
 	if yes, executes it, else it prints the error and exits*/
-int	exe_cmd(char **cmd, int fd)
+static int	exe_cmd(char **cmd, int fd)
 {
 	int		i;
 	char	*path;

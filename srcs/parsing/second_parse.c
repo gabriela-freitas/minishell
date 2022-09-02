@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 09:46:04 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:33:52 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	check_quotes(char *str, char c, int *i)
 }
 
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
-char	*next_arg(char *str)
+static char	*next_arg(char *str)
 {
 	int	i;
 
@@ -68,6 +68,7 @@ char	*next_arg(char *str)
 	return (NULL);
 }
 
+/*	Auxiliar function to make split_command pass the norminette! */
 static void	split_aux(char *aux1, char ***split)
 {
 	int		i;

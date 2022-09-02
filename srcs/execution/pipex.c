@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:45:32 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:37:15 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ static void	wait_aux(int *status)
 	}
 }
 
-/*	executes a list of commands delimited by pipes
-*/
+/*	executes a list of commands delimited by pipes */
 void	loop_pipex(void)
 {
 	int	status;

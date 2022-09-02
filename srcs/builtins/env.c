@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 17:09:35 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:43:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:43:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	print_env(void)
 	}
 }
 
+/* function that simulates env builtin */
 void	env(char **args)
 {
 	int	i;

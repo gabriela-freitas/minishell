@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:23:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 22:16:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:40:28 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	change_var(char *name, char *content)
 	aux->next = last;
 }
 
-//GABI uniformizar esse erro!!
-//minishell: export: `a-=b': not a valid identifier
 /*	check if is a valid identifier i.e
 	exists and contains only valid characters: alphanumerics and '_'*/
 static int	is_valid_identifier(char	*name)

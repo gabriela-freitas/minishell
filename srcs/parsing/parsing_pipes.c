@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 09:37:24 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 09:52:46 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	parse_pipe(char *pipe, char **begin)
 	return (1);
 }
 
+/*	Auxiliar function to make search_pipes pass the norminette */
 static int	search_aux(char **str, char **begin, int *pipe)
 {
 	while (**str)

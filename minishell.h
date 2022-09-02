@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:46:01 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:55:13 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,23 @@ typedef struct s_base
 	t_pipex	pipe;
 }	t_base;
 
+/********* SRCS *********/
 // minishell.c
 void	read_loop(void);
+
+//utils.c
+void	parse_error_message(char *cmd, char *error, int error_code);
+void	error_message(char *cmd, char *arg, char *error, int error_code);
+void	command_not_found(char *cmd);
+int		ft_special_char(char c);
+void	sig_block(int sig);
+
+/********* BASE *********/
+//base.c
+t_base	*base(void);
+void	ini_base(char **env);
+void	free_command_line(void);
+void	base_free(void);
 
 //environment.c
 t_env	*new_env(char *name, char *content);
@@ -87,11 +102,47 @@ void	ini_env(char **env);
 void	delone_env(t_env *one_env);
 void	env_free(void);
 
-//base.c
-void	ini_base(char **env);
-t_base	*base(void);
-void	free_command_line(void);
-void	base_free(void);
+/********* BUILTINS *********/
+//cd.c
+int		cd(char **args);
+
+//echo.c
+void	ft_echo(char **str);
+
+//env.c
+void	env(char **args);
+char	**convert_env_list(void);
+char	*find_env(char	*name);
+
+//exit.c
+void	ft_exit(char **args);
+
+//export.c
+void	change_var(char *name, char *content);
+void	export(char **str);
+
+// pwd.c
+void	pwd(void);
+void	update_env_pwd(char	*var);
+
+//unset.c
+void	unset(char **cmds);
+
+//utils_export.c
+void	export_ordenate(void);
+
+/********* EXECUTION *********/
+//execute.c
+int		execute(char **cmds, int fd);
+void	exec_all(void);
+
+//pipex.c
+void	loop_pipex(void);
+
+/********* PARSING *********/
+
+// expanding.c
+void	*expand(char *str);
 
 // first_parsing.c
 int		first_parse(char *line);
@@ -99,71 +150,11 @@ int		first_parse(char *line);
 // parsing_pipes.c
 int		search_pipes(char *str);
 
+//second_parse.c
+void	second_parse(void);
+
 // utils_parsing.c
 int		ft_isquote(char c);
-char	*ft_strchr_valid(const char *s, int c);
-void	my_realloc(char ***split, int size);
 void	add_split(char ***split, int *size, char *str);
-
-//second_parse.c
-int		ft_special_char(char c);
-void	second_parse(void);
-char	*next_arg(char *str);
-
-// utils.c
-int		ft_special_char(char c);
-void	command_not_found(char *cmd);
-
-//execute.c
-int		execute(char **cmds, int fd);
-void	exec_all(void);
-
-//export.c
-void	export(char **str);
-void	unset(char **cmds);
-
-// pwd.c
-void	pwd(void);
-void	update_env_pwd(char	*var);
-
-// expanding.c
-void	expand_str(char *str);
-void	*expand(char *str);
-
-// int     check_cmd(char *str);
-char	**get_path(void);
-
-//utils.c
-void	parse_error_message(char *cmd, char *error, int error_code);
-void	error_message(char *cmd, char *arg, char *error, int error_code);
-void	sig_block(int sig);
-
-//utils_parsing.c
-void	my_realloc(char ***split, int size);
-
-//utils_env.c
-char	**convert_env_list(void);
-void	export_ordenate(void);
-char	*find_env(char	*name);
-
-//env.c
-void	env(char **args);
-
-//builtins.c
-int		cd(char **args);
-void	ft_exit(char **args);
-
-//env_alter.c
-void	change_var(char *name, char *content);
-
-void	ft_echo(char **str);
-char	*ft_strchr_valid(const char *s, int c);
-
-//pipex.c
-// void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes);
-void	loop_pipex(void);
-
-//redir.c
-void	ini_redir(char **str, int pipe_no);
 
 #endif

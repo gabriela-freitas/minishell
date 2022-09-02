@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:31:39 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:31:05 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_isquote(char c)
 }
 
 /*	reallocs split to have new size	*/
-void	my_realloc(char ***split, int size)
+static void	my_realloc(char ***split, int size)
 {
 	char	**new_split;
 	int		i;

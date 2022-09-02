@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 18:01:16 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:28:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:44:50 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ static int	cd_oldpwd(char **str, char *var)
 	return (1);
 }
 
-char	*find_path(char *str)
+/*	Expands the path for
+	cd - ; cd ~ ; cd ~/path ; cd
+*/
+static char	*find_path(char *str)
 {
 	char	*path;
 

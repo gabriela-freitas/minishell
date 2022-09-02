@@ -6,14 +6,14 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:29:53 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:41:22 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //unset also receives more than one value
-void	delete_var(char	*name)
+static void	delete_var(char	*name)
 {
 	t_env	*aux;
 	t_env	*aux_next;
@@ -41,7 +41,10 @@ void	delete_var(char	*name)
 	}
 }
 
-int	is_valid_name(char *name)
+/*	checks if the variable we are trying to unset
+	has only alphanumeric characters or _	
+*/
+static int	is_valid_name(char *name)
 {
 	int	i;
 
@@ -57,12 +60,11 @@ int	is_valid_name(char *name)
 	return (1);
 }
 
-//Gabi uniformizar esse erro!!
 /*
-	Simulates unset builtins
+	unsets a single variable
 	removes from base()->env the variable with name = *str
 */
-void	unset_one(char *name)
+static void	unset_one(char *name)
 {
 	if (!is_valid_name(name))
 		return ;
@@ -74,6 +76,7 @@ void	unset_one(char *name)
 	delete_var(name);
 }
 
+// Simulates unset builtins
 void	unset(char **cmds)
 {
 	int	i;

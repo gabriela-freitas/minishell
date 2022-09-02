@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 08:43:25 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:26:49 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,23 @@ void	command_not_found(char *cmd)
 	base()->errnumb = 127;
 }
 
+/*	characters that delimit varibles
+	function used to find the end of a variable declaration 
+	(for example for expand builtin)
+*/
 int	ft_special_char(char c)
 {
-	if (c >= 34 && c <= 37)
+	if (c == '\"' || c == '#' || c == '$' || c == '%')
 		return (1);
-	if (c >= 41 && c <= 47)
+	if (c == ')' || c == '(' || c == '*' || c == '+')
 		return (1);
-	if (c == 58 || c == 61 || c == '?' || c == 64)
+	if (c == ',' || c == '-' || c == '.' || c == '/')
 		return (1);
-	if (c == 91 || c == 93 || c == 93 || c == 94)
+	if (c == ':' || c == '=' || c == '?' || c == '@')
 		return (1);
-	if (c == 123 || c == 125 || c == 126 || c == 39)
+	if (c == '[' || c == ']' || c == '^' || c == '\\')
 		return (1);
-	if (c == '\\')
+	if (c == '{' || c == '}' || c == '~' || c == '\'')
 		return (1);
 	return (0);
 }

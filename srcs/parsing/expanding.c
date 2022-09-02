@@ -6,7 +6,7 @@
 /*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 09:22:38 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:36:29 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	subs_str(char **str, char *add, int pos, int len)
 /*	receives the position in *str, after $ where the new variable starts
 	expands it and alters *str, to change the variable name to its content
 */
-int	expand_one(char **str, int pos, int len)
+static int	expand_one(char **str, int pos, int len)
 {
 	char	*content;
 	char	*name;
@@ -61,7 +61,7 @@ int	expand_one(char **str, int pos, int len)
 	this function searches for the end of argument's and
 	expands it
 */
-void	next_exp(char **str, int *pos)
+static void	next_exp(char **str, int *pos)
 {
 	int	i;
 	int	j;
@@ -84,7 +84,8 @@ void	next_exp(char **str, int *pos)
 		*pos += expand_one(str, j, i - j);
 }
 
-void	expand_aux(char **str, int *i, int *open_quotes)
+/*	Auxiliar function to make expand pass the norminette */
+static void	expand_aux(char **str, int *i, int *open_quotes)
 {
 	int		j;
 	char	*str1;
