@@ -36,7 +36,7 @@ LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft -lreadline
 
-CCFLAGS = gcc  -Wall -Wextra -Werror -fsanitize=address -g
+CCFLAGS = gcc  -Wall -Wextra -Werror -g #-fsanitize=address 
 
 DEP = ./libft/libft.a
 

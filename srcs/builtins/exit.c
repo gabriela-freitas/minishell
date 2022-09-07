@@ -59,6 +59,8 @@ void	ft_exit(char **args)
 	else
 		exit_status = 0;
 	printf("exit\n");
+	rl_clear_history();
+	base_free();
 	if (!check_alpha(args[1]))
 	{
 		error_message("exit: ", args[1], ": numeric argument required", 2);
