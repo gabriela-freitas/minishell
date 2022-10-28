@@ -86,6 +86,7 @@ void	loop_pipex(void)
 		exec_pipe(-1, pipes[1], 0, pipes);
 	else
 	{
+		signal(SIGINT, sig_block);
 		i = 1;
 		while (i < (base()->pipe.num_cmds) - 1)
 		{

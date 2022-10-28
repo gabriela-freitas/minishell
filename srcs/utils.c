@@ -52,5 +52,13 @@ void	sig_block(int sig)
 	(void) sig;
 	signal(SIGINT, SIG_IGN);
 	base()->errnumb = 130;
+}
+
+/*	same as sig_block but adds a new line*/
+void	sig_block_nl(int sig)
+{
+	(void) sig;
+	signal(SIGINT, SIG_IGN);
+	base()->errnumb = 130;
 	printf("\n");
 }

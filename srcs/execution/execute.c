@@ -56,7 +56,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 	}
 	else
 	{
-		signal(SIGINT, sig_block);
+		signal(SIGINT, sig_block_nl);
 		waitpid(pid, &exit_status, 0);
 		base()->errnumb = WEXITSTATUS(exit_status);
 		free(path);

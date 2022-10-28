@@ -64,6 +64,7 @@ void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message(char *cmd, char *arg, char *error, int error_code);
 void	command_not_found(char *cmd);
 void	sig_block(int sig);
+void	sig_block_nl(int sig);
 
 /********* BASE *********/
 //base.c
