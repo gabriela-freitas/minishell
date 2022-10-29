@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 11:02:01 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 14:14:24 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:50:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 //make heredoc
 
 /* allocs memory to an array of strings that will store the HEREDOC */
-static void recursive_heredoc(t_pipex *command, char **out_heredoc, int i)
+static void recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 {
 	char	*line;
 
 	line = readline("heredoc> ");
 	if (!ft_strncmp(line, (char *)command->heredoc, ft_strlen(line) + 1))
 	{
-		out_heredoc = malloc(sizeof(char **) * (i + 1));
-		if (!out_heredoc)
+		*out_heredoc = malloc(sizeof(char *) * (i + 1));
+		if (!(*out_heredoc))
 		{
 			parse_error_message("Malloc", "error", errno);
 			return ;
@@ -35,7 +35,8 @@ static void recursive_heredoc(t_pipex *command, char **out_heredoc, int i)
 	}
 	else
 		recursive_heredoc(command, out_heredoc, i + 1);
-	out_heredoc[i] = line;
+	printf(">>>>>>>>>>>>\n");
+	(*out_heredoc)[i] = line;
 }
 
 /* writes the content of heredoc in a pipe and changes the content of heredoc
@@ -60,7 +61,7 @@ static void	*pipe_heredoc(t_pipex *command, char **out_heredoc)
 		out_heredoc++;
 	}
 	free_split(out_heredoc);
-	// free(command->heredoc);
+	free(command->heredoc);
 	command->heredoc = (void *)fd_heredoc;
 	return (command->heredoc);
 }
@@ -76,16 +77,16 @@ static int	open_infiles(t_pipex *cmd)
 	out_heredoc = NULL;
 	if (cmd->input)
 	{
-		cmd->fd[IN] = open(cmd->input, cmd->in_mode);
+		cmd->fd[IN] = open(cmd->input, O_RDONLY | O_ASYNC, 0644);
 		if (cmd->fd[IN] < 0)
 		{
-			parse_error_message(cmd->input, "No such file or directory", 1);
+			parse_error_message(cmd->input, ": No such file or directory", 1);
 			return (FALSE);
 		}
 	}
 	else if (cmd->heredoc)
 	{
-		recursive_heredoc(cmd, out_heredoc, 0);
+		recursive_heredoc(cmd, &out_heredoc, 0);
 		if (!pipe_heredoc(cmd, out_heredoc))
 			return (FALSE);
 		close(((int *)cmd->heredoc)[1]);
@@ -108,7 +109,7 @@ static int	open_outfiles(t_pipex *cmd)
 		i = -1;
 		while (cmd->output[++i])
 		{
-			cmd->fd[OUT] = open(cmd->output[i], cmd->out_mode);
+			cmd->fd[OUT] = open(cmd->output[i], O_WRONLY | O_ASYNC | O_TRUNC | O_CREAT, 0644);
 			if (cmd->fd[OUT] < 0)
 			{
 				parse_error_message(cmd->output[i], "Could not open file", 1);
@@ -127,5 +128,7 @@ static int	open_outfiles(t_pipex *cmd)
 void	open_files(t_pipex *cmd)
 {
 	open_infiles(cmd);
+	printf("infiles done\n");
 	open_outfiles(cmd);
+	printf("outfiles done\n");
 }

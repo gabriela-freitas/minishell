@@ -25,6 +25,32 @@ static void	inthandler(int sig)
 	rl_redisplay();
 }
 
+void	args_test(void)
+{
+	base()->num_pipes = 1;
+	base()->pipes = malloc(sizeof(t_pipex) * base()->num_pipes);
+	t_pipex *pipes = base()->pipes;
+	pipes[0].cmds = malloc(sizeof (char *) * 3);
+	pipes[0].cmds[0] = ft_strdup("grep");
+	pipes[0].cmds[1] = ft_strdup("hello");
+	pipes[0].cmds[2] = NULL;
+	pipes[0].heredoc = NULL;
+	pipes[0].input = ft_strdup("infile");
+	pipes[0].output = malloc(sizeof (char *) * 2);
+	pipes[0].output[0] = ft_strdup("outfile");
+	pipes[0].output[1] = NULL;
+	// pipes[0].out_mode = (O_WRONLY | O_ASYNC | O_APPEND | O_CREAT);
+	pipes[0].in_mode = -1;
+}
+
+void	args_clean(void)
+{
+	free_split(base()->pipes[0].cmds);
+	free(base()->pipes[0].input);
+	free_split(base()->pipes[0].output);
+	free(base()->pipes[0].heredoc);
+	free(base()->pipes);
+}
 /*	reads input from terminal and executes it,
 ignoring ^C and exiting with ^D */
 void	read_loop(void)
@@ -47,11 +73,14 @@ void	read_loop(void)
 		if (!ft_strncmp("", str, 1))
 			continue ;
 		add_history(str);
-		if (first_parse(str))
-		{
-			second_parse();
-			exec_all();
-		}
+		// if (first_parse(str))
+		// {
+		// 	second_parse();
+		// 	exec_all();
+		// }
+		args_test();
+		exec_all();
+		args_clean();
 	}
 	free(str);
 }

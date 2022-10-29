@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 14:09:08 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:50:05 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,26 @@ void	exec_all(void)
 		open_files(&base()->pipes[0]);
 		/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
 		if (base()->pipes[0].fd[OUT] != STD)
+		{
 			dup2(base()->pipes[0].fd[OUT], STDOUT_FILENO);
+		}
 		if (base()->pipes[0].fd[IN] != STD)
+		{
 			dup2(base()->pipes[0].fd[IN], STDIN_FILENO);
+		}
 		if (base()->pipes[0].heredoc)
 			close(((int *)base()->pipes[0].heredoc)[0]);
 		/* DUP DONE */
 		execute(&base()->pipes->cmds[0], -1);
+		ft_putstr_fd(">>>>>>\n", 2);
+		if (base()->pipes[0].fd[OUT] != STD)
+		{
+			close(base()->pipes[0].fd[OUT]);
+		}
+		if (base()->pipes[0].fd[IN] != STD)
+		{
+			close(base()->pipes[0].fd[IN]);
+		}
 	}
 	else
 		loop_pipex();
