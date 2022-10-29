@@ -27,6 +27,10 @@
 # define FALSE 0
 # define TRUE 1
 
+# define TRUNCATE 0
+# define APPEND 1
+# define STD -1
+
 typedef struct s_env
 {
 	char			*name;
@@ -38,10 +42,12 @@ typedef struct s_pipex
 {
 	char	**cmds;
 	int		num_cmds;
-	int		input_fd;
-	int		output_fd;
-	int		heredoc;
-	int		append;
+	char	*input;
+	char	**output; //done
+	void	*heredoc;
+	int		in_mode; 
+	int		out_mode; //done
+	int		fd[2];
 }	t_pipex;
 
 /*	HOME directory is in base, because when HOME
@@ -139,5 +145,7 @@ void	third_parse(void);
 // utils_parsing.c
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
+int		check_redirec(char *str, int i);
+int		ft_redirec(char c);
 
 #endif

@@ -49,6 +49,7 @@ static char	*next_arg(char *str)
 	i = 0;
 	while (str[i])
 	{
+		printf("AQUI %s\n", &str[i]);
 		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]))
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
@@ -127,30 +128,67 @@ void	second_parse(void)
 	{
 		temp->content = expand((char *)temp->content);
 		base()->pipes[++i].cmds = split_command((char **)&temp->content);
+		base()->pipes[i].output = NULL;
+		base()->pipes[i].input = NULL;
 		temp = temp->next;
 	}
 	third_parse();
+	free_command_line();
+}
+
+void redir_left(int i, int j)
+{
+	char	*c;
+	char	*str;
+	// char	*heredoc;
+
+	str = base()->pipes[i].cmds[j];
+	c = ft_strchr(str, '<');
+	if(c)
+	{
+		if (c + 1)
+			c = ft_strchr(c + 1, '<');
+		if (c)
+		{
+			base()->pipes[i].input = 0;
+			// heredoc = ft_strdup("qualquercoisa");
+		}
+		else
+			base()->pipes[i].input = base()->pipes[i].cmds[j + 1];
+	}
+}
+
+void redir_right(int i, int j)
+{
+	static int out_nb;
+	char *c;
+	char *str;
+
+	str = base()->pipes[i].cmds[j];
+	if (!base()->pipes[i].output)
+	{
+		base()->pipes[i].output = malloc(sizeof(char*) * 2);
+		base()->pipes[i].output[out_nb] = '\0';
+	}
+	c = ft_strchr(str, '>');
+	printf("%s\n", c);
+		// add_split(&base()->pipes[i].output, &out_nb, next_arg(c));
 }
 
 void	third_parse(void)
 {
 	int	i;
 	int	j;
-	char *str;
-	char *c;
 
 	i = -1;
 	while (++i < base()->num_pipes)
 	{
 		j = -1;
-		input = 
-		str = base()->pipes[i].cmds[++j];
-		while (str)
+		while (base()->pipes[i].cmds[++j])
 		{
-			c = ft_strchr(str, '<');
-			if(c)
-				printf("%s\n", c);
-			str = base()->pipes[i].cmds[++j];
+			printf("%s\n", base()->pipes[i].cmds[j]);
+			// redir_left(i , j);
+			// redir_right(i, j);
 		}
 	}
 }

@@ -52,3 +52,17 @@ void	add_split(char ***split, int *size, char *str)
 	my_realloc(split, k + 2);
 	*size = k++;
 }
+
+int	ft_redirec(char c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
+int	check_redirec(char *str, int i)
+{
+	while(str[i] && ft_redirec(str[i]))
+		i++;
+	return (i);
+}
