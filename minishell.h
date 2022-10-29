@@ -42,11 +42,13 @@ typedef struct s_pipex
 {
 	char	**cmds;
 	int		num_cmds;
-	char	*input;
-	char	**output; //done
+	char	**input;
+	char	**output;
 	void	*heredoc;
 	int		in_mode; 
-	int		out_mode; //done
+	int		out_mode;
+	int		output_nb;
+	int		input_nb;
 	int		fd[2];
 }	t_pipex;
 
@@ -141,11 +143,12 @@ int		search_pipes(char *str);
 //second_parse.c
 void	second_parse(void);
 void	third_parse(void);
+char	*next_arg(char *str, int index);
 
 // utils_parsing.c
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
-int		check_redirec(char *str, int i);
+char	*check_redirec(char *str, int i, int index);
 int		ft_redirec(char c);
 
 #endif

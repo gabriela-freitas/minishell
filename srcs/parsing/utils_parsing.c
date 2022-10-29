@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:31:05 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:32:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,58 @@ int	ft_redirec(char c)
 	return (0);
 }
 
-int	check_redirec(char *str, int i)
+int add_redirec(char redir, int flag, char *file, int index)
 {
-	while(str[i] && ft_redirec(str[i]))
-		i++;
-	return (i);
+	(void) file;
+	if (redir == '>')
+	{
+		add_split(&base()->pipes[index].output, &base()->pipes[index].output_nb, file);
+		if (flag == 2)
+			base()->pipes[index].out_mode = O_WRONLY | O_ASYNC | O_APPEND | O_CREAT;
+		else
+			base()->pipes[index].out_mode = O_WRONLY | O_ASYNC | O_TRUNC | O_CREAT;
+	}
+	else
+	{
+		if (flag == 2)
+			base()->pipes[index].heredoc = file;
+		else
+		{
+			add_split(&base()->pipes[index].input, &base()->pipes[index].input_nb, file);
+			base()->pipes[index].heredoc = NULL;
+			base()->pipes[index].in_mode = O_RDONLY | O_ASYNC;
+		}
+	}
+	return (0);
+}
+
+
+char	*check_redirec(char *str, int i, int index)
+{
+	int j;
+	int begin;
+	char *file;
+	int redir;
+
+	j = i + 1;
+	redir = 1;
+	if (!str[j])
+		return (0);
+	if (ft_redirec(str[j]))
+	{
+		j++;
+		redir = 2;
+	}
+	while (str[j] && ft_isspace(str[j]))
+		j++;
+	begin = j;
+	while (str[++j] && !ft_isspace(str[j]) && !ft_isquote(str[j]) && !ft_redirec(str[j]))
+		;
+	file = ft_substr(str, begin, j - begin);
+	add_redirec(str[i], redir, file, index);
+	ft_memmove(&str[i], &str[j + 1], ft_strlen(&str[j]) + 1);
+	if (i != 0)
+		return (ft_substr(str, 0, i));
+	else
+		return (next_arg(str, index));
 }
