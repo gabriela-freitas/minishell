@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 11:02:01 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 19:15:49 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:46:16 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static int	open_outfiles(t_pipex *cmd)
 		i = -1;
 		while (cmd->output[++i])
 		{
-			cmd->fd[OUT] = open(cmd->output[i], O_WRONLY | O_ASYNC | O_TRUNC | O_CREAT, 0644);
+			cmd->fd[OUT] = open(cmd->output[i], O_WRONLY | O_ASYNC | O_APPEND | O_CREAT, 0644);
 			if (cmd->fd[OUT] < 0)
 			{
 				parse_error_message(cmd->output[i], "Could not open file", 1);
