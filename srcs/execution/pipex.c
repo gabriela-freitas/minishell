@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 14:08:00 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 18:58:39 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 		dup2(base()->pipes[cmd].fd[IN], STDIN_FILENO);
 	/* DUP DONE */
 	close_pipes(pipes);
-	if (base()->pipes[cmd].heredoc)
-		close(((int *)base()->pipes[cmd].heredoc)[0]);
 	execute(base()->pipes[cmd].cmds, -1);
 	exit (base()->errnumb);
 }

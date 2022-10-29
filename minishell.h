@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 13:37:00 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 18:44:57 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define STD -1
 # define IN 0
 # define OUT 1
+# define TEMP_FILE "./.temp"
 
 typedef struct s_env
 {

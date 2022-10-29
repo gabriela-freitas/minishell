@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 11:02:01 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 16:50:29 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:15:49 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //make heredoc
 
 /* allocs memory to an array of strings that will store the HEREDOC */
-static void recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
+static void	recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 {
 	char	*line;
 
@@ -35,34 +35,36 @@ static void recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 	}
 	else
 		recursive_heredoc(command, out_heredoc, i + 1);
-	printf(">>>>>>>>>>>>\n");
 	(*out_heredoc)[i] = line;
 }
 
 /* writes the content of heredoc in a pipe and changes the content of heredoc
 var to the pipe_fd instead of the delimiter string
 FIXME: REMEMBER TO FREE*/
-static void	*pipe_heredoc(t_pipex *command, char **out_heredoc)
+static void	*tempfile_heredoc(t_pipex *command, char **out_heredoc)
 {
-	int	*fd_heredoc;
+	int	i;
 
 	if (!out_heredoc)
 		return (NULL);
-	fd_heredoc =  malloc(sizeof(int) * 2);
-	if (pipe(fd_heredoc) < 0)
+	command->fd[IN] = open(TEMP_FILE, O_WRONLY | O_CREAT | O_ASYNC, 0644);
+	if (command->fd[IN] < 0)
 	{
-		parse_error_message("Pipe", "Could not create pipe", errno);
+		parse_error_message(TEMP_FILE, "Could not open file", 1);
 		return (NULL);
 	}
-	close(fd_heredoc[0]);
-	while (*out_heredoc)
+	i = -1;
+	while (out_heredoc[++i])
+		ft_putendl_fd(out_heredoc[i], command->fd[IN]);
+	close(command->fd[IN]);
+	command->fd[IN] = open(TEMP_FILE, O_RDONLY | O_ASYNC);
+	if (command->fd[IN] < 0)
 	{
-		ft_putendl_fd(*out_heredoc, fd_heredoc[1]);
-		out_heredoc++;
+		parse_error_message(TEMP_FILE, "Could not open file", 1);
+		return (NULL);
 	}
 	free_split(out_heredoc);
 	free(command->heredoc);
-	command->heredoc = (void *)fd_heredoc;
 	return (command->heredoc);
 }
 
@@ -72,7 +74,7 @@ static void	*pipe_heredoc(t_pipex *command, char **out_heredoc)
 	else , the standard input */
 static int	open_infiles(t_pipex *cmd)
 {
-	char **out_heredoc;
+	char	**out_heredoc;
 
 	out_heredoc = NULL;
 	if (cmd->input)
@@ -87,10 +89,8 @@ static int	open_infiles(t_pipex *cmd)
 	else if (cmd->heredoc)
 	{
 		recursive_heredoc(cmd, &out_heredoc, 0);
-		if (!pipe_heredoc(cmd, out_heredoc))
+		if (!tempfile_heredoc(cmd, out_heredoc))
 			return (FALSE);
-		close(((int *)cmd->heredoc)[1]);
-		cmd->fd[IN] = ((int *)cmd->heredoc)[0];
 	}
 	else
 		cmd->fd[IN] = STD;
@@ -121,6 +121,7 @@ static int	open_outfiles(t_pipex *cmd)
 		cmd->fd[OUT] = STD;
 	return (TRUE);
 }
+
 /// @brief
 /// @param command
 /// @return
@@ -128,7 +129,7 @@ static int	open_outfiles(t_pipex *cmd)
 void	open_files(t_pipex *cmd)
 {
 	open_infiles(cmd);
-	printf("infiles done\n");
+	ft_putstr_fd("infiles done\n", 2);
 	open_outfiles(cmd);
-	printf("outfiles done\n");
+	ft_putstr_fd("outfiles done\n", 2);
 }
