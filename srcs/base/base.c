@@ -46,10 +46,10 @@ void	free_command_line(void)
 	int	i;
 
 	i = -1;
-	while (base()->pipe.cmds[++i])
-		free_split(base()->pipe.cmds[i]);
-	free_split(base()->pipe.cmds[i]);
-	free(base()->pipe.cmds);
+	while (++i < base()->num_pipes)
+		free_split(base()->pipes[i].cmds);
+	// free_split(&base()->pipes->cmds[i]);
+	free(base()->pipes);
 	ft_lstclear(&(base()->div_pipes), free);
 }
 

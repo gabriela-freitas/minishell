@@ -121,13 +121,36 @@ void	second_parse(void)
 
 	i = -1;
 	temp = base()->div_pipes;
-	base()->pipe.num_cmds = ft_lstsize(temp);
-	base()->pipe.cmds = malloc(sizeof(char **) * (base()->pipe.num_cmds + 1));
+	base()->num_pipes = ft_lstsize(temp);
+	base()->pipes = malloc(sizeof(t_pipex) * base()->num_pipes);
 	while (temp)
 	{
 		temp->content = expand((char *)temp->content);
-		base()->pipe.cmds[++i] = split_command((char **)&temp->content);
+		base()->pipes[++i].cmds = split_command((char **)&temp->content);
 		temp = temp->next;
 	}
-	base()->pipe.cmds[++i] = NULL;
+	third_parse();
+}
+
+void	third_parse(void)
+{
+	int	i;
+	int	j;
+	char *str;
+	char *c;
+
+	i = -1;
+	while (++i < base()->num_pipes)
+	{
+		j = -1;
+		input = 
+		str = base()->pipes[i].cmds[++j];
+		while (str)
+		{
+			c = ft_strchr(str, '<');
+			if(c)
+				printf("%s\n", c);
+			str = base()->pipes[i].cmds[++j];
+		}
+	}
 }

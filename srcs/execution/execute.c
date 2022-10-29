@@ -113,8 +113,8 @@ int	execute(char **cmds, int fd)
 */
 void	exec_all(void)
 {
-	if (base()->pipe.num_cmds == 1)
-		execute(base()->pipe.cmds[0], -1);
+	if (base()->num_pipes == 1)
+		execute(&base()->pipes->cmds[0], -1);
 	else
 		loop_pipex();
 	free_command_line();

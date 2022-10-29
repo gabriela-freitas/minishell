@@ -36,8 +36,12 @@ typedef struct s_env
 
 typedef struct s_pipex
 {
-	char	***cmds;
+	char	**cmds;
 	int		num_cmds;
+	int		input_fd;
+	int		output_fd;
+	int		heredoc;
+	int		append;
 }	t_pipex;
 
 /*	HOME directory is in base, because when HOME
@@ -55,7 +59,8 @@ typedef struct s_base
 	char	*oldpwd;
 	int		errnumb;
 	t_list	*div_pipes;
-	t_pipex	pipe;
+	t_pipex	*pipes;
+	int		num_pipes;
 }	t_base;
 
 /********* SRCS *********/
@@ -129,6 +134,7 @@ int		search_pipes(char *str);
 
 //second_parse.c
 void	second_parse(void);
+void	third_parse(void);
 
 // utils_parsing.c
 int		ft_isquote(char c);

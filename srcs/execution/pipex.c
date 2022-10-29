@@ -18,7 +18,7 @@ static void	close_pipes(int *pipes)
 	int	i;
 	int	pipe_nb;
 
-	pipe_nb = (base()->pipe.num_cmds - 1) * 2;
+	pipe_nb = (base()->num_pipes - 1) * 2;
 	i = 0;
 	while (i < pipe_nb)
 	{
@@ -36,9 +36,9 @@ static int	*pipe_ini(void)
 	int	*pipes;
 	int	i;
 
-	pipes = malloc(sizeof(int) * (base()->pipe.num_cmds - 1) * 2);
+	pipes = malloc(sizeof(int) * (base()->num_pipes - 1) * 2);
 	i = 0;
-	while (i < (base()->pipe.num_cmds - 1) * 2)
+	while (i < (base()->num_pipes - 1) * 2)
 	{
 		pipe(pipes + i);
 		i += 2;
@@ -58,7 +58,7 @@ static void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 	if (stdin_fd >= 0)
 		dup2(stdin_fd, STDIN_FILENO);
 	close_pipes(pipes);
-	execute(base()->pipe.cmds[cmd], -1);
+	execute(&base()->pipes->cmds[cmd], -1);
 	exit (base()->errnumb);
 }
 
@@ -67,7 +67,7 @@ static void	wait_aux(int *status)
 	int	i;
 
 	i = -1;
-	while (++i < (base()->pipe.num_cmds))
+	while (++i < (base()->num_pipes))
 	{
 		wait(status);
 		base()->errnumb = WEXITSTATUS(*status);
@@ -88,7 +88,7 @@ void	loop_pipex(void)
 	{
 		signal(SIGINT, sig_block);
 		i = 1;
-		while (i < (base()->pipe.num_cmds) - 1)
+		while (i < (base()->num_pipes) - 1)
 		{
 			if (fork() == 0)
 				exec_pipe(pipes[(i - 1) * 2], pipes[(i - 1) * 2 + 3], i, pipes);
