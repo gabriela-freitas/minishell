@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:33:52 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/29 11:01:32 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,28 +129,5 @@ void	second_parse(void)
 		base()->pipes[++i].cmds = split_command((char **)&temp->content);
 		temp = temp->next;
 	}
-	third_parse();
 }
 
-void	third_parse(void)
-{
-	int	i;
-	int	j;
-	char *str;
-	char *c;
-
-	i = -1;
-	while (++i < base()->num_pipes)
-	{
-		j = -1;
-		input = 
-		str = base()->pipes[i].cmds[++j];
-		while (str)
-		{
-			c = ft_strchr(str, '<');
-			if(c)
-				printf("%s\n", c);
-			str = base()->pipes[i].cmds[++j];
-		}
-	}
-}
