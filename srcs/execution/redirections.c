@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:30:21 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:44:29 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	*tempfile_heredoc(t_pipex *command, char **out_heredoc)
 		return (NULL);
 	}
 	free_split(out_heredoc);
-	free(command->heredoc);
+	// free(command->heredoc);
 	return (command->heredoc);
 }
 
@@ -77,7 +77,7 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
-	printf("heredoc: %s\ninfile: %s\n", (char *)cmd->heredoc, *cmd->input);
+	printf("heredoc: %s\ninfile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
 	if (cmd->heredoc)
 	{
 		recursive_heredoc(cmd, &out_heredoc, 0);
@@ -97,10 +97,10 @@ static int	open_infiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[IN] = STD;
-	// ft_putstr_fd("fd in: ", 2);
-	// char *d = ft_itoa(cmd->fd[IN]);
-	// ft_putendl_fd(d, 2);
-	// free(d);
+	ft_putstr_fd("fd in: ", 2);
+	char *d = ft_itoa(cmd->fd[IN]);
+	ft_putendl_fd(d, 2);
+	free(d);
 	return (TRUE);
 }
 
@@ -111,7 +111,7 @@ static int	open_outfiles(t_pipex *cmd)
 {
 	int		i;
 
-	if (cmd->output)
+	if (*cmd->output)
 	{
 		i = -1;
 		while (cmd->output[++i])
@@ -126,10 +126,10 @@ static int	open_outfiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[OUT] = STD;
-	// ft_putstr_fd("fd OUT: ", 2);
-	// char *d = ft_itoa(cmd->fd[OUT]);
-	// ft_putendl_fd(d, 2);
-	// free(d);
+	ft_putstr_fd("fd OUT: ", 2);
+	char *d = ft_itoa(cmd->fd[OUT]);
+	ft_putendl_fd(d, 2);
+	free(d);
 	return (TRUE);
 }
 
@@ -139,12 +139,20 @@ static int	open_outfiles(t_pipex *cmd)
 //TODO: check erros return
 int	open_files(t_pipex *cmd)
 {
-	if (open_infiles(cmd))
+	if (cmd->output_nb || cmd->input_nb)
 	{
-		if (!open_outfiles(cmd))
+		if (open_infiles(cmd))
+		{
+			if (!open_outfiles(cmd))
+				return (FALSE);
+		}
+		else
 			return (FALSE);
 	}
 	else
-		return (FALSE);
+	{
+		cmd->fd[IN] = STD;
+		cmd->fd[OUT] = STD;
+	}
 	return (TRUE);
 }

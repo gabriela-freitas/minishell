@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:19:48 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:42:19 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	exe_builtin(char **cmd)
 }
 
 /*executes the list of commands, and avoids the program to exit*/
+//FIXME: fd is useless
 static int	ft_execve(char *path, char **cmd, int fd)
 {
 	int		pid;
@@ -94,18 +95,62 @@ static int	exe_cmd(char **cmd, int fd)
 /*Executes the list if commands*/
 int	execute(char **cmds, int fd)
 {
+	int pid, pid1;
+	
 	if (fd >= 0)
 		close(fd);
 	if (exe_builtin(cmds) == 0)
 		return (0);
-	if (exe_cmd(cmds, fd) == 0)
+	pid1 = fork();
+	if (pid1 == 0)
 	{
-		if (base()->errnumb == 13)
-			command_not_found(cmds[0]);
-		return (0);
+		if (!open_files(&base()->pipes[0]))
+			return (-1);
+		pid = fork();
+		if (pid == 0)
+		{
+			/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
+			if (base()->pipes[0].fd[OUT] != STD)
+			{
+				dup2(base()->pipes[0].fd[OUT], STDOUT_FILENO);
+			}
+			if (base()->pipes[0].fd[IN] != STD)
+			{
+				dup2(base()->pipes[0].fd[IN], STDIN_FILENO);
+			}
+			if (base()->pipes[0].fd[OUT] != STD)
+				close(base()->pipes[0].fd[OUT]);
+			if (base()->pipes[0].fd[IN] != STD)
+				close(base()->pipes[0].fd[IN]);
+			/* DUP DONE */
+			if (exe_cmd(cmds, fd) == 0)
+			{
+				if (base()->errnumb == 13)
+					command_not_found(cmds[0]);
+				return (0);
+			}
+			exit(1);
+		}
+		else
+		{
+			if (base()->pipes[0].fd[OUT] != STD)
+				close(base()->pipes[0].fd[OUT]);
+			if (base()->pipes[0].fd[IN] != STD)
+				close(base()->pipes[0].fd[IN]);
+			signal(SIGINT, sig_block_nl);
+			waitpid(pid, NULL, 0);
+			exit(1);
+			// wait(0);
+			// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
+		}
 	}
 	else
-		return (-1);
+	{
+		signal(SIGINT, sig_block_nl);
+		waitpid(pid1, NULL, 0);
+		return (0);
+	}
+	return (-1);
 }
 
 /*	checks if there's any pipe, if not executes the only read command
@@ -113,55 +158,9 @@ int	execute(char **cmds, int fd)
 */
 void	exec_all(void)
 {
-	int pid;
-	int pid1;
-
 	if (base()->num_pipes == 1)
 	{
-			pid1 = fork();
-			if (pid1 == 0)
-			{
-				if (!open_files(&base()->pipes[0]))
-					return ;
-				pid = fork();
-				if (pid == 0)
-				{
-					/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
-					if (base()->pipes[0].fd[OUT] != STD)
-					{
-						dup2(base()->pipes[0].fd[OUT], STDOUT_FILENO);
-					}
-					if (base()->pipes[0].fd[IN] != STD)
-					{
-						dup2(base()->pipes[0].fd[IN], STDIN_FILENO);
-					}
-					if (base()->pipes[0].fd[OUT] != STD)
-						close(base()->pipes[0].fd[OUT]);
-					if (base()->pipes[0].fd[IN] != STD)
-						close(base()->pipes[0].fd[IN]);
-					/* DUP DONE */
-					execute(&base()->pipes->cmds[0], -1);
-					exit(1);
-				}
-				else
-				{
-					if (base()->pipes[0].fd[OUT] != STD)
-						close(base()->pipes[0].fd[OUT]);
-					if (base()->pipes[0].fd[IN] != STD)
-						close(base()->pipes[0].fd[IN]);
-					signal(SIGINT, sig_block_nl);
-					waitpid(pid, NULL, 0);
-					// wait(0);
-					// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
-				}
-				exit(1);
-			}
-			else
-			{
-				signal(SIGINT, sig_block_nl);
-				waitpid(pid1, NULL, 0);
-			}
-
+		execute(&base()->pipes->cmds[0], -1);
 	}
 	else
 		loop_pipex();

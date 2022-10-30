@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 12:56:58 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:02:14 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_redirec(char c)
 
 int add_redirec(char redir, int flag, char *file, int index)
 {
-	(void) file;
+	
 	if (redir == '>')
 	{
 		add_split(&base()->pipes[index].output, &base()->pipes[index].output_nb, file);
@@ -107,10 +107,13 @@ char	*check_redirec(char *str, int i, int index)
 	while (str[++j] && !ft_isspace(str[j]) && !ft_isquote(str[j]) && !ft_redirec(str[j]))
 		;
 	file = ft_substr(str, begin, j - begin);
+	// printf("AQUI: %s\n", file);
 	add_redirec(str[i], redir, file, index);
-	ft_memmove(&str[i], &str[j + 1], ft_strlen(&str[j]) + 1);
 	if (i != 0)
 		return (ft_substr(str, 0, i));
 	else
+	{
+		ft_memmove(&str[i], &str[j + 1], ft_strlen(&str[j]) + 1);
 		return (next_arg(str, index));
+	}
 }

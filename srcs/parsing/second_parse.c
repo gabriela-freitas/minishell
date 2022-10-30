@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:29:59 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:40:08 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*next_arg(char *str, int index)
 	while (str[i])
 	{
 		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && !ft_redirec(str[i]))
+			i++;
+		if (str[i] && str[i + 1] && ft_isspace(str[i]) && ft_redirec(str[i + 1]))
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
@@ -133,10 +135,10 @@ void	second_parse(void)
 	{
 		temp->content = expand((char *)temp->content);
 		base()->pipes[++i].output = malloc(sizeof(char*) * 2);
-		base()->pipes[i].output[0] = '\0';
+		base()->pipes[i].output[0] = NULL;
 		base()->pipes[i].output_nb = 0;
 		base()->pipes[i].input = malloc(sizeof(char*) * 2);
-		base()->pipes[i].input[0] = '\0';
+		base()->pipes[i].input[0] = NULL;
 		base()->pipes[i].input_nb = 0;
 		base()->pipes[i].heredoc = NULL;
 		base()->pipes[i].cmds = split_command((char **)&temp->content, i);
@@ -148,26 +150,24 @@ void	second_parse(void)
 void check_input(int index)
 {
 	int		i;
-	char	*file;
-	char	*right_input;
+	char	*input;
 
 	i = 0;
-	file = base()->pipes[index].input[i];
-	while (file)
+	input = NULL;
+	while (base()->pipes[index].input[i])
 	{
-		if (access(file, F_OK) < 0)
+		if (access(base()->pipes[index].input[i], F_OK) < 0)
 		{
-			parse_error_message(file, ": No such file or directory", 1);
-			right_input = file;
+			// parse_error_message(file, ": No such file or directory", 1);
+			input = ft_strdup(base()->pipes[index].input[i]);
 			break ;
 		}
-		file = base()->pipes[index].input[i];
 		i++;
 	}
-	right_input = file;
+	if (input == NULL && base()->pipes[index].input_nb != 0)
+		input = ft_strdup(base()->pipes[index].input[i - 1]);
 	free_split(base()->pipes[index].input);
 	base()->pipes[index].input = malloc(sizeof(char*) * 2);
-	base()->pipes[index].input[0] = '\0';
-	i = 0;
-	add_split(&base()->pipes[index].input, &i, right_input);
+	base()->pipes[index].input[0] = input;
+	base()->pipes[index].input[1] = NULL;
 }

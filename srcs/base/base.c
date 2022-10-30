@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:27:33 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 15:22:17 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ void	ini_base(char **env)
 /*frees the command line after execution*/
 void	free_command_line(void)
 {
-	// int	i;
+	int	i;
 
-	// i = -1;
-	// while (++i < base()->num_pipes)
-	// 	free_split(base()->pipes[i].cmds);
-	// free_split(&base()->pipes->cmds[i]);
-	// free(base()->pipes);
+	i = -1;
+	while (++i < base()->num_pipes)
+	{
+		free_split(base()->pipes[i].cmds);
+		free_split(base()->pipes[i].output);
+		free_split(base()->pipes[i].input);
+	}
+	free(base()->pipes);
 	if (!access(TEMP_FILE, F_OK))
 		unlink(TEMP_FILE);
 	ft_lstclear(&(base()->div_pipes), free);
