@@ -37,7 +37,9 @@ void	args_test(void)
 	pipes[0].cmds[1] = ft_strdup("world");
 	pipes[0].cmds[2] = NULL;
 	pipes[0].heredoc = NULL;
-	pipes[0].input = ft_strdup("infile");
+	pipes[0].input = malloc(sizeof (char *) * 2);
+	pipes[0].input[0] = ft_strdup("infile");
+	pipes[0].input[1] = NULL;
 	pipes[0].output = NULL;
 	// pipes[0].output = malloc(sizeof (char *) * 2);
 	// pipes[0].output[0] = ft_strdup("out");
@@ -60,10 +62,9 @@ void	args_test(void)
 void	args_clean(void)
 {
 	free_split(base()->pipes[0].cmds);
-	free(base()->pipes[0].input);
+	free_split(base()->pipes[0].input);
 	free_split(base()->pipes[0].output);
 	free_split(base()->pipes[1].cmds);
-	free(base()->pipes[1].input);
 	free_split(base()->pipes[1].output);
 	free(base()->pipes);
 	if (!access(TEMP_FILE, F_OK))

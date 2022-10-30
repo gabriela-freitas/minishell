@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 18:58:39 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:45:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static int	*pipe_ini(void)
 */
 static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
-	open_files(&base()->pipes[cmd]);
+	if (!open_files(&base()->pipes[cmd]))
+		return ;
 	/* DUP FILE DESCRIPTORS
 		EITHER THE PIPE OR THE FILE FROM REDIRECTION */
 	if (stdout_fd > 1 && base()->pipes[cmd].fd[OUT] == STD)

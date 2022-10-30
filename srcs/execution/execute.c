@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 18:58:18 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:25:35 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ void	exec_all(void)
 
 	if (base()->num_pipes == 1)
 	{
-			open_files(&base()->pipes[0]);
+			if (!open_files(&base()->pipes[0]))
+				return ;
 			pid = fork();
 			if (pid == 0)
 			{

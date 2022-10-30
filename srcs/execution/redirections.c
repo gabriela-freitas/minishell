@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 11:02:01 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 19:46:16 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:04:40 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ static int	open_infiles(t_pipex *cmd)
 	out_heredoc = NULL;
 	if (cmd->input)
 	{
-		cmd->fd[IN] = open(cmd->input, O_RDONLY | O_ASYNC, 0644);
+		cmd->fd[IN] = open(cmd->input[0], O_RDONLY | O_ASYNC, 0644);
 		if (cmd->fd[IN] < 0)
 		{
-			parse_error_message(cmd->input, ": No such file or directory", 1);
-			return (FALSE);
+			parse_error_message(cmd->input[0], ": No such file or directory", 1);
+			cmd->fd[IN] = STD;
 		}
 	}
 	else if (cmd->heredoc)
@@ -94,6 +94,10 @@ static int	open_infiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[IN] = STD;
+	ft_putstr_fd("fd in: ", 2);
+	char *d = ft_itoa(cmd->fd[IN]);
+	ft_putendl_fd(d, 2);
+	free(d);
 	return (TRUE);
 }
 
@@ -119,6 +123,10 @@ static int	open_outfiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[OUT] = STD;
+	ft_putstr_fd("fd OUT: ", 2);
+	char *d = ft_itoa(cmd->fd[OUT]);
+	ft_putendl_fd(d, 2);
+	free(d);
 	return (TRUE);
 }
 
@@ -126,10 +134,14 @@ static int	open_outfiles(t_pipex *cmd)
 /// @param command
 /// @return
 //TODO: check erros return
-void	open_files(t_pipex *cmd)
+int	open_files(t_pipex *cmd)
 {
-	open_infiles(cmd);
-	ft_putstr_fd("infiles done\n", 2);
-	open_outfiles(cmd);
-	ft_putstr_fd("outfiles done\n", 2);
+	if (open_infiles(cmd))
+	{
+		if (!open_outfiles(cmd))
+			return (FALSE);
+	}
+	else
+		return (FALSE);
+	return (TRUE);
 }

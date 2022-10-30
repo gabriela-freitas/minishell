@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 18:44:57 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:34:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_pipex
 {
 	char **cmds;
 	int num_cmds;
-	char *input;
+	char **input;
 	char **output;
 	void *heredoc;
 	int in_mode;
@@ -134,7 +134,7 @@ void	exec_all(void);
 void	loop_pipex(void);
 
 //redirections.c
-void	open_files(t_pipex *cmd);
+int	open_files(t_pipex *cmd);
 
 /********* PARSING *********/
 
