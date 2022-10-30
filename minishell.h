@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 14:22:33 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:55:30 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	export_ordenate(void);
 
 /********* EXECUTION *********/
 //execute.c
-int		execute(char **cmds, int fd);
+int		execute(t_pipex *pipe, int fd);
 void	exec_all(void);
 
 //pipex.c

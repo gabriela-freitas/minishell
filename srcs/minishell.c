@@ -40,6 +40,7 @@ void	args_test(void)
 	pipes[0].input = malloc(sizeof (char *) * 2);
 	pipes[0].input[0] = ft_strdup("infile");
 	pipes[0].input[1] = NULL;
+	pipes[0].in_mode = O_RDONLY | O_ASYNC;
 	pipes[0].output = NULL;
 	// pipes[0].output = malloc(sizeof (char *) * 2);
 	// pipes[0].output[0] = ft_strdup("out");
@@ -51,11 +52,13 @@ void	args_test(void)
 	pipes[1].cmds[1] = NULL;
 	pipes[1].cmds[2] = NULL;
 	pipes[1].heredoc = NULL;
-	pipes[1].input = NULL;
+	pipes[1].input = malloc(sizeof (char *) * 2);
+	pipes[1].input[0] = ft_strdup("");
+	pipes[1].input[1] = NULL;
 	pipes[1].output = malloc(sizeof (char *) * 2);
 	pipes[1].output[0] = ft_strdup("out");
 	pipes[1].output[1] = NULL;
-	// pipes[0].out_mode = (O_WRONLY | O_ASYNC | O_APPEND | O_CREAT);
+	pipes[1].out_mode = O_WRONLY | O_ASYNC | O_APPEND | O_CREAT;
 	pipes[1].in_mode = -1;
 }
 
@@ -92,14 +95,13 @@ void	read_loop(void)
 		if (!ft_strncmp("", str, 1))
 			continue ;
 		add_history(str);
-		if (first_parse(str))
-		{
-			second_parse();
-			exec_all();
-		}
-		// args_test();
-		// exec_all();
-		// args_clean();
+		// if (first_parse(str))
+		// {
+		// 	second_parse();
+		// 	exec_all();
+		// }
+		args_test();
+		exec_all();
 	}
 	free(str);
 }

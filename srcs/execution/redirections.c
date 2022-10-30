@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 15:44:29 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 19:05:07 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	recursive_heredoc(t_pipex *command, char ***out_heredoc, int i);
+static void	*tempfile_heredoc(t_pipex *command, char **out_heredoc);
+static int	open_infiles(t_pipex *cmd);
+static int	open_infiles(t_pipex *cmd);
 //open files
 //redirect outputs
 //make heredoc
@@ -77,7 +81,7 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
-	printf("heredoc: %s\ninfile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
+	// printf("heredoc: %s\ninfile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
 	if (cmd->heredoc)
 	{
 		recursive_heredoc(cmd, &out_heredoc, 0);
@@ -88,19 +92,19 @@ static int	open_infiles(t_pipex *cmd)
 	{
 		if (!access(TEMP_FILE, F_OK))
 			unlink(TEMP_FILE);
-		cmd->fd[IN] = open(cmd->input[0], O_RDONLY | O_ASYNC, 0644);
+		cmd->fd[IN] = open(cmd->input[0], cmd->in_mode, 0644);
 		if (cmd->fd[IN] < 0)
 		{
 			parse_error_message(cmd->input[0], ": No such file or directory", 1);
 			cmd->fd[IN] = STD;
 		}
 	}
-	else
+	else if (!cmd->heredoc)
 		cmd->fd[IN] = STD;
-	ft_putstr_fd("fd in: ", 2);
-	char *d = ft_itoa(cmd->fd[IN]);
-	ft_putendl_fd(d, 2);
-	free(d);
+	// ft_putstr_fd("fd in: ", 2);
+	// char *d = ft_itoa(cmd->fd[IN]);
+	// ft_putendl_fd(d, 2);
+	// free(d);
 	return (TRUE);
 }
 
@@ -111,12 +115,12 @@ static int	open_outfiles(t_pipex *cmd)
 {
 	int		i;
 
-	if (*cmd->output)
+	if (cmd->output && *cmd->output)
 	{
 		i = -1;
 		while (cmd->output[++i])
 		{
-			cmd->fd[OUT] = open(cmd->output[i], O_WRONLY | O_ASYNC | O_APPEND | O_CREAT, 0644);
+			cmd->fd[OUT] = open(cmd->output[i], cmd->out_mode, 0644);
 			if (cmd->fd[OUT] < 0)
 			{
 				parse_error_message(cmd->output[i], "Could not open file", 1);
@@ -126,10 +130,10 @@ static int	open_outfiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[OUT] = STD;
-	ft_putstr_fd("fd OUT: ", 2);
-	char *d = ft_itoa(cmd->fd[OUT]);
-	ft_putendl_fd(d, 2);
-	free(d);
+	// ft_putstr_fd("fd OUT: ", 2);
+	// char *d = ft_itoa(cmd->fd[OUT]);
+	// ft_putendl_fd(d, 2);
+	// free(d);
 	return (TRUE);
 }
 
