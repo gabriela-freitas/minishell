@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 17:50:43 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:34:31 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	*next_arg(char *str, int index);
 // utils_parsing.c
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
-char	*check_redirec(char *str, int i, int index);
+void	check_redirec(char *str, int i, int index);
 int		ft_redirec(char c);
 
 #endif

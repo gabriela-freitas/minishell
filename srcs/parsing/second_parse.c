@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 17:51:35 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 19:12:09 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ char	*next_arg(char *str, int index)
 	{
 		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && !ft_redirec(str[i]))
 			i++;
-		if (!str[i] || ft_isspace(str[i]))
-			return (ft_substr(str, 0, i));
 		if (ft_redirec(str[i]))
-			return (check_redirec(str, i, index));
+			check_redirec(str, i, index);
+		if (!str[i] || ft_isspace(str[i]) || ft_redirec(str[i]))
+			return (ft_substr(str, 0, i));
 		else if (ft_isquote(str[i]))
 		{
 			if (check_quotes(str, str[i], &i) == -1)

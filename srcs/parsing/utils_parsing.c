@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 18:04:08 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 19:11:06 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ int add_redirec(char redir, int flag, char *file, int index)
 	else
 	{
 		if (flag == 1)
+		{
 			base()->pipes[index].heredoc = file;
+		}
 		else
 		{
 			add_split(&base()->pipes[index].input, &base()->pipes[index].input_nb, file);
@@ -84,67 +86,41 @@ int add_redirec(char redir, int flag, char *file, int index)
 	return (0);
 }
 
-// char	*check_redirec(char *str, int i, int index)
-// {
-// 	int j;
-// 	int begin;
-// 	char *file;
-// 	static int redir;
-
-// 	j = i + 1;
-// 	if (!str[j])
-// 		return (0);
-// 	if (i != 0)
-// 	{
-// 		redir++;
-// 		return (ft_substr(str, 0, i));
-// 	}
-// 	else
-// 	{
-// 		if (ft_redirec(str[j]))
-// 			j++;
-// 		while (str[j] && ft_isspace(str[j]))
-// 			j++;
-// 		begin = j;
-// 		while (str[++j] && !ft_isspace(str[j]) && !ft_isquote(str[j]) && !ft_redirec(str[j]))
-// 			;
-// 		file = ft_substr(str, begin, j - begin);
-// 		add_redirec(str[i], redir, file, index);
-// 		redir = 0;
-// 		ft_memmove(&str[i], &str[j + 1], ft_strlen(&str[j]) + 1);
-// 		return (next_arg(str, index));
-// 	}
-// }
-
-
-char	*check_redirec(char *str, int i, int index)
+void	check_redirec(char *str, int i, int index)
 {
+	int redir;
 	int j;
 	int begin;
 	char *file;
-	static int redir;
 
-	printf("str = %s, i = %d\n", str, i);
 	j = i + 1;
-	if (!str[j])
-		return (0);
-	if (ft_redirec(str[j]))
+	redir = 0;
+	if (str[j] && ft_redirec(str[j]))
 	{
-		j++;
 		redir = 1;
-	}
-	else
-		redir = 0;
-	while (str[j] && ft_isspace(str[j]))
 		j++;
+	}
 	begin = j;
-	while (str[++j] && !ft_isspace(str[j]) && !ft_isquote(str[j]) && !ft_redirec(str[j]))
-		;
-	file = ft_substr(str, begin, j - begin);
-	add_redirec(str[i], redir, file, index);
-	ft_memmove(&str[i], &str[j + 1], ft_strlen(&str[j]) + 1);
-	if (i != 0)
-		return (ft_substr(str, 0, i));
-	else
-		return (next_arg(str, index));
+	while (str[j] && !ft_isspace(str[j]) && !ft_redirec(str[j]))
+		j++;
+	if (str[j + 1] && ft_redirec(str[j + 1]))
+	{
+		file = ft_substr(str, begin, j - begin);
+		add_redirec(str[i], redir, file, index);
+		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
+		check_redirec(str, i, index);
+	}
+	else if (str[j] && ft_redirec(str[j]))
+	{
+		file = ft_substr(str, begin, j - begin);
+		add_redirec(str[i], redir, file, index);
+		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
+		check_redirec(str, i, index);
+	}
+	else if (!str[j] || ft_isspace(str[j]))
+	{
+		file = ft_substr(str, begin, j - begin);
+		add_redirec(str[i], redir, file, index);
+		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
+	}
 }
