@@ -107,7 +107,6 @@ void	check_redirec(char *str, int i, int index)
 	{
 		file = ft_substr(str, begin, j - begin);
 		add_redirec(str[i], redir, file, index);
-		// free(file);
 		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
 		check_redirec(str, i, index);
 	}
@@ -115,7 +114,6 @@ void	check_redirec(char *str, int i, int index)
 	{
 		file = ft_substr(str, begin, j - begin);
 		add_redirec(str[i], redir, file, index);
-		// free(file);
 		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
 		check_redirec(str, i, index);
 	}

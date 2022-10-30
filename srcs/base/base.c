@@ -51,8 +51,7 @@ void	free_command_line(void)
 		free_split(base()->pipes[i].cmds);
 		free_split(base()->pipes[i].output);
 		free_split(base()->pipes[i].input);
-		if (!base()->pipes[i].heredoc)
-			free(base()->pipes[i].heredoc);
+		free(base()->pipes[i].heredoc);
 	}
 	free(base()->pipes);
 	if (!access(TEMP_FILE, F_OK))
