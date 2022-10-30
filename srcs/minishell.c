@@ -92,14 +92,14 @@ void	read_loop(void)
 		if (!ft_strncmp("", str, 1))
 			continue ;
 		add_history(str);
-		// if (first_parse(str))
-		// {
-		// 	second_parse();
-		// 	exec_all();
-		// }
-		args_test();
-		exec_all();
-		args_clean();
+		if (first_parse(str))
+		{
+			second_parse();
+			// exec_all();
+		}
+		// args_test();
+		// exec_all();
+		// args_clean();
 	}
 	free(str);
 }

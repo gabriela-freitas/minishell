@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 11:01:32 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:57:36 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ static int	check_quotes(char *str, char c, int *i)
 }
 
 /*returns the next arg, it can end in valid space, be delimited by ", '*/
-static char	*next_arg(char *str)
+char	*next_arg(char *str, int index)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]))
+		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && !ft_redirec(str[i]))
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
+		if (ft_redirec(str[i]))
+			return (check_redirec(str, i, index));
 		else if (ft_isquote(str[i]))
 		{
 			if (check_quotes(str, str[i], &i) == -1)
@@ -69,17 +71,18 @@ static char	*next_arg(char *str)
 }
 
 /*	Auxiliar function to make split_command pass the norminette! */
-static void	split_aux(char *aux1, char ***split)
+static void	split_aux(char *aux1, char ***split, int index)
 {
 	int		i;
 	int		k;
+	// printf("AQUI = %s\n", str);
 	char	*aux;
 
 	i = 0;
 	k = 0;
 	while (aux1[i])
 	{
-		aux = next_arg(&aux1[i]);
+		aux = next_arg(&aux1[i], index);
 		if (!aux1)
 		{
 			free_split(*split);
@@ -95,10 +98,10 @@ static void	split_aux(char *aux1, char ***split)
 }
 
 /*	returns an array of args, first is the command to be executed,
-	then it's its arguments
+	then it's its argumentsnt i
 	this is the last parsing, args are ready to be executed
 */
-static char	**split_command(char **str)
+static char	**split_command(char **str, int index)
 {
 	char	**split;
 	char	*aux1;
@@ -106,9 +109,12 @@ static char	**split_command(char **str)
 	aux1 = *str;
 	split = malloc(sizeof(char *) * 2);
 	split[0] = '\0';
-	split_aux(aux1, &split);
+	split_aux(aux1, &split, index);
 	return (split);
 }
+
+void check_input(int index);
+
 
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
@@ -126,8 +132,42 @@ void	second_parse(void)
 	while (temp)
 	{
 		temp->content = expand((char *)temp->content);
-		base()->pipes[++i].cmds = split_command((char **)&temp->content);
+		base()->pipes[++i].output = malloc(sizeof(char*) * 2);
+		base()->pipes[i].output[0] = '\0';
+		base()->pipes[i].output_nb = 0;
+		base()->pipes[i].input = malloc(sizeof(char*) * 2);
+		base()->pipes[i].input[0] = '\0';
+		base()->pipes[i].input_nb = 0;
+		base()->pipes[i].heredoc = NULL;
+		base()->pipes[i].cmds = split_command((char **)&temp->content, i);
+		check_input(i);
 		temp = temp->next;
 	}
 }
 
+void check_input(int index)
+{
+	int		i;
+	char	*file;
+	char	*right_input;
+
+	i = 0;
+	file = base()->pipes[index].input[i];
+	while (file)
+	{
+		if (access(file, F_OK) < 0)
+		{
+			parse_error_message(file, ": No such file or directory", 1);
+			right_input = file;
+			break ;
+		}
+		file = base()->pipes[index].input[i];
+		i++;
+	}
+	right_input = file;
+	free_split(base()->pipes[index].input);
+	base()->pipes[i].input = malloc(sizeof(char*) * 2);
+	base()->pipes[i].input[0] = '\0';
+	i = 0;
+	add_split(&base()->pipes[i].input, &i, right_input);
+}

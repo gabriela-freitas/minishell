@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:34:58 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/29 19:26:26 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,38 @@ static int	search_quotes(char *line)
 	return (open_quotes);
 }
 
+static int	search_redir(char *line)
+{
+	int		redir;
+	int		i;
+	char	c;
+
+	redir = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (ft_redirec(line[i]))
+		{
+			if (redir == 0)
+			{
+				redir = 1;
+				c = line[i];
+			}
+			else if (redir == 1)
+			{
+				if (c == line[i])
+					redir++;
+			}
+			else
+				return (0);
+		}
+		else
+			redir = 0;
+		i++;
+	}
+	return (redir);
+}
+
 /*Removes extra spaces outside ' ' and " "
 	Checks whether the pipe is valid and
 	fills the command list (base()->div_pipes)*/
@@ -55,6 +87,11 @@ int	first_parse(char *line)
 	}
 	if (!remove_spaces(line))
 		return (0);
+	if (search_redir(line))
+	{
+		parse_error_message("", "syntax error near unexpected token `<'", 2);
+		return (0);
+	}
 	if (search_quotes(line))
 	{
 		parse_error_message("", "unclosed quotes", 2);

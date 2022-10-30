@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/29 19:49:25 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 12:34:26 by gafreita         ###   ########.fr       */
+/*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
+/*   Updated: 2022/10/30 13:10:07 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # define OUT 1
 # define TEMP_FILE "./.temp"
 
+# define TRUNCATE 0
+# define APPEND 1
+# define STD -1
+
 typedef struct s_env
 {
 	char			*name;
@@ -46,15 +50,17 @@ typedef struct s_env
 //fd >> array with the file descriptors of that command
 typedef struct s_pipex
 {
-	char **cmds;
-	int num_cmds;
-	char **input;
-	char **output;
-	void *heredoc;
-	int in_mode;
-	int out_mode;
-	int fd[2];
-} t_pipex;
+	char	**cmds;
+	int		num_cmds;
+	char	**input;
+	char	**output;
+	void	*heredoc;
+	int		in_mode;
+	int		out_mode;
+	int		output_nb;
+	int		input_nb;
+	int		fd[2];
+}	t_pipex;
 
 /*	HOME directory is in base, because when HOME
 	is unset cd ~ still goes to HOME directory
@@ -150,9 +156,12 @@ int		search_pipes(char *str);
 //second_parse.c
 void	second_parse(void);
 void	third_parse(void);
+char	*next_arg(char *str, int index);
 
 // utils_parsing.c
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
+char	*check_redirec(char *str, int i, int index);
+int		ft_redirec(char c);
 
 #endif
