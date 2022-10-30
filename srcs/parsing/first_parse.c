@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 17:09:29 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 23:00:39 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	search_quotes(char *line)
 	return (open_quotes);
 }
 
-void redir_spaces(char *str)
+void	redir_spaces(char *str)
 {
 	size_t	i;
 	char	*aux;
@@ -58,21 +58,18 @@ void redir_spaces(char *str)
 				i += (size_t)aux - (size_t)(&str[i]);
 		}
 		if (str[i + 1] && ft_redirec(str[i + 1]) && ft_isspace(str[i]))
-			ft_memmove((void *)&str[i], (void *)&str[i + 1], ft_strlen(&str[i + 1]) + 1);
+			ft_memmove((void *)&str[i], (void *)&str[i + 1], \
+			ft_strlen(&str[i + 1]) + 1);
 		if (str[i + 1] && ft_redirec(str[i]) && ft_isspace(str[i + 1]))
-			ft_memmove((void *)&str[i + 1], (void *)&str[i + 2], ft_strlen(&str[i + 2]) + 1);
+			ft_memmove((void *)&str[i + 1], (void *)&str[i + 2], \
+			ft_strlen(&str[i + 2]) + 1);
 	}
 }
 
-static int	search_redir(char *line)
+//Gabi corrigiu norminette adicionando as variaveis como parametros da funcao
+static int	search_redir(char *line, int i, char c, int redir)
 {
-	int		redir;
-	int		i;
-	char	c;
-
-	redir = 0;
-	i = 0;
-	while (line[i])
+	while (line[++i])
 	{
 		if (ft_redirec(line[i]))
 		{
@@ -93,7 +90,6 @@ static int	search_redir(char *line)
 		}
 		else
 			redir = 0;
-		i++;
 	}
 	redir_spaces(line);
 	return (1);
@@ -111,7 +107,7 @@ int	first_parse(char *line)
 	}
 	if (!remove_spaces(line))
 		return (0);
-	if (!search_redir(line))
+	if (!search_redir(line, -1, 0, 0))
 	{
 		parse_error_message("", "syntax error near unexpected token `<'", 2);
 		return (0);

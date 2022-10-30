@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:13:36 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:51:11 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_base
 	char	*oldpwd;
 	int		errnumb;
 	t_list	*div_pipes;
-	t_pipex	*pipes; //array
+	t_pipex	*pipes;
 	int		num_pipes;
 }	t_base;
 
@@ -87,8 +87,7 @@ typedef struct s_base
 void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message(char *cmd, char *arg, char *error, int error_code);
 void	command_not_found(char *cmd);
-void	sig_block(int sig);
-void	sig_block_nl(int sig);
+
 
 /********* BASE *********/
 //base.c
@@ -142,7 +141,11 @@ int		exec_setup_one(t_pipex *pipe);
 void	loop_pipex(void);
 
 //redirections.c
-int	open_files(t_pipex *cmd);
+int		open_files(t_pipex *cmd);
+
+//utils_exec.c
+void	sig_block(int sig);
+void	sig_block_nl(int sig);
 
 /********* PARSING *********/
 

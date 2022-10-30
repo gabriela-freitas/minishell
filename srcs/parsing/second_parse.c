@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 20:55:20 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 23:03:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static void	split_aux(char *aux1, char ***split, int index)
 {
 	int		i;
 	int		k;
-	// printf("AQUI = %s\n", str);
 	char	*aux;
 
 	i = 0;
@@ -113,8 +112,7 @@ static char	**split_command(char **str, int index)
 	return (split);
 }
 
-void check_input(int index);
-
+void	check_input(int index);
 
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
@@ -133,10 +131,10 @@ void	second_parse(void)
 	{
 		temp->content = expand((char *)temp->content);
 		base()->pipes[++i].redir = FALSE;
-		base()->pipes[i].output = malloc(sizeof(char*) * 2);
+		base()->pipes[i].output = malloc(sizeof(char *) * 2);
 		base()->pipes[i].output[0] = NULL;
 		base()->pipes[i].output_nb = 0;
-		base()->pipes[i].input = malloc(sizeof(char*) * 2);
+		base()->pipes[i].input = malloc(sizeof(char *) * 2);
 		base()->pipes[i].input[0] = NULL;
 		base()->pipes[i].input_nb = 0;
 		base()->pipes[i].heredoc = NULL;
@@ -146,7 +144,7 @@ void	second_parse(void)
 	}
 }
 
-void check_input(int index)
+void	check_input(int index)
 {
 	int		i;
 	char	*input;
@@ -157,7 +155,6 @@ void check_input(int index)
 	{
 		if (access(base()->pipes[index].input[i], F_OK) < 0)
 		{
-			// parse_error_message(file, ": No such file or directory", 1);
 			input = ft_strdup(base()->pipes[index].input[i]);
 			break ;
 		}
@@ -166,7 +163,7 @@ void check_input(int index)
 	if (input == NULL && base()->pipes[index].input_nb != 0)
 		input = ft_strdup(base()->pipes[index].input[i - 1]);
 	free_split(base()->pipes[index].input);
-	base()->pipes[index].input = malloc(sizeof(char*) * 2);
+	base()->pipes[index].input = malloc(sizeof(char *) * 2);
 	base()->pipes[index].input[0] = input;
 	base()->pipes[index].input[1] = NULL;
 }

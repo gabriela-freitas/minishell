@@ -27,7 +27,8 @@ SRC =	srcs/minishell.c \
 		srcs/execution/pipex.c \
 		srcs/execution/execute.c \
 		srcs/execution/redirections.c \
-		srcs/utils.c \
+		srcs/execution/utils_exec.c \
+		srcs/error_messages.c \
 		srcs/builtins/export.c \
 		srcs/builtins/echo.c \
 		srcs/builtins/exit.c \

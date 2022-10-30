@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 17:09:23 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 11:30:14 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:50:34 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,4 @@ void	command_not_found(char *cmd)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd("\n", 2);
 	base()->errnumb = 127;
-}
-
-/*	ignores the ctrl+C signal during command execution
-	so it's not interpreted twice,
-	as for pressing ctrl+C when a command waits for input*/
-void	sig_block(int sig)
-{
-	(void) sig;
-	signal(SIGINT, SIG_IGN);
-	base()->errnumb = 130;
-}
-
-/*	same as sig_block but adds a new line*/
-void	sig_block_nl(int sig)
-{
-	(void) sig;
-	signal(SIGINT, SIG_IGN);
-	base()->errnumb = 130;
-	printf("\n");
 }

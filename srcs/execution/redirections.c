@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:34:15 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:40:29 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 /* writes the content of heredoc in a pipe and changes the content of heredoc
 var to the pipe_fd instead of the delimiter string
 */
-static int tempfile_heredoc(t_pipex *command, char **out_heredoc)
+static int	tempfile_heredoc(t_pipex *command, char **out_heredoc)
 {
 	int	i;
 
@@ -80,10 +80,8 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
-	// printf("heredoc: %s infile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
 	if (cmd->heredoc)
 	{
-		// printf("+%s+\n", (char *)cmd->heredoc);
 		recursive_heredoc(cmd, &out_heredoc, 0);
 		if (!tempfile_heredoc(cmd, out_heredoc))
 			return (FALSE);
@@ -97,14 +95,11 @@ static int	open_infiles(t_pipex *cmd)
 		cmd->fd[IN] = open(cmd->input[0], cmd->in_mode, 0644);
 		if (cmd->fd[IN] < 0)
 		{
-			parse_error_message(cmd->input[0], ": No such file or directory", 1);
+			parse_error_message(cmd->input[0], \
+			": No such file or directory", 1);
 			cmd->fd[IN] = STD;
 		}
 	}
-	// ft_putstr_fd("fd in: ", 2);
-	// char *d = ft_itoa(cmd->fd[IN]);
-	// ft_putendl_fd(d, 2);
-	// free(d);
 	return (TRUE);
 }
 
@@ -130,10 +125,6 @@ static int	open_outfiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[OUT] = STD;
-	// ft_putstr_fd("fd OUT: ", 2);
-	// char *d = ft_itoa(cmd->fd[OUT]);
-	// ft_putendl_fd(d, 2);
-	// free(d);
 	return (TRUE);
 }
 
@@ -142,8 +133,6 @@ static int	open_outfiles(t_pipex *cmd)
 /// @return
 int	open_files(t_pipex *cmd)
 {
-	// for (int i = 0; cmd->cmds[i]; i++)
-	// 	printf("+%s+\n", cmd->cmds[i]);
 	if (cmd->redir)
 	{
 		if (open_infiles(cmd))

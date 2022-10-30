@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 21:25:55 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 23:04:55 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_redirec(char c)
 	return (0);
 }
 
-int add_redirec(char redir, int flag, char *file, int index)
+int	add_redirec(char redir, int flag, char *file, int index)
 {
 	base()->pipes[index].redir = TRUE;
 	if (redir == '>')
@@ -88,10 +88,10 @@ int add_redirec(char redir, int flag, char *file, int index)
 
 void	check_redirec(char *str, int i, int index)
 {
-	int redir;
-	int j;
-	int begin;
-	char *file;
+	int		redir;
+	int		j;
+	int		begin;
+	char	*file;
 
 	j = i + 1;
 	redir = 0;

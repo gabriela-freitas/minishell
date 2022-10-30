@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 20:44:58 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:39:25 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
 	if (!open_files(&base()->pipes[cmd]))
 		return ;
-	/* DUP FILE DESCRIPTORS
-		EITHER THE PIPE OR THE FILE FROM REDIRECTION */
 	if (stdout_fd > 1 && base()->pipes[cmd].fd[OUT] == STD)
 		dup2(stdout_fd, STDOUT_FILENO);
 	else
@@ -65,7 +63,6 @@ static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 		dup2(stdin_fd, STDIN_FILENO);
 	else
 		dup2(base()->pipes[cmd].fd[IN], STDIN_FILENO);
-	/* DUP DONE */
 	close_pipes(pipes);
 	execute(&base()->pipes[cmd], -1);
 	exit (base()->errnumb);
@@ -100,7 +97,8 @@ void	loop_pipex(void)
 		while (i < (base()->num_pipes) - 1)
 		{
 			if (fork() == 0)
-				exec_setup(pipes[(i - 1) * 2], pipes[(i - 1) * 2 + 3], i, pipes);
+				exec_setup(pipes[(i - 1) * 2], \
+				pipes[(i - 1) * 2 + 3], i, pipes);
 			else
 				i++;
 		}
