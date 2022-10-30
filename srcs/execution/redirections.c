@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:19:56 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:30:21 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,23 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
+	printf("heredoc: %s\ninfile: %s\n", (char *)cmd->heredoc, *cmd->input);
+	if (cmd->heredoc)
+	{
+		recursive_heredoc(cmd, &out_heredoc, 0);
+		if (!tempfile_heredoc(cmd, out_heredoc))
+			return (FALSE);
+	}
 	if (*cmd->input)
 	{
+		if (!access(TEMP_FILE, F_OK))
+			unlink(TEMP_FILE);
 		cmd->fd[IN] = open(cmd->input[0], O_RDONLY | O_ASYNC, 0644);
 		if (cmd->fd[IN] < 0)
 		{
 			parse_error_message(cmd->input[0], ": No such file or directory", 1);
 			cmd->fd[IN] = STD;
 		}
-	}
-	else if (cmd->heredoc)
-	{
-		recursive_heredoc(cmd, &out_heredoc, 0);
-		if (!tempfile_heredoc(cmd, out_heredoc))
-			return (FALSE);
 	}
 	else
 		cmd->fd[IN] = STD;

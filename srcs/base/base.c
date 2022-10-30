@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 16:34:17 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:27:33 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	free_command_line(void)
 	// 	free_split(base()->pipes[i].cmds);
 	// free_split(&base()->pipes->cmds[i]);
 	// free(base()->pipes);
+	if (!access(TEMP_FILE, F_OK))
+		unlink(TEMP_FILE);
 	ft_lstclear(&(base()->div_pipes), free);
 }
 

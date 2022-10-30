@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   second_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 12:57:36 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:29:59 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,8 +166,8 @@ void check_input(int index)
 	}
 	right_input = file;
 	free_split(base()->pipes[index].input);
-	base()->pipes[i].input = malloc(sizeof(char*) * 2);
-	base()->pipes[i].input[0] = '\0';
+	base()->pipes[index].input = malloc(sizeof(char*) * 2);
+	base()->pipes[index].input[0] = '\0';
 	i = 0;
-	add_split(&base()->pipes[i].input, &i, right_input);
+	add_split(&base()->pipes[index].input, &i, right_input);
 }
