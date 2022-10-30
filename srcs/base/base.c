@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   base.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 15:22:17 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:22:17 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	free_command_line(void)
 		free_split(base()->pipes[i].cmds);
 		free_split(base()->pipes[i].output);
 		free_split(base()->pipes[i].input);
+		if (!base()->pipes[i].heredoc)
+			free(base()->pipes[i].heredoc);
 	}
 	free(base()->pipes);
 	if (!access(TEMP_FILE, F_OK))
