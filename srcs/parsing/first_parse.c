@@ -85,6 +85,8 @@ static int	search_redir(char *line)
 			{
 				if (c == line[i])
 					redir++;
+				else
+					return (0);
 			}
 			else
 				return (0);
@@ -94,7 +96,7 @@ static int	search_redir(char *line)
 		i++;
 	}
 	redir_spaces(line);
-	return (redir);
+	return (1);
 }
 
 /*Removes extra spaces outside ' ' and " "
@@ -109,7 +111,7 @@ int	first_parse(char *line)
 	}
 	if (!remove_spaces(line))
 		return (0);
-	if (search_redir(line))
+	if (!search_redir(line))
 	{
 		parse_error_message("", "syntax error near unexpected token `<'", 2);
 		return (0);
