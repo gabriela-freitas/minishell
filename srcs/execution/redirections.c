@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 19:05:07 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:44:32 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,9 @@ static int	open_outfiles(t_pipex *cmd)
 //TODO: check erros return
 int	open_files(t_pipex *cmd)
 {
-	if (cmd->output_nb || cmd->input_nb)
+	for (int i = 0; cmd->cmds[i]; i++)
+		printf("+%s+\n", cmd->cmds[i]);
+	if (cmd->redir)
 	{
 		if (open_infiles(cmd))
 		{

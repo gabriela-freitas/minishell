@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 18:56:36 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:47:34 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,9 @@ int	execute(t_pipex *pipe, int fd)
 		{
 			/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
 			if (pipe->fd[OUT] != STD)
-			{
 				dup2(pipe->fd[OUT], STDOUT_FILENO);
-			}
 			if (pipe->fd[IN] != STD)
-			{
 				dup2(pipe->fd[IN], STDIN_FILENO);
-			}
 			if (pipe->fd[OUT] != STD)
 				close(pipe->fd[OUT]);
 			if (pipe->fd[IN] != STD)
@@ -138,10 +134,10 @@ int	execute(t_pipex *pipe, int fd)
 				close(pipe->fd[IN]);
 			signal(SIGINT, sig_block_nl);
 			waitpid(pid, NULL, 0);
-			exit(1);
 			// wait(0);
 			// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
 		}
+		// exit(1);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 18:55:30 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:47:59 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_pipex
 	int		output_nb;
 	int		input_nb;
 	int		fd[2];
+	int		redir;
 }	t_pipex;
 
 /*	HOME directory is in base, because when HOME
@@ -161,7 +162,7 @@ char	*next_arg(char *str, int index);
 // utils_parsing.c
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
-char	*check_redirec(char *str, int i, int index);
+void	check_redirec(char *str, int i, int index);
 int		ft_redirec(char c);
 
 #endif
