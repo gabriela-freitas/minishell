@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/01 21:46:50 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/29 16:34:17 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	ini_base(char **env)
 /*frees the command line after execution*/
 void	free_command_line(void)
 {
-	int	i;
+	// int	i;
 
-	i = -1;
-	while (++i < base()->num_pipes)
-		free_split(base()->pipes[i].cmds);
+	// i = -1;
+	// while (++i < base()->num_pipes)
+	// 	free_split(base()->pipes[i].cmds);
 	// free_split(&base()->pipes->cmds[i]);
-	free(base()->pipes);
+	// free(base()->pipes);
 	ft_lstclear(&(base()->div_pipes), free);
 }
 

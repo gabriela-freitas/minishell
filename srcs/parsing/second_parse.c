@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 19:30:32 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:57:36 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,9 @@ static char	**split_command(char **str, int index)
 	return (split);
 }
 
+void check_input(int index);
+
+
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
 	splits it, into valid arguments and executes
@@ -137,6 +140,34 @@ void	second_parse(void)
 		base()->pipes[i].input_nb = 0;
 		base()->pipes[i].heredoc = NULL;
 		base()->pipes[i].cmds = split_command((char **)&temp->content, i);
+		check_input(i);
 		temp = temp->next;
 	}
+}
+
+void check_input(int index)
+{
+	int		i;
+	char	*file;
+	char	*right_input;
+
+	i = 0;
+	file = base()->pipes[index].input[i];
+	while (file)
+	{
+		if (access(file, F_OK) < 0)
+		{
+			parse_error_message(file, ": No such file or directory", 1);
+			right_input = file;
+			break ;
+		}
+		file = base()->pipes[index].input[i];
+		i++;
+	}
+	right_input = file;
+	free_split(base()->pipes[index].input);
+	base()->pipes[i].input = malloc(sizeof(char*) * 2);
+	base()->pipes[i].input[0] = '\0';
+	i = 0;
+	add_split(&base()->pipes[i].input, &i, right_input);
 }

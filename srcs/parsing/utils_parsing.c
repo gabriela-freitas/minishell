@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 19:32:01 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 12:56:58 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int add_redirec(char redir, int flag, char *file, int index)
 		else
 		{
 			add_split(&base()->pipes[index].input, &base()->pipes[index].input_nb, file);
-			base()->pipes[index].heredoc = NULL;
 			base()->pipes[index].in_mode = O_RDONLY | O_ASYNC;
 		}
 	}

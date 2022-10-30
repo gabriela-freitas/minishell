@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:37:15 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/29 18:58:39 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,22 @@ static int	*pipe_ini(void)
 	STDIN_FILENO, STDOUT_FILENO all pipes are closed to prevent the
 	program to be waiting forever
 */
-static void	exec_pipe(int stdin_fd, int stdout_fd, int cmd, int *pipes)
+static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 {
-	if (stdout_fd >= 0)
+	open_files(&base()->pipes[cmd]);
+	/* DUP FILE DESCRIPTORS
+		EITHER THE PIPE OR THE FILE FROM REDIRECTION */
+	if (stdout_fd > 1 && base()->pipes[cmd].fd[OUT] == STD)
 		dup2(stdout_fd, STDOUT_FILENO);
-	if (stdin_fd >= 0)
+	else
+		dup2(base()->pipes[cmd].fd[OUT], STDOUT_FILENO);
+	if (stdin_fd > 1 && base()->pipes[cmd].fd[IN] == STD)
 		dup2(stdin_fd, STDIN_FILENO);
+	else
+		dup2(base()->pipes[cmd].fd[IN], STDIN_FILENO);
+	/* DUP DONE */
 	close_pipes(pipes);
-	execute(&base()->pipes->cmds[cmd], -1);
+	execute(base()->pipes[cmd].cmds, -1);
 	exit (base()->errnumb);
 }
 
@@ -83,7 +91,7 @@ void	loop_pipex(void)
 
 	pipes = pipe_ini();
 	if (fork() == 0)
-		exec_pipe(-1, pipes[1], 0, pipes);
+		exec_setup(STD, pipes[1], 0, pipes);
 	else
 	{
 		signal(SIGINT, sig_block);
@@ -91,13 +99,13 @@ void	loop_pipex(void)
 		while (i < (base()->num_pipes) - 1)
 		{
 			if (fork() == 0)
-				exec_pipe(pipes[(i - 1) * 2], pipes[(i - 1) * 2 + 3], i, pipes);
+				exec_setup(pipes[(i - 1) * 2], pipes[(i - 1) * 2 + 3], i, pipes);
 			else
 				i++;
 		}
 	}
 	if (fork() == 0)
-		exec_pipe(pipes[(i - 1) * 2], -1, i, pipes);
+		exec_setup(pipes[(i - 1) * 2], STD, i, pipes);
 	close_pipes(pipes);
 	wait_aux(&status);
 	free(pipes);

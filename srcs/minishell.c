@@ -25,6 +25,32 @@ static void	inthandler(int sig)
 	rl_redisplay();
 }
 
+void	args_test(void)
+{
+	base()->num_pipes = 1;
+	base()->pipes = malloc(sizeof(t_pipex) * base()->num_pipes);
+	t_pipex *pipes = base()->pipes;
+	pipes[0].cmds = malloc(sizeof (char *) * 3);
+	pipes[0].cmds[0] = ft_strdup("cat");
+	pipes[0].cmds[1] = NULL;
+	pipes[0].heredoc = ft_strdup("A");
+	pipes[0].input = NULL;
+	pipes[0].output = malloc(sizeof (char *) * 2);
+	pipes[0].output[0] = ft_strdup("out");
+	pipes[0].output[1] = NULL;
+	// pipes[0].out_mode = (O_WRONLY | O_ASYNC | O_APPEND | O_CREAT);
+	pipes[0].in_mode = -1;
+}
+
+void	args_clean(void)
+{
+	free_split(base()->pipes[0].cmds);
+	free(base()->pipes[0].input);
+	free_split(base()->pipes[0].output);
+	free(base()->pipes);
+	if (!access(TEMP_FILE, F_OK))
+		unlink(TEMP_FILE);
+}
 /*	reads input from terminal and executes it,
 ignoring ^C and exiting with ^D */
 void	read_loop(void)
@@ -50,8 +76,11 @@ void	read_loop(void)
 		if (first_parse(str))
 		{
 			second_parse();
-			exec_all();
+			// exec_all();
 		}
+		// args_test();
+		// exec_all();
+		// args_clean();
 	}
 	free(str);
 }

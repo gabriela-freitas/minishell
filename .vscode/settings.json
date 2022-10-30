@@ -4,7 +4,8 @@
         "history.h": "c",
         "minishell.h": "c",
         "libft.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "readline.h": "c"
     },
     "codam-norminette-3.command": "/var/data/python/bin/norminette"
 }
