@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:50:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 19:11:06 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:53:27 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,11 @@ void	check_redirec(char *str, int i, int index)
 	begin = j;
 	while (str[j] && !ft_isspace(str[j]) && !ft_redirec(str[j]))
 		j++;
-	if (str[j + 1] && ft_redirec(str[j + 1]))
+	if (str[j] && str[j + 1] && ft_redirec(str[j + 1]))
 	{
 		file = ft_substr(str, begin, j - begin);
 		add_redirec(str[i], redir, file, index);
+		free(file);
 		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
 		check_redirec(str, i, index);
 	}
@@ -114,6 +115,7 @@ void	check_redirec(char *str, int i, int index)
 	{
 		file = ft_substr(str, begin, j - begin);
 		add_redirec(str[i], redir, file, index);
+		free(file);
 		ft_memmove(&str[i], &str[j], ft_strlen(&str[j - 1]) + 1);
 		check_redirec(str, i, index);
 	}
