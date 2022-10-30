@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 21:51:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:31:15 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,18 @@
 static int	exe_builtin(char **cmd)
 {
 	if (!ft_strncmp(cmd[0], "echo", 5))
-		ft_echo(cmd);
+	{
+		int pid;
+		pid = fork();
+		if (pid == 0)
+			ft_echo(cmd);
+		else
+		{
+			signal(SIGINT, sig_block_nl);
+			waitpid(pid, NULL, 0);
+			(base()->errnumb) = 0;
+		}
+	}
 	else if (!ft_strncmp(cmd[0], "cd", 3))
 		cd(cmd);
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
@@ -92,6 +103,26 @@ static int	exe_cmd(char **cmd, int fd)
 	return (-1);
 }
 
+int	exec_setup_one(t_pipex *pipe)
+{
+	if (base()->num_pipes == 1)
+	{
+		if (!open_files(pipe))
+			return (FALSE);
+		/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
+			if (pipe->fd[OUT] != STD)
+				dup2(pipe->fd[OUT], STDOUT_FILENO);
+			if (pipe->fd[IN] != STD)
+				dup2(pipe->fd[IN], STDIN_FILENO);
+			if (pipe->fd[OUT] != STD)
+				close(pipe->fd[OUT]);
+			if (pipe->fd[IN] != STD)
+				close(pipe->fd[IN]);
+		/* DUP DONE */
+	}
+	return (TRUE);
+}
+
 /*Executes the list if commands*/
 int	execute(t_pipex *pipe, int fd)
 {
@@ -101,25 +132,16 @@ int	execute(t_pipex *pipe, int fd)
 		close(fd);
 	if (exe_builtin(pipe->cmds) == 0)
 		return (0);
-	if (!open_files(pipe))
-		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
-		/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
-		if (pipe->fd[OUT] != STD)
-			dup2(pipe->fd[OUT], STDOUT_FILENO);
-		if (pipe->fd[IN] != STD)
-			dup2(pipe->fd[IN], STDIN_FILENO);
-		if (pipe->fd[OUT] != STD)
-			close(pipe->fd[OUT]);
-		if (pipe->fd[IN] != STD)
-			close(pipe->fd[IN]);
-		/* DUP DONE */
-		if (exe_cmd(pipe->cmds, fd) == 0)
+		if (exec_setup_one(base()->pipes))
 		{
-			if (base()->errnumb == 13)
-				command_not_found(pipe->cmds[0]);
+			if (exe_cmd(pipe->cmds, fd) == 0)
+			{
+				if (base()->errnumb == 13)
+					command_not_found(pipe->cmds[0]);
+			}
 		}
 		exit(1);
 		return (0);
