@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 15:40:08 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:10:01 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*next_arg(char *str, int index)
 	while (str[i])
 	{
 		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && !ft_redirec(str[i]))
-			i++;
-		if (str[i] && str[i + 1] && ft_isspace(str[i]) && ft_redirec(str[i + 1]))
 			i++;
 		if (!str[i] || ft_isspace(str[i]))
 			return (ft_substr(str, 0, i));
@@ -156,12 +154,13 @@ void check_input(int index)
 	input = NULL;
 	while (base()->pipes[index].input[i])
 	{
-		if (access(base()->pipes[index].input[i], F_OK) < 0)
-		{
-			// parse_error_message(file, ": No such file or directory", 1);
-			input = ft_strdup(base()->pipes[index].input[i]);
-			break ;
-		}
+		printf("%s\n", base()->pipes[index].input[i]);
+		// if (access(base()->pipes[index].input[i], F_OK) < 0)
+		// {
+		// 	// parse_error_message(file, ": No such file or directory", 1);
+		// 	input = ft_strdup(base()->pipes[index].input[i]);
+		// 	break ;
+		// }
 		i++;
 	}
 	if (input == NULL && base()->pipes[index].input_nb != 0)

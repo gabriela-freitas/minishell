@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 14:42:19 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:42:37 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	exec_all(void)
 {
 	if (base()->num_pipes == 1)
 	{
+		printf(">>%s<<\n", base()->pipes->cmds[0]);
 		execute(&base()->pipes->cmds[0], -1);
 	}
 	else

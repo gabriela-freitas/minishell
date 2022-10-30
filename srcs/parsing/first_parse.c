@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/29 19:26:26 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:09:29 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,27 @@ static int	search_quotes(char *line)
 	return (open_quotes);
 }
 
+void redir_spaces(char *str)
+{
+	size_t	i;
+	char	*aux;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			aux = ft_strchr(&(str[i + 1]), str[i]);
+			if (aux)
+				i += (size_t)aux - (size_t)(&str[i]);
+		}
+		if (str[i + 1] && ft_redirec(str[i + 1]) && ft_isspace(str[i]))
+			ft_memmove((void *)&str[i], (void *)&str[i + 1], ft_strlen(&str[i + 1]) + 1);
+		if (str[i + 1] && ft_redirec(str[i]) && ft_isspace(str[i + 1]))
+			ft_memmove((void *)&str[i + 1], (void *)&str[i + 2], ft_strlen(&str[i + 2]) + 1);
+	}
+}
+
 static int	search_redir(char *line)
 {
 	int		redir;
@@ -72,6 +93,7 @@ static int	search_redir(char *line)
 			redir = 0;
 		i++;
 	}
+	redir_spaces(line);
 	return (redir);
 }
 
