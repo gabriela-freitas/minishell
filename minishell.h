@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 14:22:33 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:50:43 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_pipex
 	int		output_nb;
 	int		input_nb;
 	int		fd[2];
+	int		redir;
 }	t_pipex;
 
 /*	HOME directory is in base, because when HOME
@@ -133,7 +134,7 @@ void	export_ordenate(void);
 
 /********* EXECUTION *********/
 //execute.c
-int		execute(char **cmds, int fd);
+int		execute(t_pipex *pipe, int fd);
 void	exec_all(void);
 
 //pipex.c

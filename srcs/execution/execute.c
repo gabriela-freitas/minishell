@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 16:42:37 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:08:24 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,63 +93,63 @@ static int	exe_cmd(char **cmd, int fd)
 }
 
 /*Executes the list if commands*/
-int	execute(char **cmds, int fd)
+int	execute(t_pipex *pipe, int fd)
 {
-	int pid, pid1;
+	int pid;
+	//  pid1;
 	
 	if (fd >= 0)
 		close(fd);
-	if (exe_builtin(cmds) == 0)
+	if (exe_builtin(pipe->cmds) == 0)
 		return (0);
-	pid1 = fork();
-	if (pid1 == 0)
-	{
-		if (!open_files(&base()->pipes[0]))
+	// pid1 = fork();
+	// if (pid1 == 0)
+	// {
+		if (!open_files(pipe))
 			return (-1);
 		pid = fork();
 		if (pid == 0)
 		{
 			/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
-			if (base()->pipes[0].fd[OUT] != STD)
+			if (pipe->fd[OUT] != STD)
 			{
-				dup2(base()->pipes[0].fd[OUT], STDOUT_FILENO);
+				dup2(pipe->fd[OUT], STDOUT_FILENO);
 			}
-			if (base()->pipes[0].fd[IN] != STD)
+			if (pipe->fd[IN] != STD)
 			{
-				dup2(base()->pipes[0].fd[IN], STDIN_FILENO);
+				dup2(pipe->fd[IN], STDIN_FILENO);
 			}
-			if (base()->pipes[0].fd[OUT] != STD)
-				close(base()->pipes[0].fd[OUT]);
-			if (base()->pipes[0].fd[IN] != STD)
-				close(base()->pipes[0].fd[IN]);
+			if (pipe->fd[OUT] != STD)
+				close(pipe->fd[OUT]);
+			if (pipe->fd[IN] != STD)
+				close(pipe->fd[IN]);
 			/* DUP DONE */
-			if (exe_cmd(cmds, fd) == 0)
+			if (exe_cmd(pipe->cmds, fd) == 0)
 			{
 				if (base()->errnumb == 13)
-					command_not_found(cmds[0]);
-				return (0);
+					command_not_found(pipe->cmds[0]);
 			}
 			exit(1);
 		}
 		else
 		{
-			if (base()->pipes[0].fd[OUT] != STD)
-				close(base()->pipes[0].fd[OUT]);
-			if (base()->pipes[0].fd[IN] != STD)
-				close(base()->pipes[0].fd[IN]);
+			if (pipe->fd[OUT] != STD)
+				close(pipe->fd[OUT]);
+			if (pipe->fd[IN] != STD)
+				close(pipe->fd[IN]);
 			signal(SIGINT, sig_block_nl);
 			waitpid(pid, NULL, 0);
-			exit(1);
 			// wait(0);
 			// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
 		}
-	}
-	else
-	{
-		signal(SIGINT, sig_block_nl);
-		waitpid(pid1, NULL, 0);
-		return (0);
-	}
+		// exit(1);
+	// }
+	// else
+	// {
+	// 	signal(SIGINT, sig_block_nl);
+	// 	waitpid(pid1, NULL, 0);
+	// 	return (0);
+	// }
 	return (-1);
 }
 
@@ -160,8 +160,7 @@ void	exec_all(void)
 {
 	if (base()->num_pipes == 1)
 	{
-		printf(">>%s<<\n", base()->pipes->cmds[0]);
-		execute(&base()->pipes->cmds[0], -1);
+		execute(&base()->pipes[0], -1);
 	}
 	else
 		loop_pipex();

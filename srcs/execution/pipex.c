@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 22:45:57 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 12:45:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:49:11 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	exec_setup(int stdin_fd, int stdout_fd, int cmd, int *pipes)
 		dup2(base()->pipes[cmd].fd[IN], STDIN_FILENO);
 	/* DUP DONE */
 	close_pipes(pipes);
-	execute(base()->pipes[cmd].cmds, -1);
+	execute(&base()->pipes[cmd], -1);
 	exit (base()->errnumb);
 }
 

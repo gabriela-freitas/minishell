@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 17:10:01 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:51:35 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ void	second_parse(void)
 	while (temp)
 	{
 		temp->content = expand((char *)temp->content);
-		base()->pipes[++i].output = malloc(sizeof(char*) * 2);
+		base()->pipes[++i].redir = FALSE;
+		base()->pipes[i].output = malloc(sizeof(char*) * 2);
 		base()->pipes[i].output[0] = NULL;
 		base()->pipes[i].output_nb = 0;
 		base()->pipes[i].input = malloc(sizeof(char*) * 2);
@@ -154,13 +155,12 @@ void check_input(int index)
 	input = NULL;
 	while (base()->pipes[index].input[i])
 	{
-		printf("%s\n", base()->pipes[index].input[i]);
-		// if (access(base()->pipes[index].input[i], F_OK) < 0)
-		// {
-		// 	// parse_error_message(file, ": No such file or directory", 1);
-		// 	input = ft_strdup(base()->pipes[index].input[i]);
-		// 	break ;
-		// }
+		if (access(base()->pipes[index].input[i], F_OK) < 0)
+		{
+			// parse_error_message(file, ": No such file or directory", 1);
+			input = ft_strdup(base()->pipes[index].input[i]);
+			break ;
+		}
 		i++;
 	}
 	if (input == NULL && base()->pipes[index].input_nb != 0)

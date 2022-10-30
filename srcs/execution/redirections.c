@@ -6,7 +6,7 @@
 /*   By: mfreixo- <mfreixo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 15:44:29 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:55:53 by mfreixo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	open_infiles(t_pipex *cmd)
 			cmd->fd[IN] = STD;
 		}
 	}
-	else
+	if (!cmd->heredoc && !*cmd->input)
 		cmd->fd[IN] = STD;
 	ft_putstr_fd("fd in: ", 2);
 	char *d = ft_itoa(cmd->fd[IN]);
@@ -139,7 +139,9 @@ static int	open_outfiles(t_pipex *cmd)
 //TODO: check erros return
 int	open_files(t_pipex *cmd)
 {
-	if (cmd->output_nb || cmd->input_nb)
+	for (int i = 0; cmd->cmds[i]; i++)
+		printf("+%s+\n", cmd->cmds[i]);
+	if (cmd->redir)
 	{
 		if (open_infiles(cmd))
 		{
