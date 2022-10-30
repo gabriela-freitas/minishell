@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 13:11:05 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:19:56 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
-	if (cmd->input)
+	if (*cmd->input)
 	{
 		cmd->fd[IN] = open(cmd->input[0], O_RDONLY | O_ASYNC, 0644);
 		if (cmd->fd[IN] < 0)
@@ -94,10 +94,10 @@ static int	open_infiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[IN] = STD;
-	ft_putstr_fd("fd in: ", 2);
-	char *d = ft_itoa(cmd->fd[IN]);
-	ft_putendl_fd(d, 2);
-	free(d);
+	// ft_putstr_fd("fd in: ", 2);
+	// char *d = ft_itoa(cmd->fd[IN]);
+	// ft_putendl_fd(d, 2);
+	// free(d);
 	return (TRUE);
 }
 
@@ -123,10 +123,10 @@ static int	open_outfiles(t_pipex *cmd)
 	}
 	else
 		cmd->fd[OUT] = STD;
-	ft_putstr_fd("fd OUT: ", 2);
-	char *d = ft_itoa(cmd->fd[OUT]);
-	ft_putendl_fd(d, 2);
-	free(d);
+	// ft_putstr_fd("fd OUT: ", 2);
+	// char *d = ft_itoa(cmd->fd[OUT]);
+	// ft_putendl_fd(d, 2);
+	// free(d);
 	return (TRUE);
 }
 

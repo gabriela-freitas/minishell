@@ -95,7 +95,7 @@ void	read_loop(void)
 		if (first_parse(str))
 		{
 			second_parse();
-			// exec_all();
+			exec_all();
 		}
 		// args_test();
 		// exec_all();
