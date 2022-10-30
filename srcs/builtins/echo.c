@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:28:28 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:33:51 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_echo(char **str)
 		if (!str || !str[1])
 		{
 			printf("\n");
-			return ;
+			exit(1);
 		}
 		if (*str)
 			str++;

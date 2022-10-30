@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:32:07 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:34:15 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	open_infiles(t_pipex *cmd)
 	char	**out_heredoc;
 
 	out_heredoc = NULL;
-	printf("heredoc: %s infile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
+	// printf("heredoc: %s infile: %s\n", (char *)cmd->heredoc, cmd->input[0]);
 	if (cmd->heredoc)
 	{
 		// printf("+%s+\n", (char *)cmd->heredoc);
