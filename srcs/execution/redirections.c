@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 21:21:50 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:47:28 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 
 /* writes the content of heredoc in a pipe and changes the content of heredoc
 var to the pipe_fd instead of the delimiter string
-FIXME: REMEMBER TO FREE*/
+*/
 static int tempfile_heredoc(t_pipex *command, char **out_heredoc)
 {
 	int	i;
@@ -140,7 +140,6 @@ static int	open_outfiles(t_pipex *cmd)
 /// @brief
 /// @param command
 /// @return
-//TODO: check erros return
 int	open_files(t_pipex *cmd)
 {
 	// for (int i = 0; cmd->cmds[i]; i++)

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 20:47:34 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/30 21:51:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,55 +95,45 @@ static int	exe_cmd(char **cmd, int fd)
 /*Executes the list if commands*/
 int	execute(t_pipex *pipe, int fd)
 {
-	int pid, pid1;
+	int pid;
 
 	if (fd >= 0)
 		close(fd);
 	if (exe_builtin(pipe->cmds) == 0)
 		return (0);
-	pid1 = fork();
-	if (pid1 == 0)
+	if (!open_files(pipe))
+		return (-1);
+	pid = fork();
+	if (pid == 0)
 	{
-		if (!open_files(pipe))
-			return (-1);
-		pid = fork();
-		if (pid == 0)
+		/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
+		if (pipe->fd[OUT] != STD)
+			dup2(pipe->fd[OUT], STDOUT_FILENO);
+		if (pipe->fd[IN] != STD)
+			dup2(pipe->fd[IN], STDIN_FILENO);
+		if (pipe->fd[OUT] != STD)
+			close(pipe->fd[OUT]);
+		if (pipe->fd[IN] != STD)
+			close(pipe->fd[IN]);
+		/* DUP DONE */
+		if (exe_cmd(pipe->cmds, fd) == 0)
 		{
-			/* DUP FILE DESCRIPTORS IF THERE'S A FILE FROM REDIRECTION */
-			if (pipe->fd[OUT] != STD)
-				dup2(pipe->fd[OUT], STDOUT_FILENO);
-			if (pipe->fd[IN] != STD)
-				dup2(pipe->fd[IN], STDIN_FILENO);
-			if (pipe->fd[OUT] != STD)
-				close(pipe->fd[OUT]);
-			if (pipe->fd[IN] != STD)
-				close(pipe->fd[IN]);
-			/* DUP DONE */
-			if (exe_cmd(pipe->cmds, fd) == 0)
-			{
-				if (base()->errnumb == 13)
-					command_not_found(pipe->cmds[0]);
-			}
-			exit(1);
+			if (base()->errnumb == 13)
+				command_not_found(pipe->cmds[0]);
 		}
-		else
-		{
-			if (pipe->fd[OUT] != STD)
-				close(pipe->fd[OUT]);
-			if (pipe->fd[IN] != STD)
-				close(pipe->fd[IN]);
-			signal(SIGINT, sig_block_nl);
-			waitpid(pid, NULL, 0);
-			// wait(0);
-			// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
-		}
-		// exit(1);
+		exit(1);
+		return (0);
 	}
 	else
 	{
+		if (pipe->fd[OUT] != STD)
+			close(pipe->fd[OUT]);
+		if (pipe->fd[IN] != STD)
+			close(pipe->fd[IN]);
 		signal(SIGINT, sig_block_nl);
-		waitpid(pid1, NULL, 0);
-		return (0);
+		waitpid(pid, NULL, 0);
+		// wait(0);
+		// ft_putstr_fd("FINISHED EXEC >>>>>>\n", 2);
 	}
 	return (-1);
 }
