@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/31 16:12:31 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:35:50 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,12 @@ static int	exe_builtin(char **cmd)
 
 /*executes the list of commands, and avoids the program to exit*/
 //FIXME: fd is useless
-static int	ft_execve(char *path, char **cmd, int fd)
+static int	ft_execve(char *path, char **cmd)
 {
 	int		pid;
 	int		exit_status;
 	char	**env;
 
-	(void) fd;
 	env = convert_env_list();
 	pid = fork();
 	if (pid < 0)
@@ -71,7 +70,7 @@ static int	ft_execve(char *path, char **cmd, int fd)
 
 /*tests if the list of commands can be executed with current paths,
 	if yes, executes it, else it prints the error and exits*/
-static int	exe_cmd(char **cmd, int fd)
+static int	exe_cmd(char **cmd)
 {
 	int		i;
 	char	*path;
@@ -81,14 +80,14 @@ static int	exe_cmd(char **cmd, int fd)
 		cmd++;
 	i = 0;
 	if (!access(cmd[0], X_OK))
-		return (ft_execve(ft_strdup(cmd[0]), cmd, fd));
+		return (ft_execve(ft_strdup(cmd[0]), cmd));
 	while (base()->paths && base()->paths[i])
 	{
 		path_aux = ft_strjoin(base()->paths[i], "/");
 		path = ft_strjoin(path_aux, cmd[0]);
 		free(path_aux);
 		if (!access(path, F_OK))
-			return (ft_execve(path, cmd, fd));
+			return (ft_execve(path, cmd));
 		free(path);
 		i++;
 	}
@@ -97,12 +96,10 @@ static int	exe_cmd(char **cmd, int fd)
 }
 
 /*Executes the list if commands*/
-int	execute(t_pipex *pipe, int fd)
+int	execute(t_pipex *pipe)
 {
 	int		pid;
 
-	if (fd >= 0)
-		close(fd);
 	if (exe_builtin(pipe->cmds) == 0)
 		return (0);
 	pid = fork();
@@ -110,7 +107,7 @@ int	execute(t_pipex *pipe, int fd)
 	{
 		if (exec_setup_one(base()->pipes))
 		{
-			if (exe_cmd(pipe->cmds, fd) == 0)
+			if (exe_cmd(pipe->cmds) == 0)
 			{
 				if (base()->errnumb == 13)
 					command_not_found(pipe->cmds[0]);
@@ -133,7 +130,7 @@ void	exec_all(void)
 {
 	if (base()->num_pipes == 1)
 	{
-		execute(base()->pipes, -1);
+		execute(base()->pipes);
 	}
 	else
 		loop_pipex();

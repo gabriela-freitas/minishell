@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:09:38 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:51:11 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:36:08 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	export_ordenate(void);
 
 /********* EXECUTION *********/
 //execute.c
-int		execute(t_pipex *pipe, int fd);
+int		execute(t_pipex *pipe);
 void	exec_all(void);
 int		exec_setup_one(t_pipex *pipe);
 
