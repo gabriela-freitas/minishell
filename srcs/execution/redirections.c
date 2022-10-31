@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/31 16:18:52 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:41:48 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ static void	recursive_heredoc(t_pipex *command, char ***out_heredoc, int i)
 {
 	char	*line;
 
-	line = readline("heredoc> ");
+	line = readline("> ");
+	if (line == NULL)
+	{
+		parse_error_message("warning: here-document at line 1 delimited by \
+end-of-file. wanted: ", (char *)command->heredoc, 0);
+	}
 	if (!ft_strncmp(line, (char *)command->heredoc, ft_strlen(line) + 1))
 	{
 		*out_heredoc = malloc(sizeof(char *) * (i + 1));

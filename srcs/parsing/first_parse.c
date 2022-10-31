@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/31 16:50:51 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:49:22 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	first_parse(char *line)
 	}
 	if (!search_redir(line, -1, 0, 0))
 	{
-		parse_error_message("", "syntax error near unexpected token `<'", 2);
+		parse_error_message("syntax error near unexpected token\
+ (> or <)", "", 2);
 		return (0);
 	}
 	if (search_quotes(line))
