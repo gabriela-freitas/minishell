@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 17:58:19 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:39:18 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:44:01 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	**convert_env_list_export(void)
 	aux = base()->env;
 	size = 0;
 	mini_env = malloc(sizeof(char *) * 2);
-	mini_env[0] = '\0';
+	mini_env[0] = NULL;
 	while (aux)
 	{
 		if (aux->content == NULL)
@@ -63,7 +63,7 @@ static char	**env_to_export(char	**env)
 
 	size = 0;
 	env_to_print = malloc(sizeof(char *) * 2);
-	env_to_print[0] = '\0';
+	env_to_print[0] = NULL;
 	i = -1;
 	while (env[++i])
 	{

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 13:10:37 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:40:29 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:18:52 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	open_infiles(t_pipex *cmd)
 		{
 			parse_error_message(cmd->input[0], \
 			": No such file or directory", 1);
-			cmd->fd[IN] = STD;
+			return (FALSE);
 		}
 	}
 	return (TRUE);

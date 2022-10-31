@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfreixo- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 17:09:35 by gafreita          #+#    #+#             */
-/*   Updated: 2022/09/02 10:43:26 by mfreixo-         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:44:58 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**convert_env_list(void)
 	aux = base()->env;
 	size = 0;
 	mini_env = malloc(sizeof(char *) * 2);
-	mini_env[0] = '\0';
+	mini_env[0] = NULL;
 	while (aux)
 	{
 		temp = ft_strjoin(aux->name, "=");

@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:51:32 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:12:31 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 /*checks if cmd[0] is builtin and executes it, if not returns -1*/
 static int	exe_builtin(char **cmd)
 {
+	if (!cmd[0][0] && cmd[1][0])
+		cmd++;
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		ft_echo(cmd);
 	else if (!ft_strncmp(cmd[0], "cd", 3))
@@ -75,6 +77,8 @@ static int	exe_cmd(char **cmd, int fd)
 	char	*path;
 	char	*path_aux;
 
+	if (!cmd[0][0] && cmd[1][0])
+		cmd++;
 	i = 0;
 	if (!access(cmd[0], X_OK))
 		return (ft_execve(ft_strdup(cmd[0]), cmd, fd));
@@ -95,7 +99,7 @@ static int	exe_cmd(char **cmd, int fd)
 /*Executes the list if commands*/
 int	execute(t_pipex *pipe, int fd)
 {
-	int	pid;
+	int		pid;
 
 	if (fd >= 0)
 		close(fd);

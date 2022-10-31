@@ -39,7 +39,7 @@ LIBFT_DIR = ./libft
 INC = -I . -I ./libft/include/
 LIB = -L ./libft -lft -lreadline
 
-CCFLAGS = gcc  -Wall -Wextra -Werror -g -fsanitize=address
+CCFLAGS = clang -Wall -Wextra -Werror -g -fsanitize=address
 
 DEP = ./libft/libft.a
 

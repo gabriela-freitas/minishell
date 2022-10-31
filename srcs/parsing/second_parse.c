@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/04 20:05:51 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 23:03:26 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:42:04 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static char	**split_command(char **str, int index)
 
 	aux1 = *str;
 	split = malloc(sizeof(char *) * 2);
-	split[0] = '\0';
+	split[0] = NULL;
 	split_aux(aux1, &split, index);
 	return (split);
 }
