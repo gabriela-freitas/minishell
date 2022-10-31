@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 17:42:29 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 23:00:39 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 14:06:18 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ int	first_parse(char *line)
 	}
 	if (!remove_spaces(line))
 		return (0);
+	if (ft_strlen(line) == 1 && !ft_isalpha(*line))
+	{
+		command_not_found(line);
+		return (0);
+	}
 	if (!search_redir(line, -1, 0, 0))
 	{
 		parse_error_message("", "syntax error near unexpected token `<'", 2);
@@ -119,8 +124,6 @@ int	first_parse(char *line)
 	}
 	if (!search_pipes(line))
 		return (0);
-	if (!check_cmds())
-		reutrn (0);
 	return (1);
 }
 
