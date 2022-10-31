@@ -49,11 +49,12 @@ char	*next_arg(char *str, int index)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && !ft_isspace(str[i]) && !ft_isquote(str[i]) && !ft_redirec(str[i]))
+		while (str[i] && !ft_isspace(str[i])
+			&& !ft_isquote(str[i]) && !ft_redir(str[i]))
 			i++;
-		if (ft_redirec(str[i]))
+		if (ft_redir(str[i]))
 			check_redirec(str, i, index);
-		if (!str[i] || ft_isspace(str[i]) || ft_redirec(str[i]))
+		if (!str[i] || ft_isspace(str[i]) || ft_redir(str[i]))
 			return (ft_substr(str, 0, i));
 		else if (ft_isquote(str[i]))
 		{
@@ -112,8 +113,6 @@ static char	**split_command(char **str, int index)
 	return (split);
 }
 
-void	check_input(int index);
-
 /*	given the list of commands (a command ends with pipe
 	of end of input from terminal),
 	splits it, into valid arguments and executes
@@ -142,28 +141,4 @@ void	second_parse(void)
 		check_input(i);
 		temp = temp->next;
 	}
-}
-
-void	check_input(int index)
-{
-	int		i;
-	char	*input;
-
-	i = 0;
-	input = NULL;
-	while (base()->pipes[index].input[i])
-	{
-		if (access(base()->pipes[index].input[i], F_OK) < 0)
-		{
-			input = ft_strdup(base()->pipes[index].input[i]);
-			break ;
-		}
-		i++;
-	}
-	if (input == NULL && base()->pipes[index].input_nb != 0)
-		input = ft_strdup(base()->pipes[index].input[i - 1]);
-	free_split(base()->pipes[index].input);
-	base()->pipes[index].input = malloc(sizeof(char *) * 2);
-	base()->pipes[index].input[0] = input;
-	base()->pipes[index].input[1] = NULL;
 }

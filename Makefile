@@ -16,6 +16,7 @@ SRC =	srcs/minishell.c \
 		srcs/parsing/first_parse.c \
 		srcs/parsing/second_parse.c \
 		srcs/parsing/utils_parsing.c \
+		srcs/parsing/redirec_parse.c \
 		srcs/parsing/parsing_pipes.c \
 		srcs/parsing/expanding.c \
 		srcs/base/environment.c \

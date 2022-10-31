@@ -57,10 +57,10 @@ void	redir_spaces(char *str)
 			if (aux)
 				i += (size_t)aux - (size_t)(&str[i]);
 		}
-		if (str[i + 1] && ft_redirec(str[i + 1]) && ft_isspace(str[i]))
+		if (str[i + 1] && ft_redir(str[i + 1]) && ft_isspace(str[i]))
 			ft_memmove((void *)&str[i], (void *)&str[i + 1], \
 			ft_strlen(&str[i + 1]) + 1);
-		if (str[i + 1] && ft_redirec(str[i]) && ft_isspace(str[i + 1]))
+		if (str[i + 1] && ft_redir(str[i]) && ft_isspace(str[i + 1]))
 			ft_memmove((void *)&str[i + 1], (void *)&str[i + 2], \
 			ft_strlen(&str[i + 2]) + 1);
 	}
@@ -71,7 +71,7 @@ static int	search_redir(char *line, int i, char c, int redir)
 {
 	while (line[++i])
 	{
-		if (ft_redirec(line[i]))
+		if (ft_redir(line[i]))
 		{
 			if (redir == 0)
 			{
@@ -119,6 +119,8 @@ int	first_parse(char *line)
 	}
 	if (!search_pipes(line))
 		return (0);
+	if (!check_cmds())
+		reutrn (0);
 	return (1);
 }
 

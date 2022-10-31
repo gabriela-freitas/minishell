@@ -12,10 +12,7 @@
 
 #include "minishell.h"
 
-/*	simulates pwd builtin
-	printf current directory
-*/
-void	pwd(void)
+static void	pwd_aux(void)
 {
 	char	*path;
 	int		length;
@@ -25,6 +22,38 @@ void	pwd(void)
 	getcwd(path, length);
 	printf("%s\n", path);
 	free(path);
+	exit(1);
+}
+
+/*	simulates pwd builtin
+	printf current directory
+*/
+void	pwd(void)
+{
+	int	pid1;
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (base()->num_pipes == 1)
+			exec_setup_one(base()->pipes);
+		pid1 = fork();
+		if (pid1 == 0)
+			pwd_aux();
+		else
+		{
+			signal(SIGINT, sig_block_nl);
+			waitpid(pid1, NULL, 0);
+			exit(1);
+		}
+	}
+	else
+	{
+		signal(SIGINT, sig_block_nl);
+		waitpid(pid, NULL, 0);
+		(base()->errnumb) = 0;
+	}
 }
 
 /*	sets the variable OLDPWD or PWD, according

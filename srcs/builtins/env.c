@@ -28,8 +28,7 @@ static void	print_env(void)
 	}
 }
 
-/* function that simulates env builtin */
-void	env(char **args)
+static void	env_aux(char **args)
 {
 	int	i;
 
@@ -40,6 +39,36 @@ void	env(char **args)
 		print_env();
 	else
 		error_message("env: ‘", args[1], "’: No such file or directory", 127);
+	exit(1);
+}
+
+/* function that simulates env builtin */
+void	env(char **args)
+{
+	int	pid1;
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (base()->num_pipes == 1)
+			exec_setup_one(base()->pipes);
+		pid1 = fork();
+		if (pid1 == 0)
+			env_aux(args);
+		else
+		{
+			signal(SIGINT, sig_block_nl);
+			waitpid(pid1, NULL, 0);
+			exit(1);
+		}
+	}
+	else
+	{
+		signal(SIGINT, sig_block_nl);
+		waitpid(pid, NULL, 0);
+		(base()->errnumb) = 0;
+	}
 }
 
 /*	converts the env list to a string's array

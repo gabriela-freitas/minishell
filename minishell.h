@@ -88,7 +88,6 @@ void	parse_error_message(char *cmd, char *error, int error_code);
 void	error_message(char *cmd, char *arg, char *error, int error_code);
 void	command_not_found(char *cmd);
 
-
 /********* BASE *********/
 //base.c
 t_base	*base(void);
@@ -167,6 +166,8 @@ char	*next_arg(char *str, int index);
 int		ft_isquote(char c);
 void	add_split(char ***split, int *size, char *str);
 void	check_redirec(char *str, int i, int index);
-int		ft_redirec(char c);
+int		ft_redir(char c);
+
+void	check_input(int index);
 
 #endif
