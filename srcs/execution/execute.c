@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 20:15:40 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/31 16:35:50 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:26:34 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ static int	exe_cmd(char **cmd)
 int	execute(t_pipex *pipe)
 {
 	int		pid;
+	int		exit_status;
 
 	if (exe_builtin(pipe->cmds) == 0)
 		return (0);
@@ -113,12 +114,13 @@ int	execute(t_pipex *pipe)
 					command_not_found(pipe->cmds[0]);
 			}
 		}
-		exit(1);
+		exit(base()->errnumb);
 	}
 	else
 	{
 		signal(SIGINT, sig_block_nl);
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &exit_status, 0);
+		base()->errnumb = WEXITSTATUS(exit_status);
 	}
 	return (-1);
 }

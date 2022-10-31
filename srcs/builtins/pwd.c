@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/08/09 20:34:25 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:25:26 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	pwd(void)
 		{
 			signal(SIGINT, sig_block_nl);
 			waitpid(pid1, NULL, 0);
-			exit(1);
+			exit(0);
 		}
 	}
 	else

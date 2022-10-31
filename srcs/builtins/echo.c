@@ -6,7 +6,7 @@
 /*   By: gafreita <gafreita@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 12:13:36 by gafreita          #+#    #+#             */
-/*   Updated: 2022/10/30 22:44:50 by gafreita         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:24:46 by gafreita         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	echo_aux(char **str)
 	if (!str || !str[1])
 	{
 		printf("\n");
-		exit(1);
+		exit(0);
 	}
 	if (*str)
 		str++;
@@ -54,7 +54,7 @@ static void	echo_aux(char **str)
 	}
 	if (new_line)
 		printf("\n");
-	exit(1);
+	exit(0);
 }
 
 /*	simulates echo builtin from bash
@@ -77,7 +77,7 @@ void	ft_echo(char **str)
 		{
 			signal(SIGINT, sig_block_nl);
 			waitpid(pid1, NULL, 0);
-			exit(1);
+			exit(0);
 		}
 	}
 	else
